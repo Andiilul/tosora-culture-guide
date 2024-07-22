@@ -1,7 +1,7 @@
 import { Typography, useTheme } from "@mui/material";
 import { NavbarWrapper, NavbarMenuList, NavbarContainer } from "./styled";
 import ThemeToggle from "../theme-toggle/ThemeToggle";
-import { navbarMenu } from "../../../assets/menu";
+import { navbarMenu } from "../../../mock/menu";
 import { useEffect, useState } from "react";
 import { NavTo } from "../../navigate/NavTo";
 

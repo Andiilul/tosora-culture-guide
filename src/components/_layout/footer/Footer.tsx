@@ -7,7 +7,7 @@ import {
 	FooterWrapper,
 	QuickLinks,
 } from "./styled";
-import { navbarMenu } from "../../../assets/menu";
+import { navbarMenu } from "../../../mock/menu";
 import { NavTo } from "../../navigate/NavTo";
 import { useState } from "react";
 

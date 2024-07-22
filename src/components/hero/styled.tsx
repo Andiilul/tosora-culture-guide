@@ -34,7 +34,7 @@ export const HeroImages: StyledComponent<BoxProps & { theme?: Theme }> = styled(
 	height: "100vh",
 	width: "100vw",
 	backgroundPosition: "center",
-	backgroundImage: `url("public/images/image-1.jpg")`,
+	backgroundImage: `url("/assets/image-1.jpg")`,
 	backgroundSize: "cover",
 });
 

@@ -1,6 +1,7 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { Hero } from "../../components/hero";
 import { HomeContainer, HomeContentWrapper, IntroSection } from "./styled";
+import tosora from "/assets/image-1.jpg"
 
 interface HomeProps {}
 
@@ -65,7 +66,7 @@ export const Home: React.FC<HomeProps> = () => {
 										boxShadow: "-3pxX -3px 3px 0 rgba(0,0,0,0.4)",
 									}}
 									height={180}
-									src="/images/image-1.jpg"
+									src={tosora}
 									alt=""
 								/>
 								<img
@@ -77,7 +78,7 @@ export const Home: React.FC<HomeProps> = () => {
 										boxShadow: "-3px -3px 3px 0 rgba(0,0,0,0.4)",
 									}}
 									height={180}
-									src="/images/image-2.jpg"
+									src="/assets/image-2.jpg"
 									alt=""
 								/>
 							</Box>
