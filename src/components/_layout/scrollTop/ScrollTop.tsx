@@ -23,6 +23,7 @@ export const ScrollTop: React.FC<ScrollTopProps> = () => {
 	};
 
 	const handleScrollToTop = () => {
+		setScrollPercent(0);
 		window.scrollTo({ top: 0, behavior: "smooth" });
 	};
 
