@@ -65,7 +65,7 @@ export const Home: React.FC<HomeProps> = () => {
 										boxShadow: "-3pxX -3px 3px 0 rgba(0,0,0,0.4)",
 									}}
 									height={180}
-									src="./public/images/image-1.jpg"
+									src="/images/image-1.jpg"
 									alt=""
 								/>
 								<img
@@ -77,7 +77,7 @@ export const Home: React.FC<HomeProps> = () => {
 										boxShadow: "-3px -3px 3px 0 rgba(0,0,0,0.4)",
 									}}
 									height={180}
-									src="./public/images/image-2.jpg"
+									src="/images/image-2.jpg"
 									alt=""
 								/>
 							</Box>
