@@ -33,6 +33,6 @@ export const IntroSection: StyledComponent<BoxProps & { theme?: Theme }> =
 	}));
 
 export const Sites: StyledComponent<BoxProps & { theme?: Theme }> =
-styled(Box)(({ theme }) => ({
+styled(Box)(() => ({
 
 }));
