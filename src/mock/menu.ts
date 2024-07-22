@@ -15,4 +15,8 @@ export const navbarMenu = [
 		name: "Gallery",
 		link: "/gallery",
 	},
+	{
+		name: "Tales",
+		link: "/tales",
+	},
 ];
