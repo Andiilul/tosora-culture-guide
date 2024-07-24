@@ -4,10 +4,13 @@ import ThemeToggle from "../theme-toggle/ThemeToggle";
 import { navbarMenu } from "../../../mock/menu";
 import { useEffect, useState } from "react";
 import { NavTo } from "../../navigate/NavTo";
+import { useLocation } from "react-router-dom";
 
 interface NavbarProps {}
 
 export const Navbar: React.FC<NavbarProps> = () => {
+	const path = useLocation().pathname;
+
 	const theme = useTheme();
 	const [scrolled, setScrolled] = useState(false);
 
@@ -26,14 +29,19 @@ export const Navbar: React.FC<NavbarProps> = () => {
 			window.removeEventListener("scroll", handleScroll);
 		};
 	}, []);
-
+	//if page ="/" show this one
 	return (
 		<NavbarWrapper
 			sx={{
-				backgroundColor: scrolled
-					? theme.palette.common.white
-					: "transparent",
+				backgroundColor:
+					path !== "/"
+						? theme.palette.common.white
+						: scrolled
+						? theme.palette.common.white
+						: "transparent",
 				transition: "background-color 0.3s ease",
+				position: path === "/" ? "fixed" : "sticky",
+				top: "0",
 			}}
 		>
 			<NavbarContainer>
@@ -46,7 +54,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
 				</Typography>
 				<NavbarMenuList display={"flex"}>
 					{navbarMenu.map((nav, index) => (
-						<NavTo href={nav.link}>
+						<NavTo key={nav.link} href={nav.link}>
 							<Typography
 								color={!scrolled ? "white" : theme.palette.text.primary}
 								fontFamily={"Poppins"}
@@ -70,4 +78,6 @@ export const Navbar: React.FC<NavbarProps> = () => {
 			</NavbarContainer>
 		</NavbarWrapper>
 	);
+
+	//return null
 };

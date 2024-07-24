@@ -76,7 +76,7 @@ export const Hero: React.FC<HeroProps> = () => {
 					<HeroGrid>
 						{cardList.map((map, index) => (
 							<HeroCard key={index} onClick={map.onclick}>
-								<Box display={"flex"} gap={"12px"}>
+								<Box display={"flex"} gap={"12px"} alignItems={"center"}>
 									<Typography color={theme.palette.primary.main}>
 										{map.icon}
 									</Typography>

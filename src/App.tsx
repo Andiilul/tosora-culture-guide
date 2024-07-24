@@ -7,6 +7,7 @@ import { Home } from "./pages/home/page";
 import { Explore } from "./pages/explore/page";
 import { NotFound } from "./pages/_notfound/page";
 import { MainLayout } from "./components/_layout/layout";
+import { Navbar } from "./components/_layout/navbar";
 
 function App() {
 	const { theme } = useThemeContext();
@@ -15,6 +16,7 @@ function App() {
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
 			<Router>
+				<Navbar />
 				<Routes>
 					<Route element={<MainLayout />}>
 						<Route path="/" element={<Home />} />

@@ -7,9 +7,10 @@ import {
 	FooterWrapper,
 	QuickLinks,
 } from "./styled";
-import { navbarMenu } from "../../../mock/menu";
+import { navbarMenu, mockBlog } from "../../../mock/menu";
 import { NavTo } from "../../navigate/NavTo";
 import { useState } from "react";
+import { Facebook, Instagram, Twitter, YouTube } from "@mui/icons-material";
 
 interface FooterProps {}
 
@@ -20,7 +21,9 @@ export const Footer: React.FC<FooterProps> = () => {
 		event: React.SyntheticEvent | Event,
 		reason?: string
 	) => {
-		{!event}
+		{
+			!event;
+		}
 		if (reason === "clickaway") {
 			return;
 		}
@@ -35,6 +38,7 @@ export const Footer: React.FC<FooterProps> = () => {
 	};
 
 	const theme = useTheme();
+
 	return (
 		<Box display={"flex"} flexDirection={"column"}>
 			<FooterWrapper>
@@ -90,10 +94,22 @@ export const Footer: React.FC<FooterProps> = () => {
 					</FooterLeft>
 					<FooterMid>
 						<Typography fontSize={"28px"} fontFamily={"Rokkitt"}>
-							Quick Links
+							Navigate
 						</Typography>
 						<QuickLinks>
 							{navbarMenu.map((map, index) => (
+								<NavTo key={index} href={map.link}>
+									<Box>{map.name}</Box>
+								</NavTo>
+							))}
+						</QuickLinks>
+					</FooterMid>
+					<FooterMid>
+						<Typography fontSize={"28px"} fontFamily={"Rokkitt"}>
+							Resources
+						</Typography>
+						<QuickLinks>
+							{mockBlog.map((map, index) => (
 								<NavTo key={index} href={map.link}>
 									<Box>{map.name}</Box>
 								</NavTo>
@@ -104,6 +120,20 @@ export const Footer: React.FC<FooterProps> = () => {
 						<Typography fontSize={"28px"} fontFamily={"Rokkitt"}>
 							Contact Us
 						</Typography>
+						<Typography
+							fontFamily={"Poppins"}
+							fontSize={"14px"}
+							fontWeight={"300"}
+						>
+							Follow Our Social Media to Find Out the Latest Updates of Our
+							Progress
+						</Typography>
+						<Box display={"flex"} gap={"12px"}>
+							<Instagram />
+							<Twitter />
+							<Facebook />
+							<YouTube />
+						</Box>
 					</FooterRight>
 				</FooterContainer>
 				<Snackbar
@@ -119,8 +149,16 @@ export const Footer: React.FC<FooterProps> = () => {
 					}}
 				/>
 			</FooterWrapper>
-			<Box display={"flex"} justifyContent={"center"} padding={"8px"} bgcolor={theme.palette.background.paper}>
-				<Typography fontSize={"10px"} fontFamily={"Poppins"}>&copy; 2024 CultureGuide. Created by KKNT-112 Universitas Hasanuddin Team.</Typography>
+			<Box
+				display={"flex"}
+				justifyContent={"center"}
+				padding={"8px"}
+				bgcolor={theme.palette.background.paper}
+			>
+				<Typography fontSize={"10px"} fontFamily={"Poppins"}>
+					&copy; 2024 CultureGuide. Created by KKNT-112 Universitas Hasanuddin
+					Team.
+				</Typography>
 			</Box>
 		</Box>
 	);
