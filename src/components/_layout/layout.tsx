@@ -12,7 +12,6 @@ export const MainLayout: React.FC = () => {
 					display: "flex",
 					flexDirection: "column",
 					minHeight: "100vh",
-					overflowX: "hidden",
 					position: "relative",
 				}}
 			>
