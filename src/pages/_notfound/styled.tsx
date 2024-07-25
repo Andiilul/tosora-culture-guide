@@ -3,7 +3,7 @@ import { Theme } from "@mui/material/styles";
 import { StyledComponent } from "@emotion/styled";
 
 export const NotFoundWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
-	styled(Box)(({ theme }) => ({
+	styled(Box)(() => ({
 		display: "flex",
 		flexDirection: "column",
 		position: "relative",
@@ -16,7 +16,7 @@ export const NotFoundWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
 	}));
 
 export const 	NotFoundContainer: StyledComponent<BoxProps & { theme?: Theme }> =
-	styled(Box)(({ theme }) => ({
+	styled(Box)(() => ({
 		display: "flex",
 		flexDirection: "column",
 		maxWidth: "1980px",
