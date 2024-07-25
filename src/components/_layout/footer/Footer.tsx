@@ -15,6 +15,29 @@ import { Facebook, Instagram, Twitter, YouTube } from "@mui/icons-material";
 interface FooterProps {}
 
 export const Footer: React.FC<FooterProps> = () => {
+	const socialMedia = [
+		{
+			name: "Facebook",
+			icon: <Facebook />,
+			link: "https://www.facebook.com/",
+		},
+		{
+			name: "Instagram",
+			icon: <Instagram />,
+			link: "https://www.instagram.com/",
+		},
+		{
+			name: "Twitter",
+			icon: <Twitter />,
+			link: "https://twitter.com/",
+		},
+		{
+			name: "YouTube",
+			icon: <YouTube />,
+			link: "https://www.youtube.com/",
+		},
+	];
+
 	const [open, setOpen] = useState(false);
 
 	const handleClose = (
@@ -129,10 +152,11 @@ export const Footer: React.FC<FooterProps> = () => {
 							Progress
 						</Typography>
 						<Box display={"flex"} gap={"12px"}>
-							<Instagram />
-							<Twitter />
-							<Facebook />
-							<YouTube />
+							{socialMedia.map((map, index) => (
+								<NavTo key={index} href={map.link}>
+									<Box>{map.icon}</Box>
+								</NavTo>
+							))}
 						</Box>
 					</FooterRight>
 				</FooterContainer>
