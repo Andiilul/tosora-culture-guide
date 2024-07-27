@@ -2,6 +2,7 @@ import {
 	Box,
 	Button,
 	CardActionArea,
+	Link,
 	Typography,
 	useTheme,
 } from "@mui/material";
@@ -16,7 +17,6 @@ import {
 import tosora from "/assets/image-1.jpg";
 import { SpinDecoration } from "../../components/_layout/decoration";
 import { ArrowRightAlt, Map } from "@mui/icons-material";
-import { NavTo } from "../../components/navigate/NavTo";
 import { useEffect, useState } from "react";
 
 interface HomeProps {}
@@ -117,7 +117,7 @@ export const Home: React.FC<HomeProps> = () => {
 								bangunan bersejarah hingga makam raja-raja Wajo.
 							</Typography>
 							<Box display={"flex"} gap={"24px"}>
-								<NavTo href="/explore">
+								<Link href="/explore">
 									<Button
 										sx={{
 											textTransform: "none",
@@ -139,7 +139,7 @@ export const Home: React.FC<HomeProps> = () => {
 										</Typography>
 										<ArrowRightAlt />
 									</Button>
-								</NavTo>
+								</Link>
 
 								<Button
 									onClick={() =>

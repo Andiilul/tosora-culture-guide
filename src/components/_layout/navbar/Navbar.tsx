@@ -1,9 +1,8 @@
-import { Typography, useTheme } from "@mui/material";
+import { Link, Typography, useTheme } from "@mui/material";
 import { NavbarWrapper, NavbarMenuList, NavbarContainer } from "./styled";
 import ThemeToggle from "../theme-toggle/ThemeToggle";
 import { navbarMenu } from "../../../mock/menu";
 import { useEffect, useState } from "react";
-import { NavTo } from "../../navigate/NavTo";
 import { useLocation } from "react-router-dom";
 
 interface NavbarProps {}
@@ -54,7 +53,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
 				</Typography>
 				<NavbarMenuList display={"flex"}>
 					{navbarMenu.map((nav, index) => (
-						<NavTo key={nav.link} href={nav.link}>
+						<Link key={nav.link} href={nav.link}>
 							<Typography
 								color={!scrolled ? "white" : theme.palette.text.primary}
 								fontFamily={"Poppins"}
@@ -71,7 +70,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
 							>
 								{nav.name}
 							</Typography>
-						</NavTo>
+						</Link>
 					))}
 				</NavbarMenuList>
 				<ThemeToggle />

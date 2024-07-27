@@ -10,33 +10,41 @@ import { StyledComponent } from "@emotion/styled";
 
 // Define the type for FooterContainer
 export const HeroWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
-	styled(Box)(({ theme }) => ({
-		minHeight: "100vh",
+	styled(Box)(() => ({
 		display: "flex",
-		justifyContent: "center",
-		// maxHeight: "1080px",
-		alignItems: "center",
-		flexDirection: "column",
-		backgroundPosition: "bottom",
-		backgroundImage:
-			"linear-gradient(to top, rgba(0,0,0,0.9),rgba(0,0,0,0.75))",
 		position: "relative",
-		color: theme.palette.primary.main,
-		["@media (max-width: 1024px)"]: {},
-		["@media (max-width: 768px)"]: {},
+		padding: "64px 128px",
+		height: "100vh",
+		maxHeight: "720px",
+		justifyContent: "Center",
+		alignItems: "center",
+		width: "100%",
+		backgroundSize: "cover",
+		backgroundImage: "url('/assets/image-1.jpg')",
+		backgroundPosition: "center",
+		"&::before": {
+			content: '""',
+			position: "absolute",
+			top: 0,
+			left: 0,
+			right: 0,
+			bottom: 0,
+			backgroundColor: "rgba(0, 0, 0, 0.6)",
+			zIndex: 1,
+		},
 	}));
 
-export const HeroImages: StyledComponent<BoxProps & { theme?: Theme }> = styled(
-	Box
-)({
-	position: "absolute",
-	zIndex: "-10",
-	height: "100vh",
-	width: "100vw",
-	backgroundPosition: "center",
-	backgroundImage: `url("/assets/image-1.jpg")`,
-	backgroundSize: "cover",
-});
+export const HeroContainer: StyledComponent<BoxProps & { theme?: Theme }> =
+	styled(Box)(() => ({
+		position: "relative",
+		zIndex: "1",
+		display: "flex",
+		flex: "1",
+		flexDirection: "column",
+		maxWidth: "1980px",
+		alignItems: "center",
+		justifyContent: "center",
+	}));
 
 export const HeroGrid: StyledComponent<BoxProps & { theme?: Theme }> = styled(
 	Box

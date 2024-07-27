@@ -9,7 +9,6 @@ export const SiteWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
 		padding: "64px 128px",
 		height: "100vh",
 		maxHeight: "720px",
-		backgroundImage: "url('/assets/masjidtua/1.jpg')",
 		justifyContent: "Center",
 		alignItems: "center",
 		width: "100%",
@@ -22,14 +21,14 @@ export const SiteWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
 			left: 0,
 			right: 0,
 			bottom: 0,
-			backgroundColor: "rgba(0, 0, 0, 0.7)", // Black with 80% opacity
+			backgroundColor: "rgba(0, 0, 0, 0.6)",
 			zIndex: 1,
 		},
 	}));
 
 export const SiteContainer: StyledComponent<BoxProps & { theme?: Theme }> =
 	styled(Box)(() => ({
-		backgroundColor: "rgba(255,255,255,0.4)",
+		// backgroundColor: "rgba(255,255,255,0.4)",
 		position: "relative",
 		zIndex: "1",
 		display: "flex",
@@ -43,7 +42,22 @@ export const SiteContainer: StyledComponent<BoxProps & { theme?: Theme }> =
 export const SiteContent: StyledComponent<BoxProps & { theme?: Theme }> =
 	styled(Box)(() => ({
 		width: "100%",
-		height: "ma-content",
+		height: "max-content",
 		display: "grid",
 		gridTemplateColumns: "repeat(2,minmax(0,1fr))",
+	}));
+
+export const CarouselContainer: StyledComponent<BoxProps & { theme?: Theme }> =
+	styled(Box)(() => ({
+		flex: "1",
+		padding:"24px 0px",
+		display: "flex",
+		gap: "20px",
+		overflowY: "visible",
+		overflowX: "auto",
+		userSelect: "none",
+		scrollbarWidth: "none", // Hide scrollbar for Firefox
+		"&::-webkit-scrollbar": {
+			display: "none", // Hide scrollbar for Chrome, Safari, and Opera
+		},
 	}));
