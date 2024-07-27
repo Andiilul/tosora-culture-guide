@@ -8,6 +8,7 @@ import { Explore } from "./pages/explore/page";
 import { NotFound } from "./pages/_notfound/page";
 import { MainLayout } from "./components/_layout/layout";
 import { Navbar } from "./components/_layout/navbar";
+import { Sites } from "./pages/explore/sites/page";
 
 function App() {
 	const { theme } = useThemeContext();
@@ -21,6 +22,7 @@ function App() {
 					<Route element={<MainLayout />}>
 						<Route path="/" element={<Home />} />
 						<Route path="/explore" element={<Explore />} />
+						<Route path="/explore/sites" element={<Sites />} />
 						<Route path="*" element={<NotFound />} />
 					</Route>
 				</Routes>

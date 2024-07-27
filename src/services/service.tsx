@@ -8,7 +8,7 @@ import {
 	setDoc,
 	updateDoc,
 } from "firebase/firestore";
-import { db } from "../config/firebase-config";
+import { db } from "../config/firebaseConfig";
 
 /**
  * Fetch all documents from a specific collection.

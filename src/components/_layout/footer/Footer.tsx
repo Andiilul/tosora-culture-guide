@@ -1,4 +1,4 @@
-import { Box, Snackbar, Typography, useTheme } from "@mui/material";
+import { Box, Link, Snackbar, Typography, useTheme } from "@mui/material";
 import {
 	FooterContainer,
 	FooterLeft,
@@ -8,7 +8,6 @@ import {
 	QuickLinks,
 } from "./styled";
 import { navbarMenu, mockBlog } from "../../../mock/menu";
-import { NavTo } from "../../navigate/NavTo";
 import { useState } from "react";
 import { Facebook, Instagram, Twitter, YouTube } from "@mui/icons-material";
 
@@ -121,9 +120,9 @@ export const Footer: React.FC<FooterProps> = () => {
 						</Typography>
 						<QuickLinks>
 							{navbarMenu.map((map, index) => (
-								<NavTo key={index} href={map.link}>
+								<Link key={index} href={map.link}>
 									<Box>{map.name}</Box>
-								</NavTo>
+								</Link>
 							))}
 						</QuickLinks>
 					</FooterMid>
@@ -133,9 +132,9 @@ export const Footer: React.FC<FooterProps> = () => {
 						</Typography>
 						<QuickLinks>
 							{mockBlog.map((map, index) => (
-								<NavTo key={index} href={map.link}>
+								<Link key={index} href={map.link}>
 									<Box>{map.name}</Box>
-								</NavTo>
+								</Link>
 							))}
 						</QuickLinks>
 					</FooterMid>
@@ -153,9 +152,9 @@ export const Footer: React.FC<FooterProps> = () => {
 						</Typography>
 						<Box display={"flex"} gap={"12px"}>
 							{socialMedia.map((map, index) => (
-								<NavTo key={index} href={map.link}>
+								<Link key={index} href={map.link}>
 									<Box>{map.icon}</Box>
-								</NavTo>
+								</Link>
 							))}
 						</Box>
 					</FooterRight>
