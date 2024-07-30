@@ -92,7 +92,7 @@ const MRTTable: React.FC<MRTTableProps> = ({
 				Cell: ({ cell }) => (
 					<>
 						{cell.getValue<string[]>().map((url, index) => (
-							<Link href={url}>
+							<Link key={index} href={url}>
 								<Button key={index} title={url}>
 									Preview
 								</Button>
