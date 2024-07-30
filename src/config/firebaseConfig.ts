@@ -5,13 +5,13 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: process.env.VITE_PUBLIC_apiKey,
-  authDomain: process.env.VITE_PUBLIC_authDomain,
-  projectId: process.env.VITE_PUBLIC_projectId,
-  storageBucket: process.env.VITE_PUBLIC_storageBucket,
-  messagingSenderId: process.env.VITE_PUBLIC_messagingSenderId,
-  appId: process.env.VITE_PUBLIC_appId,
-  measurementId: process.env.VITE_PUBLIC_measurementId,
+  apiKey: process.env.apiKey,
+  authDomain: process.env.authDomain,
+  projectId: process.env.projectId,
+  storageBucket: process.env.storageBucket,
+  messagingSenderId: process.env.messagingSenderId,
+  appId: process.env.appId,
+  measurementId: process.env.measurementId, 
 };
 
 // Initialize Firebase
