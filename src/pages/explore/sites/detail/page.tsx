@@ -42,7 +42,16 @@ export const SiteDetail: React.FC<SiteDetailProps> = () => {
 		}
 	}, [id]);
 
-	return <div>{site.name}
-	
-	</div>;
+	if(loading){
+		return <div>Loadingg....</div>
+	}
+	if(error){
+		return <div>{error}</div>
+	}
+
+	return(
+		<div>
+			{site.name}
+		</div>
+	)
 };
