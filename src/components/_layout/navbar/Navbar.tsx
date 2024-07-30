@@ -9,17 +9,12 @@ interface NavbarProps {}
 
 export const Navbar: React.FC<NavbarProps> = () => {
 	const path = useLocation().pathname;
-
 	const theme = useTheme();
 	const [scrolled, setScrolled] = useState(false);
 
 	const handleScroll = () => {
 		const offset = window.scrollY;
-		if (offset > 10) {
-			setScrolled(true);
-		} else {
-			setScrolled(false);
-		}
+		setScrolled(offset > 10);
 	};
 
 	useEffect(() => {
@@ -28,7 +23,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
 			window.removeEventListener("scroll", handleScroll);
 		};
 	}, []);
-	//if page ="/" show this one
+
 	return (
 		<NavbarWrapper
 			sx={{
@@ -46,18 +41,32 @@ export const Navbar: React.FC<NavbarProps> = () => {
 			<NavbarContainer>
 				<Typography
 					fontFamily={"Rokkitt"}
-					color={!scrolled ? "white" : theme.palette.text.primary}
+					color={
+						path === "/" && !scrolled
+							? "white"
+							: theme.palette.text.primary
+					}
 					fontSize={"24px"}
 				>
 					CultureGuide
 				</Typography>
 				<NavbarMenuList display={"flex"}>
 					{navbarMenu.map((nav, index) => (
-						<Link key={nav.link} href={nav.link}>
+						<Link
+							key={nav.link}
+							href={nav.link}
+							sx={{
+								textDecoration: "none",
+							}}
+						>
 							<Typography
-								color={!scrolled ? "white" : theme.palette.text.primary}
+								color={
+									path === "/" && !scrolled
+										? "white"
+										: theme.palette.text.primary
+								}
 								fontFamily={"Poppins"}
-								fontSize={"14px"}
+								fontSize={"12px"}
 								fontWeight={"300"}
 								key={index}
 								sx={{
@@ -77,6 +86,4 @@ export const Navbar: React.FC<NavbarProps> = () => {
 			</NavbarContainer>
 		</NavbarWrapper>
 	);
-
-	//return null
 };

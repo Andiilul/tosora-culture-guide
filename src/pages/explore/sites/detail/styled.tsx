@@ -2,7 +2,7 @@ import { Box, styled, BoxProps } from "@mui/material";
 import { Theme } from "@mui/material/styles";
 import { StyledComponent } from "@emotion/styled";
 
-export const SiteWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
+export const SiteDetailWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
 	styled(Box)(() => ({
 		display: "flex",
 		position: "relative",
@@ -26,7 +26,7 @@ export const SiteWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
 		},
 	}));
 
-export const SiteContainer: StyledComponent<BoxProps & { theme?: Theme }> =
+export const SiteDetailContainer: StyledComponent<BoxProps & { theme?: Theme }> =
 	styled(Box)(() => ({
 		// backgroundColor: "rgba(255,255,255,0.4)",
 		position: "relative",
@@ -39,26 +39,11 @@ export const SiteContainer: StyledComponent<BoxProps & { theme?: Theme }> =
 		justifyContent: "center",
 	}));
 
-export const SiteContent: StyledComponent<BoxProps & { theme?: Theme }> =
+export const SiteDetailContent: StyledComponent<BoxProps & { theme?: Theme }> =
 	styled(Box)(() => ({
 		width: "100%",
 		height: "max-content",
 		display: "grid",
 		gap: "24px",
 		gridTemplateColumns: "repeat(2,minmax(0,1fr))",
-	}));
-
-export const CarouselContainer: StyledComponent<BoxProps & { theme?: Theme }> =
-	styled(Box)(() => ({
-		flex: "1",
-		padding: "24px 0px",
-		display: "flex",
-		gap: "20px",
-		overflowY: "visible",
-		overflowX: "auto",
-		userSelect: "none",
-		scrollbarWidth: "none", // Hide scrollbar for Firefox
-		"&::-webkit-scrollbar": {
-			display: "none", // Hide scrollbar for Chrome, Safari, and Opera
-		},
 	}));

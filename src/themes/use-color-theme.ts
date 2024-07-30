@@ -3,22 +3,22 @@ import React from "react";
 import { getDesignTokens } from "./theme";
 
 export const useColorTheme = () => {
-  const [mode, setMode] = React.useState<PaletteMode>("dark");
+  const storedMode = localStorage.getItem("theme-mode") as PaletteMode;
+  const initialMode = storedMode ? storedMode : "dark";
 
-  const toggleColorMode = () =>
-    setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+  const [mode, setMode] = React.useState<PaletteMode>(initialMode);
 
-  // const modifiedTheme = React.useMemo(
-  //   () =>
-  //     createTheme({
-  //       ...theme,
-  //       palette: {
-  //         ...theme.palette,
-  //         mode,
-  //       },
-  //     }),
-  //   [mode]
-  // );
+  const toggleColorMode = () => {
+    setMode((prevMode) => {
+      const newMode = prevMode === "light" ? "dark" : "light";
+      localStorage.setItem("theme-mode", newMode);
+      return newMode;
+    });
+  };
+
+  React.useEffect(() => {
+    localStorage.setItem("theme-mode", mode);
+  }, [mode]);
 
   const modifiedTheme = React.useMemo(
     () => createTheme(getDesignTokens(mode)),
