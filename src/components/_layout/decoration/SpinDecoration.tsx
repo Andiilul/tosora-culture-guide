@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { Spinner } from "./styles";
+import { Spinner } from "./styled";
 
 interface SpinDecorationProps {
 	children: React.ReactNode;

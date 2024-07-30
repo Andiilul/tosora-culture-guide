@@ -9,7 +9,7 @@ const ThemeToggle = () => {
 		<Button
 			variant="outlined"
 			sx={{
-				width: "104px",
+				width: "94px",
 				borderRadius: "24px",
 				borderColor: `${mode == "light" ? "#1ab69d" : "#ffffff"}`,
 				color: `${mode == "light" ? "#1ab69d" : "#ffffff"}`,
@@ -32,14 +32,18 @@ const ThemeToggle = () => {
 				<Typography
 					sx={{
 						textTransform: "capitalize",
-						width: "40px",
 						// bgcolor: "red",
 					}}
+					fontSize={"12px"}
 				>
 					{mode}
 				</Typography>
 				<Divider orientation="vertical" flexItem />
-				{mode === "dark" ? <BrightnessHigh /> : <BrightnessLow />}
+				{mode === "dark" ? (
+					<BrightnessHigh fontSize="small" />
+				) : (
+					<BrightnessLow fontSize="small" />
+				)}
 			</Box>
 		</Button>
 	);

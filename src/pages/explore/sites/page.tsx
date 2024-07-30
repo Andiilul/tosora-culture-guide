@@ -1,4 +1,12 @@
-import { Box, IconButton, Radio, Typography } from "@mui/material";
+import {
+	Box,
+	Button,
+	IconButton,
+	Link,
+	Radio,
+	Typography,
+	useTheme,
+} from "@mui/material";
 import {
 	SiteContainer,
 	SiteWrapper,
@@ -6,14 +14,19 @@ import {
 	CarouselContainer,
 } from "./styled";
 import { SlideCard } from "../../../components/slideCard";
-import { siteMock } from "../../../mock/sites";
 import { ArrowLeft, ArrowRight } from "@mui/icons-material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { getAllSites } from "../../../services/sites";
+import { SitesTypes } from "../../../types/sites";
 
 interface SitesProps {}
 
 export const Sites: React.FC<SitesProps> = () => {
 	const [selectedIndex, setSelectedIndex] = useState<number>(0);
+	const [data, setData] = useState<SitesTypes[]>([]);
+	const [loading, setLoading] = useState<boolean>(false);
+	const [error, setError] = useState<string | null>(null);
+	const theme = useTheme();
 
 	useEffect(() => {
 		const element = document.getElementById(`slider-${selectedIndex}`);
@@ -26,35 +39,112 @@ export const Sites: React.FC<SitesProps> = () => {
 		}
 	}, [selectedIndex]);
 
+	const fetchData = useCallback(async () => {
+		setLoading(true);
+		try {
+			const result = await getAllSites();
+			setData(result);
+		} catch (error) {
+			setError("Failed to fetch data.");
+		} finally {
+			setLoading(false);
+		}
+	}, []);
+
+	useEffect(() => {
+		fetchData();
+	}, [fetchData]);
+
+	if (loading) {
+		return <div>Loading...</div>;
+	}
+
+	if (error) {
+		return <div>{error}</div>;
+	}
+
+	// Make sure to handle cases where data might be empty
+	if (data.length === 0) {
+		return <div>No sites available.</div>;
+	}
+
+	const currentSite = data[selectedIndex];
+	const imagePaths = Array.isArray(currentSite.image_path)
+		? currentSite.image_path
+		: [currentSite.image_path];
+
 	return (
 		<SiteWrapper
 			sx={{
-				backgroundImage: `url("${siteMock[selectedIndex].img}")`,
+				backgroundImage: `url("${imagePaths[0]}")`,
 				transition: "background-image 0.2s ease-in-out",
 			}}
 		>
 			<SiteContainer>
 				<SiteContent>
-					<Box>
-						<Typography fontFamily={"Poppins"}>Discover</Typography>
-						<Typography fontFamily={"Rokkitt"}>
-							{siteMock[selectedIndex].name}
+					<Box
+						display={"flex"}
+						flexDirection={"column"}
+						gap={"12px"}
+						color={"white"}
+					>
+						<Typography
+							fontFamily={"Poppins"}
+							fontSize={"12px"}
+							color={"#cccccc"}
+						>
+							DISCOVER
 						</Typography>
-						<Typography>Discover</Typography>
+						<Typography
+							fontFamily={"League Spartan"}
+							fontSize={"28px"}
+							fontWeight={"600"}
+							color={theme.palette.primary.main}
+						>
+							{currentSite.name}
+						</Typography>
+						<Typography fontFamily={"Poppins"} fontSize={"14px"}>
+							{currentSite.catchphrase}
+						</Typography>
+						<Box>
+							<Link href={`/explore/sites/${currentSite.id}`}>
+								<Button
+									variant="text"
+									sx={{
+										textTransform: "none",
+									}}
+									size="large"
+								>
+									<Typography
+										fontFamily={"Poppins"}
+										fontSize={"14px"}
+										fontWeight={600}
+									>
+										Cek Detail
+									</Typography>
+									<ArrowRight />
+								</Button>
+							</Link>
+						</Box>
 					</Box>
 					<Box display={"flex"} flexDirection={"column"}>
 						<CarouselContainer>
-							{siteMock.map((map, index) => (
-								<div id={`slider-${index}`}>
-									<SlideCard
-										focus={selectedIndex === index}
-										onClick={() => setSelectedIndex(index)}
-										key={index}
-										src={map.img}
-										opacity={selectedIndex === index ? 0 : 0.8}
-									/>
-								</div>
-							))}
+							{data.map((map, index) => {
+								const imagePath = Array.isArray(map.image_path)
+									? map.image_path[0] // Show the first image if multiple are available
+									: map.image_path;
+
+								return (
+									<div id={`slider-${index}`} key={index}>
+										<SlideCard
+											focus={selectedIndex === index}
+											onClick={() => setSelectedIndex(index)}
+											src={imagePath as string}
+											opacity={selectedIndex === index ? 0 : 0.8}
+										/>
+									</div>
+								);
+							})}
 						</CarouselContainer>
 						<Box justifyContent={"center"} display={"flex"} gap={"12px"}>
 							<IconButton
@@ -63,9 +153,7 @@ export const Sites: React.FC<SitesProps> = () => {
 								}}
 								onClick={() =>
 									setSelectedIndex(
-										selectedIndex === 0
-											? siteMock.length - 1
-											: selectedIndex - 1
+										selectedIndex === 0 ? data.length - 1 : selectedIndex - 1
 									)
 								}
 							>
@@ -75,7 +163,7 @@ export const Sites: React.FC<SitesProps> = () => {
 								display={"flex"}
 								gap={"12px"}
 								justifyContent={"space-between"}
-								alignItems={"center	"}
+								alignItems={"center"}
 								width={"100%"}
 							>
 								<Box
@@ -85,9 +173,9 @@ export const Sites: React.FC<SitesProps> = () => {
 										justifyContent: "center",
 									}}
 								>
-									{siteMock.map((map, index) => (
+									{Array.from({ length: data.length }, (_, index) => (
 										<Radio
-											key={map.name}
+											key={index}
 											sx={{
 												color: "white",
 												padding: "2px",
@@ -95,7 +183,7 @@ export const Sites: React.FC<SitesProps> = () => {
 											size="small"
 											checked={selectedIndex === index}
 											onClick={() => setSelectedIndex(index)}
-										></Radio>
+										/>
 									))}
 								</Box>
 							</Box>
@@ -105,9 +193,7 @@ export const Sites: React.FC<SitesProps> = () => {
 								}}
 								onClick={() =>
 									setSelectedIndex(
-										selectedIndex === siteMock.length - 1
-											? 0
-											: selectedIndex + 1
+										selectedIndex === data.length - 1 ? 0 : selectedIndex + 1
 									)
 								}
 							>
