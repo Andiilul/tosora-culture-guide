@@ -9,7 +9,7 @@ import { Link as Rlinks } from "react-router-dom";
 
 interface MRTTableProps {
 	data: SitesTypes[];
-	setOnDelete: (id: string) => void; // Update this line
+	setOnDelete: (site: SitesTypes) => void; // Update this line
 	setOpenDescription: (value: string) => void; // Update this line
 }
 
@@ -115,19 +115,15 @@ const MRTTable: React.FC<MRTTableProps> = ({
 			},
 			{
 				id: "actions",
-				accessorKey: "id",
 				header: "Actions",
-				Cell: ({ cell }) => (
+				Cell: ({ row }) => (
 					<div>
-						<Rlinks to={`./site/${cell.getValue() as string}/edit`}>
+						<Rlinks to={`./site/${row.original.id}/edit`}>
 							<IconButton color="primary">
 								<Edit />
 							</IconButton>
 						</Rlinks>
-						<IconButton
-							color="error"
-							onClick={() => setOnDelete(cell.getValue() as string)}
-						>
+						<IconButton color="error" onClick={() => setOnDelete(row.original)}>
 							<Delete />
 						</IconButton>
 					</div>
@@ -171,7 +167,7 @@ export const AdminSites: React.FC = () => {
 	const [data, setData] = useState<SitesTypes[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
-	const [onDelete, setOnDelete] = useState<undefined | string>(undefined);
+	const [onDelete, setOnDelete] = useState<undefined | SitesTypes>(undefined);
 	const [openDescription, setOpenDescription] = useState<string | undefined>(
 		undefined
 	);
@@ -200,8 +196,8 @@ export const AdminSites: React.FC = () => {
 		return <div>{error}</div>;
 	}
 
-	const handleDelete = async (id: string) => {
-		await deleteSite(id);
+	const handleDelete = async (sites: SitesTypes) => {
+		await deleteSite(sites);
 		setOnDelete(undefined);
 		fetchData();
 	};
@@ -252,7 +248,10 @@ export const AdminSites: React.FC = () => {
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={() => setOnDelete(undefined)}>Disagree</Button>
-					<Button onClick={() => handleDelete(onDelete as string)} autoFocus>
+					<Button
+						onClick={() => handleDelete(onDelete as SitesTypes)}
+						autoFocus
+					>
 						Agree
 					</Button>
 				</DialogActions>

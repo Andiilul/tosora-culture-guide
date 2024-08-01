@@ -5,7 +5,7 @@ export interface SitesTypes {
 	name: string;
 	description: string;
 	catchphrase: string;
-	image_path?: string[];
+	image_path: string[];
 	location: string;
 	embedded_maplink: string;
 	designationYear?: number;

@@ -7,3 +7,12 @@ export const AdminSiteWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
 		display: "flex",
 		flexDirection: "column",
 	}));
+
+
+	export const FormWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
+	styled(Box)(() => ({
+		display:"flex",
+		flexDirection:"column",
+		gap:"32px"
+
+		}));

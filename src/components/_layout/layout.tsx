@@ -1,33 +1,71 @@
 import {
 	Box,
 	Button,
+	CardActionArea,
 	Dialog,
 	DialogActions,
 	DialogTitle,
 	Drawer,
 	IconButton,
+	Typography,
 	useTheme,
 } from "@mui/material";
 import { Footer } from "./footer";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { ScrollTop } from "./scrollTop";
 import { Navbar } from "./navbar";
 import { useState } from "react";
-import { Close, Menu } from "@mui/icons-material";
+import {
+	AccountBalanceOutlined,
+	Close,
+	Collections,
+	DashboardOutlined,
+	Diversity2Outlined,
+	Menu,
+	Public,
+} from "@mui/icons-material";
 import ThemeToggle from "./theme-toggle/ThemeToggle";
 import { signOut } from "firebase/auth";
 import { auth } from "../../config/firebaseConfig";
-
 
 export interface MainLayoutProps {
 	admin?: boolean;
 }
 
+const adminMenu = [
+	{
+		name: "Dashboard",
+		link: "/admin/dashboard",
+		icon: <DashboardOutlined />,
+	},
+	{
+		name: "Sites",
+		link: "/admin/sites",
+		icon: <AccountBalanceOutlined />,
+	},
+	{
+		name: "Culture",
+		link: "/admin/culture",
+		icon: <Diversity2Outlined />,
+	},
+	{
+		name: "Blog",
+		link: "/admin/blog",
+		icon: <Public />,
+	},
+	{
+		name: "Gallery",
+		link: "/admin/gallery",
+		icon: <Collections />,
+	},
+];
+
 export const MainLayout: React.FC<MainLayoutProps> = ({ admin = false }) => {
 	const [openLogOut, setOpenLogOut] = useState<boolean>(false);
 	const theme = useTheme();
-	const [open, setOpen] = useState(false);
+	const [open, setOpen] = useState(true);
 	const width = "220px";
+	const path = useLocation();
 
 	const handleLogOut = () => {
 		signOut(auth)
@@ -52,54 +90,136 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ admin = false }) => {
 		return (
 			<Box display={"flex"}>
 				<Drawer onClose={handleDrawerClose} open={open} variant="persistent">
-					<Box width={width} display={"flex"}>
-						<IconButton onClick={handleDrawerClose}>
-							<Close />
-						</IconButton>
+					<Box
+						padding={"10px 14px"}
+						width={width}
+						display={"flex"}
+						bgcolor={theme.palette.background.default}
+						flexDirection={"column"}
+						boxShadow={"0 2px 2px 0 rgba(0,0,0,0.3)"}
+					>
+						<Box
+							display={"flex"}
+							justifyContent={"space-between"}
+							alignItems={"center"}
+						>
+							{/* <ThemeToggle /> */}
+							<Typography fontFamily={"Rokkitt"} fontSize={"18px"}>
+								CultureGuide
+							</Typography>
+							<IconButton onClick={handleDrawerClose}>
+								<Close />
+							</IconButton>
+						</Box>
+					</Box>
+					<Box
+						// bgcolor={"red"}
+						width={"100%"}
+						height={"100%"}
+						display={"flex"}
+						gap={"12px"}
+						padding={"12px"}
+						flexDirection={"column"}
+					>
+						<Box
+							flex={1}
+							// bgcolor={"white"}
+							sx={{
+								overflowY: "auto",
+								display: "flex",
+
+								flexDirection: "column",
+								gap: "12px",
+							}}
+						>
+							{adminMenu.map((map, index) => (
+								<CardActionArea href={map.link} key={index}>
+									<Box
+										padding={"8px 4px"}
+										display={"flex"}
+										gap={"8px"}
+										alignItems={"center"}
+									>
+										<Typography
+											color={
+												path.pathname === map.link
+													? theme.palette.primary.main
+													: theme.palette.text.primary
+											}
+											fontFamily={"Poppins"}
+											fontSize={"14px"}
+										>
+											{map.icon}
+										</Typography>
+										<Typography
+											color={
+												path.pathname === map.link
+													? theme.palette.primary.main
+													: theme.palette.text.primary
+											}
+											fontFamily={"Poppins"}
+											fontSize={"14px"}
+										>
+											{map.name}
+										</Typography>
+									</Box>
+								</CardActionArea>
+							))}
+						</Box>
 						<ThemeToggle />
 					</Box>
 				</Drawer>
 				<Box
-					height={"100vh"}
-					sx={{
-						marginLeft: open ? width : 0,
-						transition: "200ms",
-					}}
+					// bgcolor={"blue"}
+					width={"100%"}
 					display={"flex"}
-					flexDirection={"column"}
-					flex={1}
-					width={"100vw"}
+					justifyContent={"flex-end"}
 				>
 					<Box
+						height={"100vh"}
+						// bgcolor={"red"}
+						sx={{
+							width: open ? `calc(100% - ${width})` : "100%",
+							transition: "200ms",
+						}}
 						display={"flex"}
-						justifyContent={"space-between"}
-						padding={"12px"}
-						bgcolor={theme.palette.background.paper}
+						flexDirection={"column"}
 					>
-						<Box display={"flex"}>
-							<IconButton
-								sx={{
-									width: open ? "0px" : "max-content",
-									transition: "200ms",
-								}}
-								onClick={handleDrawerOpen}
-							>
-								<Menu
+						<Box
+							display={"flex"}
+							justifyContent={"space-between"}
+							padding={"12px"}
+							bgcolor={theme.palette.background.paper}
+						>
+							<Box display={"flex"} alignItems={"center"} gap={"12px"}>
+								<IconButton
+									disabled={open}
 									sx={{
-										fontSize: open ? "0" : "24px",
+										color: open ? "transparent" : "white",
+
 										transition: "200ms",
 									}}
-								/>
-							</IconButton>
+									onClick={handleDrawerOpen}
+								>
+									<Menu
+										sx={{
+											fontSize: open ? "0" : "24px",
+											transition: "200ms",
+										}}
+									/>
+								</IconButton>
+								<Typography>Dashboard</Typography>
+							</Box>
+							<Box>
+								<Button onClick={() => setOpenLogOut(true)} variant="outlined">
+									Sign out
+								</Button>
+							</Box>
 						</Box>
-
-						<Button onClick={() => setOpenLogOut(true)} variant="outlined">
-							Sign out
-						</Button>
-					</Box>
-					<Box padding={"24px"} sx={{ overflowY: "auto" }}>
-						<Box>
-							<Outlet />
+						<Box padding={"24px"} sx={{ overflowY: "auto" }}>
+							<Box>
+								<Outlet />
+							</Box>
 						</Box>
 					</Box>
 				</Box>

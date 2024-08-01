@@ -10,6 +10,7 @@ const ThemeToggle = () => {
 			variant="outlined"
 			sx={{
 				width: "94px",
+				height:"32px",
 				borderRadius: "24px",
 				borderColor: `${mode == "light" ? "#1ab69d" : "#ffffff"}`,
 				color: `${mode == "light" ? "#1ab69d" : "#ffffff"}`,

@@ -1,3 +1,5 @@
+
+
 export const navbarMenu = [
 	{
 		name: "Home",
@@ -16,6 +18,7 @@ export const navbarMenu = [
 		link: "/gallery",
 	},
 ];
+
 
 export const mockBlog = [
 	{
@@ -53,7 +56,7 @@ export const mockBlog = [
 	{
 		name: "Volunteer Opportunities in Tosora: How You Can Help",
 		link: "/blog/volunteer-opportunities-in-tosora",
-	}, 
+	},
 	{
 		name: "Tosora’s Natural Beauty: Exploring Scenic Spots",
 		link: "/blog/natural-beauty-of-tosora",

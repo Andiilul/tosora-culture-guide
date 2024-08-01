@@ -2,9 +2,25 @@ import { Box, Button, Typography } from "@mui/material";
 import { NotFoundContainer, NotFoundWrapper } from "./styled";
 import { useNavigate } from "react-router-dom";
 
-interface NotFoundProps {}
+interface NotFoundProps {
+	statusCode?: string;
+	customMessage?: string;
+}
 
-export const NotFound: React.FC<NotFoundProps> = () => {
+export const NotFound: React.FC<NotFoundProps> = ({
+	statusCode = "404",
+	customMessage,
+}) => {
+	const NotFoundStatus = [
+		{
+			status: "404",
+			message: "We apologize, we cannot find the page you are looking for.",
+		},
+		{
+			status: "204",
+			message: "We apologize, we cannot find the data you are looking for.",
+		},
+	];
 	const navigate = useNavigate();
 	return (
 		<NotFoundWrapper>
@@ -15,14 +31,19 @@ export const NotFound: React.FC<NotFoundProps> = () => {
 					gap={"24px"}
 					alignItems={"center"}
 				>
-					<Box display={"flex"} flexDirection={"column"}  alignItems={"center"} justifyContent={"center"}>
+					<Box
+						display={"flex"}
+						flexDirection={"column"}
+						alignItems={"center"}
+						justifyContent={"center"}
+					>
 						<Typography
 							fontWeight={"500"}
 							fontFamily={"Rokkitt"}
 							// lineHeight={"96px"}
 							fontSize={"128px"}
 						>
-							404
+							{statusCode}
 						</Typography>
 						{/* <Box width={"1px"} flex={1} bgcolor={"white"} />{" "} */}
 						<Typography
@@ -40,9 +61,13 @@ export const NotFound: React.FC<NotFoundProps> = () => {
 							fontSize={"20px"}
 							fontFamily={"Rokkitt"}
 						>
-							We apologize, we cannot find the page you are looking for. <br />
+							{customMessage
+								? customMessage
+								: NotFoundStatus.find((item) => item.status === statusCode)
+										?.message}
+							<br />
 							Please contact our Client Services or navigate to another page.
-							Thank you...
+							Thank you...,
 						</Typography>
 					</Box>
 					<Box

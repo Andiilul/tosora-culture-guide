@@ -316,6 +316,7 @@ export const Home: React.FC<HomeProps> = () => {
 									cerita yang belum pernah Anda dengar sebelumnya.
 								</Typography>
 								<Button
+									href="/explore/sites/masjid-tua-tosora"
 									sx={{
 										textTransform: "none",
 										display: "flex",

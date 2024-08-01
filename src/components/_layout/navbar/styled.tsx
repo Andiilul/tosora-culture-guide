@@ -7,7 +7,7 @@ export const NavbarContainer: StyledComponent<BoxProps & { theme?: Theme }> =
 		justifyContent: "space-between",
 		alignItems: "center",
 		width: "100%",
-		maxWidth: "1720px",
+		// maxWidth: "1980px",
 	}));
 
 export const NavbarWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
@@ -16,9 +16,10 @@ export const NavbarWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
 		color: "white",
 		display: "flex",
 		top: "0",
-		position:"sticky",
+		position: "sticky",
 		width: "100vw",
 		overflowX: "hidden",
+
 		zIndex: "100",
 		userSelect: "none",
 		justifyContent: "center",
