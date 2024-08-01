@@ -5,8 +5,15 @@ import { StyledComponent } from "@emotion/styled";
 export const SiteDetailWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
 	styled(Box)(() => ({
 		display: "flex",
+		flexDirection: "column",
+		alignItems: "center",
+		justifyContent: "center",
+	}));
+export const SiteHeroWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
+	styled(Box)(() => ({
+		display: "flex",
 		position: "relative",
-		padding: "64px 128px",
+		padding: "64px 96px",
 		height: "100vh",
 		maxHeight: "720px",
 		justifyContent: "Center",
@@ -26,9 +33,8 @@ export const SiteDetailWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
 		},
 	}));
 
-export const SiteDetailContainer: StyledComponent<BoxProps & { theme?: Theme }> =
+export const SiteHeroContainer: StyledComponent<BoxProps & { theme?: Theme }> =
 	styled(Box)(() => ({
-		// backgroundColor: "rgba(255,255,255,0.4)",
 		position: "relative",
 		zIndex: "1",
 		display: "flex",
@@ -38,12 +44,20 @@ export const SiteDetailContainer: StyledComponent<BoxProps & { theme?: Theme }> 
 		alignItems: "center",
 		justifyContent: "center",
 	}));
+export const SiteHeroContent: StyledComponent<BoxProps & { theme?: Theme }> =
+	styled(Box)(() => ({
+		display: "flex",
+		flexDirection: "column",
+		gap: "12px",
+		alignItems: "center",
+		justifyContent: "center",
+	}));
 
 export const SiteDetailContent: StyledComponent<BoxProps & { theme?: Theme }> =
 	styled(Box)(() => ({
-		width: "100%",
-		height: "max-content",
-		display: "grid",
+		display: "flex",
+		padding: "64px 96px",
+		flexDirection: "column",
 		gap: "24px",
-		gridTemplateColumns: "repeat(2,minmax(0,1fr))",
+		width: "100%",
 	}));

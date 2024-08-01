@@ -13,7 +13,7 @@ export const HeroWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
 	styled(Box)(() => ({
 		display: "flex",
 		position: "relative",
-		padding: "64px 128px",
+		padding: "64px 96px",
 		height: "100vh",
 		maxHeight: "720px",
 		justifyContent: "Center",

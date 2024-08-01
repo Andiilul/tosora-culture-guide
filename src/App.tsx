@@ -27,6 +27,7 @@ function App() {
 			<CssBaseline />
 			<Router>
 				<Routes>
+					{/* Admin Route */}
 					<Route element={<ProtectedRoute type="login" />}>
 						<Route path="/admin/auth" element={<AuthPage />} />
 					</Route>
@@ -41,9 +42,22 @@ function App() {
 								element={<AdminSitesForm isedit />}
 							/>
 							<Route path="culture" element={"Culture"} />
+							<Route path="culture/add" element={"Culture"} />{" "}
+							<Route
+								path="sites/site/:id/edit"
+								element={<AdminSitesForm isedit />}
+							/>
 							<Route path="blog" element={"Blog"} />
+							<Route path="blog/add" element={"Blog"} />{" "}
+							<Route
+								path="sites/site/:id/edit"
+								element={<AdminSitesForm isedit />}
+							/>
+							<Route path="gallery" element={<AdminSitesForm isedit />} />
 						</Route>
 					</Route>
+
+					{/* User Route */}
 					<Route element={<MainLayout />}>
 						<Route path="/" element={<Home />} />
 						<Route path="/explore" element={<Explore />} />

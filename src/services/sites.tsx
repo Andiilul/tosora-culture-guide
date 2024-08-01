@@ -3,26 +3,37 @@ import {
 	collection,
 	getDoc,
 	doc,
-	addDoc,
 	Timestamp,
 	updateDoc,
 	deleteDoc,
+	setDoc,
 } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
 import { AddSiteInput, SitesTypes, UpdateSiteInput } from "../types/sites";
+import { deleteAllImage } from "./image";
 
-export const getAllSites = async () => {
+export const getAllSites = async (): Promise<SitesTypes[]> => {
 	const querySnapshot = await getDocs(collection(db, "sites"));
 	const sites: SitesTypes[] = [];
 
-	const sitePromises = querySnapshot.docs.map((doc) => {
+	querySnapshot.docs.forEach((doc) => {
 		const data = doc.data();
 
-		return { ...data, id: doc.id } as SitesTypes;
-	});
+		const site: SitesTypes = {
+			id: doc.id,
+			name: data.name ?? "",
+			description: data.description ?? "",
+			catchphrase: data.catchphrase ?? "",
+			image_path: data.image_path ?? [],
+			location: data.location ?? "",
+			embedded_maplink: data.embedded_maplink ?? "",
+			designationYear: data.designationYear ?? 0,
+			createdAt: data.createdAt ?? Timestamp.now(),
+			updatedAt: data.updatedAt ?? Timestamp.now(),
+		};
 
-	const siteResult = await Promise.all(sitePromises);
-	sites.push(...siteResult);
+		sites.push(site);
+	});
 
 	return sites;
 };
@@ -38,7 +49,11 @@ export async function getOneSite(
 			const siteData = siteSnapshot.data();
 			const site: SitesTypes = {
 				id: siteSnapshot.id,
-				name: siteData.name,
+				name: siteData.name
+					.replace(/-/g, " ")
+					.split(" ")
+					.map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+					.join(" "),
 				description: siteData.description,
 				catchphrase: siteData.catchphrase,
 				createdAt: siteData.createdAt,
@@ -59,26 +74,17 @@ export async function getOneSite(
 	}
 }
 
-export async function createSites(site: AddSiteInput): Promise<SitesTypes> {
+export async function createSites(
+	site: AddSiteInput,
+	siteId: string
+): Promise<SitesTypes> {
 	try {
 		const siteCollection = collection(db, "sites");
 
-		const newSiteRef = await addDoc(siteCollection, {
-			name: site.name,
-			description: site.description,
-			catchphrase: site.catchphrase,
-			createdAt: Timestamp.now(),
-			updatedAt: Timestamp.now(),
-			location: site.location,
-			embedded_maplink: site.embedded_maplink,
-			designationYear: site.designationYear,
-			image_path: site.image_path,
-		});
-
-		const newSiteId = newSiteRef.id;
+		const newSiteRef = doc(siteCollection, siteId);
 
 		const newSite: SitesTypes = {
-			id: newSiteId,
+			id: siteId,
 			name: site.name,
 			description: site.description,
 			catchphrase: site.catchphrase,
@@ -89,12 +95,12 @@ export async function createSites(site: AddSiteInput): Promise<SitesTypes> {
 			designationYear: site.designationYear,
 			image_path: site.image_path,
 		};
+		await setDoc(newSiteRef, newSite);
 
-		console.log("Site created successfully with ID:", newSiteId);
 		return newSite;
 	} catch (error) {
-		console.error("Error creating site:", error);
-		throw new Error("Failed to create site.");
+		console.error("Error creating site: ", error);
+		throw error;
 	}
 }
 
@@ -111,9 +117,11 @@ export const updateSite = async ({
 
 		if (currentSiteSnapshot.exists()) {
 			const currentSiteData = currentSiteSnapshot.data();
+			const formattedName = site.name.toLowerCase().replace(/ /g, "-");
 			const updatedSiteData = {
 				...currentSiteData,
 				...site,
+				name: formattedName,
 				updatedAt: Timestamp.now(),
 			};
 
@@ -126,13 +134,44 @@ export const updateSite = async ({
 	}
 };
 
-export const deleteSite = async (id: string): Promise<void> => {
+export const deleteSite = async (site: SitesTypes): Promise<void> => {
 	try {
-		const siteDocRef = doc(db, "sites", id);
+		const siteDocRef = doc(db, "sites", site.id);
 		await deleteDoc(siteDocRef);
-		console.log("Site deleted successfully with ID:", id);
+		await deleteAllImage(site.image_path);
+		console.log("Site deleted successfully with ID:", site.id);
 	} catch (error) {
 		console.error("Failed to delete site:", error);
 		throw new Error("Failed to delete site: " + error);
+	}
+};
+
+export const deleteSiteImageOnly = async (id: string, imgPaths: string[]) => {
+	const siteDocRef = doc(db, "sites", id);
+
+	try {
+		// Fetch the document
+		const siteDoc = await getDoc(siteDocRef);
+		if (siteDoc.exists()) {
+			const siteData = siteDoc.data();
+			const existingImagePaths: string[] = siteData.image_path || [];
+
+			// Filter out the images to be deleted
+			const updatedImagePaths = existingImagePaths.filter(
+				(path) => !imgPaths.includes(path)
+			);
+
+			await deleteAllImage(imgPaths);
+			await updateDoc(siteDocRef, {
+				image_path: updatedImagePaths,
+				updatedAt: Timestamp.now(),
+			});
+
+			console.log(`Images for site ${id} deleted successfully.`);
+		} else {
+			console.log(`Site ${id} not found.`);
+		}
+	} catch (error) {
+		console.error("Error deleting site images: ", error);
 	}
 };

@@ -18,6 +18,7 @@ import { ArrowLeft, ArrowRight } from "@mui/icons-material";
 import { useCallback, useEffect, useState } from "react";
 import { getAllSites } from "../../../services/sites";
 import { SitesTypes } from "../../../types/sites";
+import { NotFound } from "../../_notfound/page";
 
 interface SitesProps {}
 
@@ -65,13 +66,15 @@ export const Sites: React.FC<SitesProps> = () => {
 
 	// Make sure to handle cases where data might be empty
 	if (data.length === 0) {
-		return <div>No sites available.</div>;
+		return <NotFound statusCode="204"/>;
 	}
 
 	const currentSite = data[selectedIndex];
 	const imagePaths = Array.isArray(currentSite.image_path)
 		? currentSite.image_path
 		: [currentSite.image_path];
+
+	const formattedName = currentSite.name.toLowerCase().replace(/ /g, "-");
 
 	return (
 		<SiteWrapper
@@ -96,18 +99,38 @@ export const Sites: React.FC<SitesProps> = () => {
 							DISCOVER
 						</Typography>
 						<Typography
+							fontFamily={"Poppins"}
+							fontSize={"28px"}
+							fontWeight={"600"}
+							color={"white"}
+							sx={{
+								textShadow: "2px 2px rgba(0,0,0,0.4)",
+							}}
+						>
+							Cagar Budaya :{" "}
+						</Typography>
+						<Typography
 							fontFamily={"League Spartan"}
 							fontSize={"28px"}
 							fontWeight={"600"}
+							sx={{
+								textShadow: "2px 2px rgba(0,0,0,0.8)",
+							}}
 							color={theme.palette.primary.main}
 						>
 							{currentSite.name}
 						</Typography>
-						<Typography fontFamily={"Poppins"} fontSize={"14px"}>
+						<Typography
+							sx={{
+								textShadow: "2px 2px rgba(0,0,0,0.4)",
+							}}
+							fontFamily={"Poppins"}
+							fontSize={"14px"}
+						>
 							{currentSite.catchphrase}
 						</Typography>
 						<Box>
-							<Link href={`/explore/sites/${currentSite.id}`}>
+							<Link href={`/explore/sites/${formattedName}`}>
 								<Button
 									variant="text"
 									sx={{

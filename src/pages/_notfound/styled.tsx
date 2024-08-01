@@ -7,7 +7,7 @@ export const NotFoundWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
 		display: "flex",
 		flexDirection: "column",
 		position: "relative",
-		padding: "64px 128px",
+		padding: "64px 96px",
 		height:"100vh",
 		maxHeight: "720px",
 		justifyContent: "Center",

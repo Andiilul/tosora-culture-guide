@@ -54,7 +54,7 @@ export const ScrollTop: React.FC<ScrollTopProps> = () => {
 				}}
 			>
 				<CircularProgress
-					size={"54px"}
+					size={"44px"}
 					variant="determinate"
 					value={Math.round(scrollPercent)}
 				/>
