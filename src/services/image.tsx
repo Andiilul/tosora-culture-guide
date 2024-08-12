@@ -1,4 +1,9 @@
-import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+	deleteObject,
+	getDownloadURL,
+	ref,
+	uploadBytes,
+} from "firebase/storage";
 import { storage } from "../config/firebaseConfig";
 
 export const uploadImages = async (
@@ -19,17 +24,21 @@ export const uploadImages = async (
 	);
 };
 
-export const deleteAllImage = async (urls: string[]): Promise<void> => {
+export const deleteAllImage = async (
+	urls: string[] | string
+): Promise<void> => {
+	try {
+		// Ensure urls is always an array
+		const urlArray = Array.isArray(urls) ? urls : [urls];
 
-  try {
-    await Promise.all(
-      urls.map(async (url) => {
-        const imgRef = ref(storage, url);
-        await deleteObject(imgRef);
-      })
-    );
-    console.log("All images deleted successfully");
-  } catch (error) {
-    console.error("Error deleting images:", error);
-  }
+		await Promise.all(
+			urlArray.map(async (url) => {
+				const imgRef = ref(storage, url);
+				await deleteObject(imgRef);
+			})
+		);
+		console.log("All images deleted successfully");
+	} catch (error) {
+		console.error("Error deleting images:", error);
+	}
 };

@@ -16,7 +16,7 @@ import {
 import { SlideCard } from "../../../components/slideCard";
 import { ArrowLeft, ArrowRight } from "@mui/icons-material";
 import { useCallback, useEffect, useState } from "react";
-import { getAllSites } from "../../../services/sites";
+import { getAllSites } from "../../../services/admin/sites";
 import { SitesTypes } from "../../../types/sites";
 import { NotFound } from "../../_notfound/page";
 
@@ -107,7 +107,7 @@ export const Sites: React.FC<SitesProps> = () => {
 								textShadow: "2px 2px rgba(0,0,0,0.4)",
 							}}
 						>
-							Cagar Budaya :{" "}
+							Situs Budaya :{" "}
 						</Typography>
 						<Typography
 							fontFamily={"League Spartan"}

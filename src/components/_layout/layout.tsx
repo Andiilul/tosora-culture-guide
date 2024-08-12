@@ -18,11 +18,12 @@ import { useState } from "react";
 import {
 	AccountBalanceOutlined,
 	Close,
-	Collections,
 	DashboardOutlined,
+	Dining,
 	Diversity2Outlined,
 	Menu,
-	Public,
+	Psychology,
+	SportsEsports,
 } from "@mui/icons-material";
 import ThemeToggle from "./theme-toggle/ThemeToggle";
 import { signOut } from "firebase/auth";
@@ -39,24 +40,34 @@ const adminMenu = [
 		icon: <DashboardOutlined />,
 	},
 	{
-		name: "Sites",
+		name: "Situs Budaya",
 		link: "/admin/sites",
 		icon: <AccountBalanceOutlined />,
 	},
 	{
-		name: "Culture",
-		link: "/admin/culture",
+		name: "Karya Tulis & Lisan",
+		link: "/admin/works",
+		icon: <Psychology />,
+	},
+	{
+		name: "Kebudayaan",
+		link: "/admin/cultures",
 		icon: <Diversity2Outlined />,
 	},
 	{
-		name: "Blog",
-		link: "/admin/blog",
-		icon: <Public />,
+		name: "Pengetahuan Lokal",
+		link: "/admin/wisdoms",
+		icon: <Psychology />,
 	},
 	{
-		name: "Gallery",
-		link: "/admin/gallery",
-		icon: <Collections />,
+		name: "Kuliner",
+		link: "/admin/cuisine",
+		icon: <Dining />,
+	},
+	{
+		name: "Kesenian dan Hiburan",
+		link: "/admin/entertainment",
+		icon: <SportsEsports />,
 	},
 ];
 
@@ -202,13 +213,14 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ admin = false }) => {
 									onClick={handleDrawerOpen}
 								>
 									<Menu
+										color="primary"
 										sx={{
 											fontSize: open ? "0" : "24px",
 											transition: "200ms",
 										}}
 									/>
 								</IconButton>
-								<Typography>Dashboard</Typography>
+								<Typography>Dashboard </Typography>
 							</Box>
 							<Box>
 								<Button onClick={() => setOpenLogOut(true)} variant="outlined">

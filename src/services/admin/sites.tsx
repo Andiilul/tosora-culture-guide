@@ -8,9 +8,9 @@ import {
 	deleteDoc,
 	setDoc,
 } from "firebase/firestore";
-import { db } from "../config/firebaseConfig";
-import { AddSiteInput, SitesTypes, UpdateSiteInput } from "../types/sites";
-import { deleteAllImage } from "./image";
+import { db } from "../../config/firebaseConfig";
+import { AddSiteInput, SitesTypes, UpdateSiteInput } from "../../types/sites";
+import { deleteAllImage } from "../image";
 
 export const getAllSites = async (): Promise<SitesTypes[]> => {
 	const querySnapshot = await getDocs(collection(db, "sites"));

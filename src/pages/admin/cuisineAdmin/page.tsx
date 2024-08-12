@@ -8,38 +8,23 @@ import { Timestamp } from "firebase/firestore";
 import { Link as Rlinks } from "react-router-dom";
 
 interface MRTTableProps {
-	data: SitesTypes[];
-	setOnDelete: (site: SitesTypes) => void; // Update this line
+	data: CuisineTypes[];
+	setOnDelete: (cuisine: CuisineTypes) => void; // Update this line
 	setOpenDescription: (value: string) => void; // Update this line
+	setOpenRecipe: (recipe: Recipe) => void; // Update this line
 }
 
 const MRTTable: React.FC<MRTTableProps> = ({
 	data,
 	setOnDelete,
 	setOpenDescription,
+	setOpenRecipe,
 }) => {
-	const columns = useMemo<MRT_ColumnDef<SitesTypes>[]>(
+	const columns = useMemo<MRT_ColumnDef<CuisineTypes>[]>(
 		() => [
 			{
 				accessorKey: "id",
 				header: "ID",
-				Cell: ({ cell }) => {
-					const copyToClipboard = (text: string) => {
-						navigator.clipboard.writeText(text).then(() => {});
-					};
-
-					return (
-						<Button
-							variant="text"
-							sx={{
-								textTransform: "none",
-							}}
-							onClick={() => copyToClipboard(cell.getValue() as string)}
-						>
-							{cell.getValue() as string}
-						</Button>
-					);
-				},
 			},
 			{
 				accessorKey: "name",
@@ -57,47 +42,24 @@ const MRTTable: React.FC<MRTTableProps> = ({
 				),
 			},
 			{
-				accessorKey: "catchphrase",
-				header: "Catchphrase",
-			},
-			{
-				accessorKey: "location",
-				header: "Location",
+				accessorKey: "recipe",
+				header: "Recipe",
 				Cell: ({ cell }) => (
-					<Link
-						href={`${cell.getValue<string>()}`}
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						View In Map
-					</Link>
+					<>
+						<Button onClick={() => setOpenRecipe(cell.getValue<Recipe>())}>
+							Preview
+						</Button>
+					</>
 				),
-			},
-			{
-				accessorKey: "embedded_maplink",
-				header: "Embedded Map",
-				Cell: ({ cell }) => (
-					<Tooltip title={`${cell.getValue<string>()}`}>
-						<Button>Copy</Button>
-					</Tooltip>
-				),
-			},
-			{
-				accessorKey: "designationYear",
-				header: "Designation Year",
 			},
 			{
 				accessorKey: "image_path",
 				header: "Image",
 				Cell: ({ cell }) => (
 					<>
-						{cell.getValue<string[]>().map((url, index) => (
-							<Link key={index} href={url}>
-								<Button key={index} title={url}>
-									Preview
-								</Button>
-							</Link>
-						))}
+						<Link href={cell.getValue<string>()}>
+							<Button>Preview</Button>
+						</Link>
 					</>
 				),
 			},
@@ -118,7 +80,7 @@ const MRTTable: React.FC<MRTTableProps> = ({
 				header: "Actions",
 				Cell: ({ row }) => (
 					<div>
-						<Rlinks to={`./site/${row.original.id}/edit`}>
+						<Rlinks to={`./edit/${row.original.id}`}>
 							<IconButton color="primary">
 								<Edit />
 							</IconButton>
@@ -130,7 +92,7 @@ const MRTTable: React.FC<MRTTableProps> = ({
 				),
 			},
 		],
-		[setOnDelete, setOpenDescription]
+		[setOnDelete, setOpenDescription, setOpenRecipe]
 	);
 
 	const table = useMaterialReactTable({
@@ -154,30 +116,31 @@ import {
 	DialogTitle,
 	IconButton,
 	Link,
-	Tooltip,
 	Typography,
 } from "@mui/material";
 import { AdminSiteWrapper } from "./styled";
-import { SitesTypes } from "../../../types/sites";
-import { deleteSite, getAllSites } from "../../../services/sites";
 import { Delete, Edit } from "@mui/icons-material";
 import { formatDateString } from "../../../services/dateformatter";
+import { CuisineTypes, Recipe } from "../../../types/cuisine";
+import { deleteCuisine, getAllCuisine } from "../../../services/admin/cuisine";
 
-export const AdminSites: React.FC = () => {
-	const [data, setData] = useState<SitesTypes[]>([]);
+export const AdminCuisine: React.FC = () => {
+	const [data, setData] = useState<CuisineTypes[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
-	const [onDelete, setOnDelete] = useState<undefined | SitesTypes>(undefined);
+	const [onDelete, setOnDelete] = useState<undefined | CuisineTypes>(undefined);
 	const [openDescription, setOpenDescription] = useState<string | undefined>(
 		undefined
 	);
+	const [openRecipe, setOpenRecipe] = useState<Recipe | undefined>(undefined);
 
 	const fetchData = useCallback(async () => {
 		setLoading(true);
+		setError(null); // Reset error state before fetching
 		try {
-			const result = await getAllSites(); // Replace with your collection name
-			setData(result); // Ensure result matches SitesTypes
-		} catch (error) {
+			const result = await getAllCuisine();
+			setData(result);
+		} catch (err) {
 			setError("Failed to fetch data.");
 		} finally {
 			setLoading(false);
@@ -185,7 +148,7 @@ export const AdminSites: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		fetchData(); // Fetch data on mount
+		fetchData();
 	}, [fetchData]);
 
 	if (loading) {
@@ -196,8 +159,8 @@ export const AdminSites: React.FC = () => {
 		return <div>{error}</div>;
 	}
 
-	const handleDelete = async (sites: SitesTypes) => {
-		await deleteSite(sites);
+	const handleDelete = async (cuisine: CuisineTypes) => {
+		await deleteCuisine(cuisine);
 		setOnDelete(undefined);
 		fetchData();
 	};
@@ -212,6 +175,9 @@ export const AdminSites: React.FC = () => {
 
 	return (
 		<AdminSiteWrapper>
+			<Box padding={"12px 0"}>
+				<Typography color={"primary"}>Data Kuliner</Typography>
+			</Box>
 			<Box display={"flex"} flexDirection={"column"} gap={"24px"}>
 				<Rlinks
 					to={"./add"}
@@ -233,6 +199,7 @@ export const AdminSites: React.FC = () => {
 						data={data}
 						setOnDelete={setOnDelete}
 						setOpenDescription={setOpenDescription}
+						setOpenRecipe={setOpenRecipe}
 					/>
 				</Box>
 			</Box>
@@ -243,18 +210,59 @@ export const AdminSites: React.FC = () => {
 				<DialogTitle id="alert-dialog-title">Confirm Delete</DialogTitle>
 				<DialogContent>
 					<DialogContentText id="alert-dialog-description">
-						Are You Sure You Want to Delete this Site
+						Are You Sure You Want to Delete this Cuisines?
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={() => setOnDelete(undefined)}>Disagree</Button>
 					<Button
-						onClick={() => handleDelete(onDelete as SitesTypes)}
+						onClick={() => handleDelete(onDelete as CuisineTypes)}
 						autoFocus
 					>
 						Agree
 					</Button>
 				</DialogActions>
+			</Dialog>
+			<Dialog
+				open={openRecipe !== undefined}
+				onClose={() => setOpenRecipe(undefined)}
+			>
+				<Box
+					sx={{
+						minWidth: "480px",
+						padding: "12px",
+						minHeight: "480px",
+						display: "flex",
+						flexDirection: "column",
+						gap: "12px",
+					}}
+				>
+					<Typography>Resep :</Typography>
+					<Box
+						sx={{
+							border: "1px solid #cccccc",
+							borderRadius: "4px",
+							padding: "4px",
+							overflowY: "auto",
+						}}
+						flex={1}
+						title="preview"
+					>
+						<Typography>Recipe</Typography>
+						<Typography>Ingredients : </Typography>
+						<ol>
+							{openRecipe?.ingredients.map((map, index) => (
+								<li key={index}>{map}</li>
+							))}
+						</ol>
+						<Typography>Steps : </Typography>
+						<ol>
+							{openRecipe?.steps.map((map, index) => (
+								<li key={index}>{map}</li>
+							))}
+						</ol>
+					</Box>
+				</Box>
 			</Dialog>
 			<Dialog
 				open={openDescription !== undefined}

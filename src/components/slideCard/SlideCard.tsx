@@ -33,6 +33,7 @@ export const SlideCard: React.FC<SlideCardProps> = ({
 					width: "100%",
 				}}
 			/>
+			
 			<Overlay
 				sx={{
 					background: focus

@@ -1,4 +1,4 @@
-import { Link, Typography, useTheme } from "@mui/material";
+import { Box, Link, Typography, useTheme } from "@mui/material";
 import { NavbarWrapper, NavbarMenuList, NavbarContainer } from "./styled";
 import ThemeToggle from "../theme-toggle/ThemeToggle";
 import { navbarMenu } from "../../../mock/menu";
@@ -42,9 +42,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
 				<Typography
 					fontFamily={"Rokkitt"}
 					color={
-						path === "/" && !scrolled
-							? "white"
-							: theme.palette.text.primary
+						path === "/" && !scrolled ? "white" : theme.palette.text.primary
 					}
 					fontSize={"24px"}
 				>
@@ -59,26 +57,32 @@ export const Navbar: React.FC<NavbarProps> = () => {
 								textDecoration: "none",
 							}}
 						>
-							<Typography
-								color={
-									path === "/" && !scrolled
-										? "white"
-										: theme.palette.text.primary
-								}
-								fontFamily={"Poppins"}
-								fontSize={"12px"}
-								fontWeight={"300"}
-								key={index}
-								sx={{
-									":hover": {
-										color: theme.palette.primary.main,
-										transition: "ease-in-out 300ms",
-									},
-									transition: "300ms",
-								}}
+							<Box
+								component={"div"}
+								// onMouseEnter={() => console.log("Hovered")}
+								// onMouseLeave={() => console.log("Leaving")}
 							>
-								{nav.name}
-							</Typography>
+								<Typography
+									color={
+										path === "/" && !scrolled
+											? "white"
+											: theme.palette.text.primary
+									}
+									fontFamily={"Poppins"}
+									fontSize={"12px"}
+									fontWeight={"300"}
+									key={index}
+									sx={{
+										":hover": {
+											color: theme.palette.primary.main,
+											transition: "ease-in-out 300ms",
+										},
+										transition: "300ms",
+									}}
+								>
+									{nav.name}
+								</Typography>
+							</Box>
 						</Link>
 					))}
 				</NavbarMenuList>

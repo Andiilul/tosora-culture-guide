@@ -1,4 +1,5 @@
 import {
+	Avatar,
 	Box,
 	Button,
 	CardActionArea,
@@ -66,7 +67,15 @@ export const Home: React.FC<HomeProps> = () => {
 								}}
 							>
 								<SpinDecoration>
-									<img width={"200"} alt="" src="/assets/decoration/001.png" />
+									<Avatar
+										variant="square"
+										sx={{
+											width: "200px",
+											height: "200px",
+										}}
+										alt=""
+										src="/assets/decoration/001.png"
+									/>
 								</SpinDecoration>
 							</Box>
 							<Box
@@ -174,7 +183,7 @@ export const Home: React.FC<HomeProps> = () => {
 							height={"100%"}
 						>
 							<Box position={"relative"} height={"300px"}>
-								<img
+								<Avatar
 									alt=""
 									src="/assets/decoration/002.png"
 									style={{
@@ -183,9 +192,10 @@ export const Home: React.FC<HomeProps> = () => {
 										left: "-40px",
 										top: "60px",
 										width: "200px",
+										height: "200px",
 									}}
 								/>
-								<img
+								<Avatar
 									alt=""
 									src="/assets/decoration/001.png"
 									style={{
@@ -194,20 +204,23 @@ export const Home: React.FC<HomeProps> = () => {
 										left: "300px",
 										top: "-40px",
 										width: "200px",
+										height: "200px",
 									}}
 								/>
-								<img
+								<Avatar
 									style={{
 										borderRadius: "8px",
 										boxShadow: "-3px -3px 3px 0 rgba(0,0,0,0.4)",
 										zIndex: "10",
 										position: "relative", // Ensure this is not positioned absolutely
+
+										height: "180px",
+										width: "320px",
 									}}
-									height={180}
 									src={tosora}
 									alt=""
 								/>
-								<img
+								<Avatar
 									style={{
 										borderRadius: "8px",
 										position: "absolute",
@@ -215,8 +228,9 @@ export const Home: React.FC<HomeProps> = () => {
 										bottom: "0",
 										zIndex: "15", // Set a lower z-index than the relative image
 										boxShadow: "-3px -3px 3px 0 rgba(0,0,0,0.4)",
+										height: "180px",
+										width: "320px",
 									}}
-									height={180}
 									src="/assets/image-2.jpg"
 									alt=""
 								/>
@@ -285,7 +299,15 @@ export const Home: React.FC<HomeProps> = () => {
 										onClick={() => setMasjidTuaImage(index + 1)}
 									>
 										<CardImage>
-											<img src={`/assets/masjidtua/${index + 1}.jpg`} alt="" />
+											<Avatar
+											variant="square"
+											sx={{
+												height: "100%",
+												width: "100%",
+											}}
+												src={`/assets/masjidtua/${index + 1}.jpg`}
+												alt=""
+											/>
 										</CardImage>
 									</CardActionArea>
 								))}

@@ -8,8 +8,9 @@ export const FooterWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
 		backgroundColor: theme.palette.background.default,
 		color: theme.palette.text.primary,
 		width: "100vw",
-		padding: "64px 96px",
+		padding: "64px 128px",
 		display: "flex",
+		maxWidth: "1980px",
 		justifyContent: "center",
 	}));
 
@@ -17,7 +18,6 @@ export const FooterContainer: StyledComponent<BoxProps & { theme?: Theme }> =
 	styled(Box)(() => ({
 		display: "grid",
 		gridTemplateColumns: "repeat(4 , minmax(0,1fr))",
-		maxWidth: "1980px",
 		gap:"32px"
 	}));
 

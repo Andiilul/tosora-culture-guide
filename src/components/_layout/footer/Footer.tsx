@@ -7,12 +7,12 @@ import {
 	FooterWrapper,
 	QuickLinks,
 } from "./styled";
-import { navbarMenu, mockBlog } from "../../../mock/menu";
+import { navbarMenu, ExploreBlog } from "../../../mock/menu";
 import { useState } from "react";
 import { Facebook, Instagram, Twitter, YouTube } from "@mui/icons-material";
 
 interface FooterProps {}
-
+''
 export const Footer: React.FC<FooterProps> = () => {
 	const socialMedia = [
 		{
@@ -128,10 +128,10 @@ export const Footer: React.FC<FooterProps> = () => {
 					</FooterMid>
 					<FooterMid>
 						<Typography fontSize={"28px"} fontFamily={"Rokkitt"}>
-							Resources
+							Explore
 						</Typography>
 						<QuickLinks>
-							{mockBlog.map((map, index) => (
+							{ExploreBlog.map((map, index) => (
 								<Link key={index} href={map.link}>
 									<Box>{map.name}</Box>
 								</Link>
