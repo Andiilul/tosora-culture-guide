@@ -20,9 +20,9 @@ import { ArrowLeft, ArrowRight } from "@mui/icons-material";
 import { NotFound } from "../../../_notfound/page";
 import { getOneSite } from "../../../../services/admin/sites";
 
-interface SiteDetailProps {}
+interface CuisineDetailProps {}
 
-export const SiteDetail: React.FC<SiteDetailProps> = () => {
+export const CuisineDetail: React.FC<CuisineDetailProps> = () => {
 	const theme = useTheme();
 	const { id } = useParams();
 

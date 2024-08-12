@@ -7,35 +7,42 @@ import {
 	Button,
 	CardActionArea,
 	CircularProgress,
+	FormControl,
+	InputLabel,
+	MenuItem,
+	Select,
+	SelectChangeEvent,
 	TextField,
 	Typography,
 } from "@mui/material";
-import { createSites, getOneSite, updateSite } from "../../../services/sites";
-import { AddSiteInput, UpdateSiteInput } from "../../../types/sites";
 import { Link as Rlinks } from "react-router-dom";
 import "react-quill/dist/quill.snow.css";
 
-import ReactQuill from "react-quill";
 import { deleteAllImage, uploadImages } from "../../../services/image";
 import { useTheme } from "@mui/material";
 import { FormWrapper } from "./styled";
 import { AddAPhoto, Cancel, Delete, Undo } from "@mui/icons-material";
 import Dropzone from "react-dropzone";
+import { AddCultureInput, UpdateCultureInput } from "../../../types/culture";
+import {
+	createCulture,
+	getOneCulture,
+	updateCulture,
+} from "../../../services/admin/culture";
 
-interface AdminSitesFormProps {
+interface AdminCultureFormProps {
 	isedit?: boolean;
 }
 
-const AdminSitesForm: React.FC<AdminSitesFormProps> = ({ isedit = false }) => {
+const AdminCultureForm: React.FC<AdminCultureFormProps> = ({
+	isedit = false,
+}) => {
 	const theme = useTheme();
 	const { id } = useParams<{ id?: string }>();
-	const [site, setSite] = useState<AddSiteInput>({
+	const [culture, setCulture] = useState<AddCultureInput>({
 		name: "",
 		description: "",
-		catchphrase: "",
-		location: "",
-		embedded_maplink: "",
-		designationYear: new Date().getFullYear(),
+		type: "customs",
 		image_path: [],
 	});
 	const [loading, setLoading] = useState<boolean>(true);
@@ -48,30 +55,26 @@ const AdminSitesForm: React.FC<AdminSitesFormProps> = ({ isedit = false }) => {
 
 	useEffect(() => {
 		if (isedit && id) {
-			const fetchSite = async () => {
+			const fetchCulture = async () => {
 				try {
-					const siteData = await getOneSite(id);
-					if (siteData) {
-						setSite(siteData);
+					const cultureData = await getOneCulture(id);
+					if (cultureData) {
+						setCulture(cultureData);
 					} else {
-						setError("Invalid parameter: Site not found.");
+						setError("Invalid parameter: Culture not found.	");
 					}
 				} catch (error) {
-					setError("Failed to fetch site data.");
+					setError("Failed to fetch culture data.");
 				} finally {
 					setLoading(false);
 				}
 			};
 
-			fetchSite();
+			fetchCulture();
 		} else {
 			setLoading(false);
 		}
 	}, [isedit, id]);
-
-	const handleDescriptionChange = (value: string) => {
-		setSite((prev) => ({ ...prev, description: value }));
-	};
 
 	const handleDeleteClick = (map: string) => {
 		setPreDeletedImage((prev) => [...prev, map]);
@@ -81,21 +84,26 @@ const AdminSitesForm: React.FC<AdminSitesFormProps> = ({ isedit = false }) => {
 		setPreDeletedImage((prev) => prev.filter((image) => image !== map));
 	};
 
+	const handleChangeType = (event: SelectChangeEvent) => {
+		const selectedType = event.target.value as "customs" | "rites";
+		setCulture((prev) => ({ ...prev, type: selectedType }));
+	};
+
 	const handleAdd = async () => {
-		const preGeneratedId = site.name
+		const preGeneratedId = culture.name
 			.trim()
 			.replace(/\s+/g, " ")
 			.replace(/ /g, "-")
 			.toLowerCase();
-		const imgUrls = await uploadImages("sites", preGeneratedId, imgs);
-		const newSite = { ...site, image_path: imgUrls };
-		await createSites(newSite, preGeneratedId);
+		const imgUrls = await uploadImages("culture", preGeneratedId, imgs);
+		const newCulture = { ...culture, image_path: imgUrls };
+		await createCulture(newCulture, preGeneratedId);
 		setRedirect(true);
 	};
 
 	const handleEdit = async () => {
 		if (id) {
-			let imgUrls = site.image_path;
+			let imgUrls = culture.image_path;
 
 			if (preDeletedImage.length > 0) {
 				await deleteAllImage(preDeletedImage);
@@ -103,12 +111,15 @@ const AdminSitesForm: React.FC<AdminSitesFormProps> = ({ isedit = false }) => {
 			}
 
 			if (imgs.length > 0) {
-				const newImgUrls = await uploadImages("sites", id, imgs);
+				const newImgUrls = await uploadImages("cultures", id, imgs);
 				imgUrls = [...imgUrls, ...newImgUrls];
 			}
 
-			const updateSiteInput: UpdateSiteInput = { ...site, image_path: imgUrls };
-			await updateSite({ id, site: updateSiteInput });
+			const updateCultureInput: UpdateCultureInput = {
+				...culture,
+				image_path: imgUrls,
+			};
+			await updateCulture({ id, culture: updateCultureInput });
 			setRedirect(true);
 		}
 	};
@@ -135,7 +146,7 @@ const AdminSitesForm: React.FC<AdminSitesFormProps> = ({ isedit = false }) => {
 	};
 
 	if (redirect) {
-		return <Navigate to="/admin/sites" />;
+		return <Navigate to="/admin/cultures" />;
 	}
 
 	if (loading) {
@@ -160,69 +171,49 @@ const AdminSitesForm: React.FC<AdminSitesFormProps> = ({ isedit = false }) => {
 					label="Name"
 					fullWidth
 					required
-					value={site.name}
+					value={culture.name}
 					onChange={(e) =>
-						setSite((prev) => ({ ...prev, name: e.target.value }))
+						setCulture((prev) => ({ ...prev, name: e.target.value }))
 					}
 					sx={{ mb: 2 }}
 				/>
 				<TextField
-					label="Catchphrase"
+					label="Description"
 					fullWidth
 					required
-					multiline
-					maxRows={4}
-					value={site.catchphrase}
+					value={culture.description}
 					onChange={(e) =>
-						setSite((prev) => ({ ...prev, catchphrase: e.target.value }))
+						setCulture((prev) => ({ ...prev, description: e.target.value }))
 					}
 					sx={{ mb: 2 }}
 				/>
-				<TextField
-					label="Location"
-					fullWidth
-					required
-					value={site.location}
-					onChange={(e) =>
-						setSite((prev) => ({ ...prev, location: e.target.value }))
-					}
-					sx={{ mb: 2 }}
-				/>
-				<TextField
-					label="Embedded Map Link"
-					fullWidth
-					value={site.embedded_maplink}
-					onChange={(e) =>
-						setSite((prev) => ({ ...prev, embedded_maplink: e.target.value }))
-					}
-					sx={{ mb: 2 }}
-				/>
-				<TextField
-					label="Designation Year"
-					fullWidth
-					type="number"
-					value={site.designationYear}
-					onChange={(e) =>
-						setSite((prev) => ({
-							...prev,
-							designationYear: Number(e.target.value),
-						}))
-					}
-					sx={{ mb: 2 }}
-				/>
-				{isedit && (
+				<FormControl>
+					<InputLabel id="demo-simple-select-label">Type</InputLabel>
+					<Select
+						value={culture.type}
+						placeholder="Type"
+						labelId="demo-simple-select-label"
+						id="demo-simple-select"
+						label="Type"
+						onChange={handleChangeType}
+					>
+						<MenuItem value={"customs"}>Adat Istiadat</MenuItem>
+						<MenuItem value={"rites"}>Ritual</MenuItem>
+					</Select>
+				</FormControl>
+				{isedit && !imgs && (
 					<Box>
 						<Box display={"flex"} flexDirection={"column"} gap={"8px"}>
 							<Typography fontSize={"12px"} color={"primary"}>
 								Current Images :
 							</Typography>
 							<Box padding={"8px"} display={"flex"} gap={"12px"}>
-								{site.image_path.map((map, index) => (
+								{culture.image_path.map((map, index) => (
 									<Badge key={index}>
 										<Box width={"100px"} height={"100px"} position={"relative"}>
 											<Avatar
 												src={map}
-												alt={site.name}
+												alt={culture.name}
 												sx={{
 													width: "100%",
 													height: "100%",
@@ -320,7 +311,7 @@ const AdminSitesForm: React.FC<AdminSitesFormProps> = ({ isedit = false }) => {
 										>
 											<Avatar
 												src={URL.createObjectURL(img)}
-												alt={site.name}
+												alt={culture.name}
 												sx={{
 													width: "100%",
 													height: "100%",
@@ -413,58 +404,6 @@ const AdminSitesForm: React.FC<AdminSitesFormProps> = ({ isedit = false }) => {
 				</Box>
 				{/* preview file img*/}
 
-				<Box
-					display={"flex"}
-					flexDirection={"column"}
-					width={"100%"}
-					mb={2}
-					padding={"12px 0px"}
-					borderRadius={"8px"}
-				>
-					<Typography color={"primary"} fontSize={"12px"}>
-						Description:
-					</Typography>
-					<Box
-						display={"flex"}
-						flexDirection={"column"}
-						gap={"12px"}
-						padding={"12px"}
-					>
-						<Box flex={1}>
-							<Typography color={"primary"} fontSize={"12px"}>
-								Editor:
-							</Typography>
-							<ReactQuill
-								theme="snow"
-								value={site.description}
-								onChange={handleDescriptionChange}
-							/>
-						</Box>
-						<Typography color={"primary"} fontSize={"12px"}>
-							Preview:
-						</Typography>
-						<Box
-							display={"flex"}
-							width={"100%"}
-							padding={"12px"}
-							border={"#cccccc 1px solid"}
-							borderRadius={"4px"}
-						>
-							<Box
-								sx={{
-									textAlign: "justify",
-								}}
-								component={"div"}
-								dangerouslySetInnerHTML={{
-									__html:
-										site.description.length !== 0
-											? site.description
-											: "<p>Preview Here</p>",
-								}}
-							></Box>
-						</Box>
-					</Box>
-				</Box>
 				<Box display={"flex"} gap={"12px"}>
 					<Button type="submit" variant="contained" disabled={submitting}>
 						{submitting ? (
@@ -478,7 +417,7 @@ const AdminSitesForm: React.FC<AdminSitesFormProps> = ({ isedit = false }) => {
 							"Submit"
 						)}
 					</Button>
-					<Rlinks to={"/admin/sites"}>
+					<Rlinks to={"/admin/cultures"}>
 						<Button variant="text">Cancel</Button>
 					</Rlinks>
 				</Box>
@@ -487,4 +426,4 @@ const AdminSitesForm: React.FC<AdminSitesFormProps> = ({ isedit = false }) => {
 	);
 };
 
-export default AdminSitesForm;
+export default AdminCultureForm;

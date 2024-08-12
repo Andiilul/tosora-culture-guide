@@ -20,7 +20,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ type }) => {
 	}, []);
 
 	if (loading) {
-		return <div>Loading...</div>;
+		return <div>Authenticating...</div>;
 	}
 
 	if (type === "admin") {

@@ -4,7 +4,7 @@ import { StyledComponent } from "@emotion/styled";
 
 export const SliderWrapper: StyledComponent<CardActionAreaProps & { theme?: Theme }> =
 	styled(CardActionArea)(() => ({
-		minWidth: "160px",
+		width: "160px",
 		height:"240px",
 		position: "relative",
 		overflow: "hidden", // Ensure the overlay doesn't overflow the wrapper

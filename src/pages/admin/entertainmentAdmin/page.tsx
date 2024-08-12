@@ -8,8 +8,8 @@ import { Timestamp } from "firebase/firestore";
 import { Link as Rlinks } from "react-router-dom";
 
 interface MRTTableProps {
-	data: SitesTypes[];
-	setOnDelete: (site: SitesTypes) => void; // Update this line
+	data: EntertainmentTypes[];
+	setOnDelete: (knowledge: EntertainmentTypes) => void; // Update this line
 	setOpenDescription: (value: string) => void; // Update this line
 }
 
@@ -18,32 +18,19 @@ const MRTTable: React.FC<MRTTableProps> = ({
 	setOnDelete,
 	setOpenDescription,
 }) => {
-	const columns = useMemo<MRT_ColumnDef<SitesTypes>[]>(
+	const columns = useMemo<MRT_ColumnDef<EntertainmentTypes>[]>(
 		() => [
 			{
 				accessorKey: "id",
 				header: "ID",
-				Cell: ({ cell }) => {
-					const copyToClipboard = (text: string) => {
-						navigator.clipboard.writeText(text).then(() => {});
-					};
-
-					return (
-						<Button
-							variant="text"
-							sx={{
-								textTransform: "none",
-							}}
-							onClick={() => copyToClipboard(cell.getValue() as string)}
-						>
-							{cell.getValue() as string}
-						</Button>
-					);
-				},
 			},
 			{
 				accessorKey: "name",
 				header: "Name",
+			},
+			{
+				accessorKey: "type",
+				header: "Type",
 			},
 			{
 				accessorKey: "description",
@@ -57,47 +44,17 @@ const MRTTable: React.FC<MRTTableProps> = ({
 				),
 			},
 			{
-				accessorKey: "catchphrase",
-				header: "Catchphrase",
-			},
-			{
-				accessorKey: "location",
-				header: "Location",
-				Cell: ({ cell }) => (
-					<Link
-						href={`${cell.getValue<string>()}`}
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						View In Map
-					</Link>
-				),
-			},
-			{
-				accessorKey: "embedded_maplink",
-				header: "Embedded Map",
-				Cell: ({ cell }) => (
-					<Tooltip title={`${cell.getValue<string>()}`}>
-						<Button>Copy</Button>
-					</Tooltip>
-				),
-			},
-			{
-				accessorKey: "designationYear",
-				header: "Designation Year",
-			},
-			{
 				accessorKey: "image_path",
 				header: "Image",
 				Cell: ({ cell }) => (
 					<>
-						{cell.getValue<string[]>().map((url, index) => (
-							<Link key={index} href={url}>
-								<Button key={index} title={url}>
-									Preview
-								</Button>
+						{!cell.getValue() ? (
+							<> No Picture </>
+						) : (
+							<Link href={cell.getValue<string>()}>
+								<Button>Preview</Button>
 							</Link>
-						))}
+						)}
 					</>
 				),
 			},
@@ -118,7 +75,7 @@ const MRTTable: React.FC<MRTTableProps> = ({
 				header: "Actions",
 				Cell: ({ row }) => (
 					<div>
-						<Rlinks to={`./site/${row.original.id}/edit`}>
+						<Rlinks to={`./edit/${row.original.id}`}>
 							<IconButton color="primary">
 								<Edit />
 							</IconButton>
@@ -154,30 +111,33 @@ import {
 	DialogTitle,
 	IconButton,
 	Link,
-	Tooltip,
 	Typography,
 } from "@mui/material";
 import { AdminSiteWrapper } from "./styled";
-import { SitesTypes } from "../../../types/sites";
-import { deleteSite, getAllSites } from "../../../services/sites";
 import { Delete, Edit } from "@mui/icons-material";
 import { formatDateString } from "../../../services/dateformatter";
 
-export const AdminSites: React.FC = () => {
-	const [data, setData] = useState<SitesTypes[]>([]);
+import { deleteEntertainments, getAllEntertainment } from "../../../services/admin/entertainment";
+import { EntertainmentTypes } from "../../../types/entertainment";
+
+export const AdminEntertainment: React.FC = () => {
+	const [data, setData] = useState<EntertainmentTypes[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
-	const [onDelete, setOnDelete] = useState<undefined | SitesTypes>(undefined);
+	const [onDelete, setOnDelete] = useState<undefined | EntertainmentTypes>(
+		undefined
+	);
 	const [openDescription, setOpenDescription] = useState<string | undefined>(
 		undefined
 	);
 
 	const fetchData = useCallback(async () => {
 		setLoading(true);
+		setError(null); // Reset error state before fetching
 		try {
-			const result = await getAllSites(); // Replace with your collection name
-			setData(result); // Ensure result matches SitesTypes
-		} catch (error) {
+			const result = await getAllEntertainment();
+			setData(result);
+		} catch (err) {
 			setError("Failed to fetch data.");
 		} finally {
 			setLoading(false);
@@ -185,7 +145,7 @@ export const AdminSites: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		fetchData(); // Fetch data on mount
+		fetchData();
 	}, [fetchData]);
 
 	if (loading) {
@@ -196,8 +156,8 @@ export const AdminSites: React.FC = () => {
 		return <div>{error}</div>;
 	}
 
-	const handleDelete = async (sites: SitesTypes) => {
-		await deleteSite(sites);
+	const handleDelete = async (entertainments: EntertainmentTypes) => {
+		await deleteEntertainments(entertainments);
 		setOnDelete(undefined);
 		fetchData();
 	};
@@ -212,7 +172,9 @@ export const AdminSites: React.FC = () => {
 
 	return (
 		<AdminSiteWrapper>
-			<Box display={"flex"} flexDirection={"column"} gap={"24px"}>
+			<Box padding={"12px 0"}>
+				<Typography color={"primary"}>Data Kesenian & Hiburan</Typography>
+			</Box>			<Box display={"flex"} flexDirection={"column"} gap={"24px"}>
 				<Rlinks
 					to={"./add"}
 					style={{
@@ -243,13 +205,13 @@ export const AdminSites: React.FC = () => {
 				<DialogTitle id="alert-dialog-title">Confirm Delete</DialogTitle>
 				<DialogContent>
 					<DialogContentText id="alert-dialog-description">
-						Are You Sure You Want to Delete this Site
+						Are You Sure You Want to Delete this Entertainment?
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={() => setOnDelete(undefined)}>Disagree</Button>
 					<Button
-						onClick={() => handleDelete(onDelete as SitesTypes)}
+						onClick={() => handleDelete(onDelete as EntertainmentTypes)}
 						autoFocus
 					>
 						Agree

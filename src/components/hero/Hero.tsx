@@ -36,7 +36,7 @@ export const Hero: React.FC<HeroProps> = () => {
 		},
 		{
 			title: "Explore Historical Sites",
-			name: "Cagar Budaya Tosora",
+			name: "Situs Budaya Tosora",
 			icon: <AccountBalance fontSize="large" />,
 			onclick: handleNavigate,
 		},
