@@ -42,6 +42,11 @@ const MRTTable: React.FC<MRTTableProps> = ({
 				),
 			},
 			{
+				accessorKey: "duration",
+				header: "Lama Pembuatan",
+				Cell: ({ cell }) => <>{cell.getValue<number>()} Menit</>,
+			},
+			{
 				accessorKey: "recipe",
 				header: "Recipe",
 				Cell: ({ cell }) => (

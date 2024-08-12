@@ -11,6 +11,7 @@ export interface CuisineTypes {
 	description: string;
 	image_path: string | null;
 	recipe: Recipe | null;
+	duration: number | null;
 	createdAt: Timestamp;
 	updatedAt: Timestamp;
 }

@@ -32,6 +32,7 @@ export const getAllCuisine = async (): Promise<CuisineTypes[]> => {
 				id: doc.id,
 				name: data.name ?? "",
 				description: data.description ?? "",
+				duration: data.duration,
 				image_path: data.image_path ?? null,
 				recipe: data.recipe ?? {
 					ingredients: data.recipe?.ingredients ?? [],
@@ -64,6 +65,7 @@ export async function getOneCuisine(
 				id: cuisineSnapshot.id,
 				name: cuisineData.name,
 				description: cuisineData.description,
+				duration: cuisineData.duration,
 				image_path: cuisineData.image_path,
 				recipe: cuisineData.recipe
 					? {
@@ -91,6 +93,9 @@ export async function createCuisine(
 	imageURL: string | undefined
 ): Promise<CuisineTypes> {
 	try {
+		if (cuisine.duration === null || isNaN(cuisine.duration)) {
+			throw new Error("Duration is either null or not a valid number");
+		}
 		const cuisineCollection = collection(db, collectionName);
 
 		const newCuisineRef = doc(cuisineCollection, cuisineId);
@@ -100,6 +105,7 @@ export async function createCuisine(
 			name: cuisine.name,
 			description: cuisine.description,
 			image_path: imageURL ? imageURL : null,
+			duration: cuisine.duration,
 			recipe: cuisine.recipe
 				? {
 						ingredients: cuisine.recipe.ingredients,

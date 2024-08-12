@@ -91,6 +91,7 @@ const AdminCuisineForm: React.FC<AdminCuisineFormProps> = ({
 	const [cuisine, setCuisine] = useState<AddCuisineInput>({
 		name: "",
 		description: "",
+		duration: NaN,
 		image_path: "",
 		recipe: null,
 	});
@@ -165,7 +166,7 @@ const AdminCuisineForm: React.FC<AdminCuisineFormProps> = ({
 			const updateCuisineInput: UpdateCuisineInput = {
 				...cuisine,
 				image_path: imgURLS,
-				recipe:recipe
+				recipe: recipe,
 			};
 			await updateCuisine({ id, cuisine: updateCuisineInput });
 			setRedirect(true);
@@ -212,7 +213,7 @@ const AdminCuisineForm: React.FC<AdminCuisineFormProps> = ({
 				onSubmit={handleSubmit}
 			>
 				<TextField
-					label="Name"
+					label="Nama"
 					fullWidth
 					required
 					value={cuisine.name}
@@ -222,7 +223,7 @@ const AdminCuisineForm: React.FC<AdminCuisineFormProps> = ({
 					sx={{ mb: 2 }}
 				/>
 				<TextField
-					label="Description"
+					label="Deskripsi"
 					fullWidth
 					required
 					multiline
@@ -233,11 +234,40 @@ const AdminCuisineForm: React.FC<AdminCuisineFormProps> = ({
 					}
 					sx={{ mb: 2 }}
 				/>
+				{/* <TextField
+					label="Lama Pembuatan"
+					fullWidth
+					required
+					type="number"
+					value={cuisine.duration}
+					onChange={(e) =>
+						setCuisine((prev) => ({
+							...prev,
+							duration: +e.target.value,
+						}))
+					}
+					sx={{ mb: 2 }}
+				/> */}
 
+				<TextField
+					label="Lama Pembuatan (menit)"
+					type="number"
+					fullWidth
+					required
+					InputProps={{ inputProps: { min: 0 } }}
+					value={cuisine.duration}
+					onChange={(e) =>
+						setCuisine((prev) => ({
+							...prev,
+							duration: Number(e.target.value), // Convert to number
+						}))
+					}
+					sx={{ mb: 2 }}
+				/>
 				<Box display={"flex"} flexDirection={"column"}>
 					<Box display={"flex"} gap={"12px"} alignItems={"center"}>
 						<Typography fontSize={"12px"} color={"primary"}>
-							Recipe :
+							Resep :
 						</Typography>
 						<Switch size="small" checked={checked} onChange={handleChange} />
 					</Box>
@@ -250,7 +280,7 @@ const AdminCuisineForm: React.FC<AdminCuisineFormProps> = ({
 							flex={1}
 						>
 							<Typography fontSize={"12px"} color={"primary"}>
-								Ingredients :
+								Bahan :
 							</Typography>
 							<Box display={"flex"} flexDirection={"column"} gap={"4px"}>
 								{recipe.ingredients.map((ingredient, index) => (
@@ -276,7 +306,7 @@ const AdminCuisineForm: React.FC<AdminCuisineFormProps> = ({
 								))}
 								<Button disabled={!checked} onClick={handleAddIngredient}>
 									<Add />
-									Add Ingredients
+									Tambah Bahan
 								</Button>
 							</Box>
 						</Box>
@@ -288,7 +318,7 @@ const AdminCuisineForm: React.FC<AdminCuisineFormProps> = ({
 							flex={1}
 						>
 							<Typography fontSize={"12px"} color={"primary"}>
-								Steps :
+								Langkah Langkah :
 							</Typography>
 							<Box display={"flex"} flexDirection={"column"} gap={"4px"}>
 								{recipe.steps.map((step, index) => (
@@ -312,7 +342,7 @@ const AdminCuisineForm: React.FC<AdminCuisineFormProps> = ({
 								))}
 								<Button disabled={!checked} onClick={handleAddStep}>
 									<Add />
-									Add Steps
+									Tambah Langkah
 								</Button>
 							</Box>
 						</Box>
