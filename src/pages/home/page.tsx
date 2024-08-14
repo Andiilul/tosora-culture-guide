@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import { Explore } from "../explore/page";
 import { PageLayout } from "../../components/_layout/pageLayout/pageLayout";
 import { socialMedia } from "../../mock/socialMedia";
+import { GridLayout } from "../../components/_layout/gridLayout";
 
 interface HomeProps {}
 
@@ -360,12 +361,20 @@ export const Home: React.FC<HomeProps> = () => {
 						>
 							About Us
 						</Typography>
+						<Avatar
+							src="/assets/Frame 1.png"
+							variant="square"
+							sx={{
+								width: "100%",
+								height: "auto",
+							}}
+						/>
 						<Typography
 							fontFamily={"Rokkitt"}
 							textAlign={"center"}
 							fontSize={"14px"}
 						>
-							Welcome to the Tosora Culture Guide, a project proudly created by
+							Welcome to the Tosora Culture Guide, one of projects proudly created by
 							the KKNT-112 Team from Universitas Hasanuddin. This website is
 							part of our community service program, dedicated to preserving and
 							sharing the rich cultural heritage of Tosora. Our mission is to
@@ -375,13 +384,12 @@ export const Home: React.FC<HomeProps> = () => {
 							understanding of this vibrant community. Thank you for exploring
 							with us!
 						</Typography>
-						<Box
-							display={"grid"}
-							gridTemplateColumns={"repeat(4,minmax(0,1fr))"}
-							gap={"4px"}
-						>
+						<GridLayout defaultGrid={4}>
 							{socialMedia.map((map, index) => (
-								<CardActionArea key={index} onClick={()=>window.open(map.link)}>
+								<CardActionArea
+									key={index}
+									onClick={() => window.open(map.link)}
+								>
 									<Box display={"flex"} padding={"12px"}>
 										<Box>
 											<Typography fontSize={"64px"}>{map.icon}</Typography>
@@ -410,7 +418,7 @@ export const Home: React.FC<HomeProps> = () => {
 									</Box>
 								</CardActionArea>
 							))}
-						</Box>
+						</GridLayout>
 					</Box>
 				</PageLayout>
 			</HomeContentWrapper>

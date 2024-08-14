@@ -22,6 +22,12 @@ export const LayoutContainer: StyledComponent<BoxProps & { theme?: Theme }> =
 		alignItems: "flex-start",
 		// backgroundColor:"green",
 		maxWidth: "1980px",
+		["@media (max-width: 1024px)"]: {
+			padding: "32px 48px",
+		},
+		["@media (max-width: 768px)"]: {
+			padding: "32px 24px",
+		},
 	}));
 
 export const LayoutContentWrapperPlain: StyledComponent<

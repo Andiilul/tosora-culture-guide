@@ -32,6 +32,8 @@ import AdminJournalForm from "./pages/admin/journalAdmin/page";
 import { CuisineDetail } from "./pages/explore/cuisine/detail/page";
 import { Culture } from "./pages/explore/culture/page";
 import { Works } from "./pages/explore/works/page";
+import { Entertainments } from "./pages/explore/entertainments/page";
+import { Wisdoms } from "./pages/explore/wisdoms/page";
 
 function App() {
 	const { theme } = useThemeContext();
@@ -117,13 +119,13 @@ function App() {
 						<Route path="/explore/cultures" element={<Culture />} />
 						<Route path="/explore/cultures/:id" element={<SiteDetail />} />
 						{/* Local Knowledfe */}
-						<Route path="/explore/wisdoms" element={<Sites />} />
+						<Route path="/explore/wisdoms" element={<Wisdoms />} />
 						<Route path="/explore/wisdoms/:id" element={<SiteDetail />} />
 						{/* Cuisines */}
 						<Route path="/explore/cuisines" element={<Cuisine />} />
 						<Route path="/explore/cuisines/:id" element={<CuisineDetail />} />
 						{/* Arts and Entertainments */}
-						<Route path="/explore/entertainments" element={<Sites />} />
+						<Route path="/explore/entertainments" element={<Entertainments />} />
 						<Route path="/explore/entertainments /:id" element={<SiteDetail />} />
 					</Route>
 					<Route element={<MainLayout />}>

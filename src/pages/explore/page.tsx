@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { PageHeroes } from "../../components/PageHeroes";
 import { ExploreCards } from "../../components/ExploreCards";
 import { ExploreBlog } from "../../mock/menu";
+import { GridLayout } from "../../components/_layout/gridLayout";
 
 interface ExploreProps {}
 
@@ -12,8 +13,8 @@ export const Explore: React.FC<ExploreProps> = () => {
 			flexDirection={"column"}
 			sx={{
 				backgroundImage: "url('/assets/explore-bg.jpeg')",
-				backgroundPosition:"center",
-				backgroundSize:"cover"
+				backgroundPosition: "center",
+				backgroundSize: "cover",
 			}}
 		>
 			<PageHeroes variant="plain" id="" img="/assets/bg.jpeg">
@@ -36,12 +37,7 @@ export const Explore: React.FC<ExploreProps> = () => {
 					</Typography>
 				</Box>
 				<Box>
-					<Box
-						width={"100%"}
-						display={"grid"}
-						gap={"24px"}
-						gridTemplateColumns={"repeat(3,minmax(0,1fr))"}
-					>
+					<GridLayout defaultGrid={3}>
 						{ExploreBlog.map((map, index) => (
 							<ExploreCards
 								key={index}
@@ -52,7 +48,7 @@ export const Explore: React.FC<ExploreProps> = () => {
 								{map.icon}
 							</ExploreCards>
 						))}
-					</Box>
+					</GridLayout>
 				</Box>
 			</PageHeroes>
 		</Box>

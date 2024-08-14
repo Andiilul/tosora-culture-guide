@@ -5,7 +5,8 @@ import { PageHeroes } from "../../../components/PageHeroes";
 import { CultureTypes } from "../../../types/culture";
 import { getAllCulture } from "../../../services/admin/culture";
 import { CultureCard, CultureDesc, CultureTitle } from "./styled";
-import { ArrowRight } from "@mui/icons-material";
+import { ArrowForward } from "@mui/icons-material";
+import { GridLayout } from "../../../components/_layout/gridLayout";
 
 interface CultureProps {}
 
@@ -68,12 +69,8 @@ export const Culture: React.FC<CultureProps> = () => {
 						</Typography>
 					</Box>
 
-					<Box
-						sx={{
-							display: "grid",
-							gap: "12px",
-							gridTemplateColumns: "repeat(2,minmax(0,1fr))",
-						}}
+					<GridLayout defaultGrid={2}
+
 					>
 						{data?.map((map, index) => (
 							<CardActionArea key={index}>
@@ -84,7 +81,11 @@ export const Culture: React.FC<CultureProps> = () => {
 									height={"100%"}
 								>
 									<Avatar
-										src={map.image_path[0] ? map.image_path[0]:"/assets/not-found.webp"}
+										src={
+											map.image_path[0]
+												? map.image_path[0]
+												: "/assets/not-found.webp"
+										}
 										variant="square"
 										sx={{
 											width: "160px",
@@ -96,6 +97,7 @@ export const Culture: React.FC<CultureProps> = () => {
 										flexDirection={"column"}
 										justifyContent={"space-between"}
 										height={"100%"}
+										flex={1}
 									>
 										<Box display={"flex"} flexDirection={"column"}>
 											<CultureTitle fontFamily={"Poppins"} fontWeight={500}>
@@ -105,9 +107,9 @@ export const Culture: React.FC<CultureProps> = () => {
 												fontFamily={"Poppins"}
 												fontWeight={"300"}
 												fontSize={"12px"}
-												color={"secondary"}
+												color={"primary"}
 											>
-												{map.type === "customs"? "Adat-Istiadat" :"Ritual"}
+												{map.type === "customs" ? "Adat-Istiadat" : "Ritual"}
 											</Typography>
 											<CultureDesc
 												fontSize={"14px"}
@@ -121,20 +123,21 @@ export const Culture: React.FC<CultureProps> = () => {
 											display={"flex"}
 											alignItems={"center"}
 											padding={"12px"}
-											justifyContent={"flex-end"}
+											justifyContent={"flex"}
+											
 										>
 											<Typography fontSize={"16px"} color={"primary"}>
-												Cek Selengkapnya
+												Detail
 											</Typography>
-											<Typography fontSize={"16px"} color={"primary"}>
-												<ArrowRight fontSize="inherit" />
+											<Typography fontSize={"16px"} lineHeight={"12px"} color={"primary"}>
+												<ArrowForward fontSize="inherit" />
 											</Typography>
 										</Box>
 									</Box>
 								</CultureCard>
 							</CardActionArea>
 						))}
-					</Box>
+					</GridLayout>
 				</Box>
 			</PageLayout>
 		</>

@@ -26,7 +26,7 @@ export const PageHeroes: React.FC<PageHeroesProps> = ({
 
 	if (variant === "explore") {
 		return (
-			<HeroSection 
+			<HeroSection
 				sx={{
 					backgroundImage: `url(${img})`,
 				}}
@@ -46,6 +46,7 @@ export const PageHeroes: React.FC<PageHeroesProps> = ({
 							textAlign={"center"}
 							fontSize={"48px"}
 							fontWeight={"300"}
+							color={"white"}
 							fontFamily={"Baskervville SC"}
 						>
 							{children}
@@ -91,9 +92,11 @@ export const PageHeroes: React.FC<PageHeroesProps> = ({
 	} else {
 		return (
 			<WhiteHeroSection
-				sx={{
-					// backgroundImage: `url(${img})`,
-				}}
+				sx={
+					{
+						// backgroundImage: `url(${img})`,
+					}
+				}
 			>
 				<Box
 					display={"flex"}

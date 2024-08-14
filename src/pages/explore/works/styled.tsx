@@ -16,19 +16,19 @@ export const Data: StyledComponent<BoxProps & { theme?: Theme }> = styled(Box)(
 	})
 );
 
-export const CultureTitle: StyledComponent<
-	TypographyProps & { theme?: Theme }
-> = styled(Typography)(() => ({
-	fontSize: "24px",
-}));
-
-export const CultureCard: StyledComponent<BoxProps & { theme?: Theme }> =
-	styled(Box)(() => ({
-		display: "flex",
-		gap: "12px",
+export const WorksTitle: StyledComponent<TypographyProps & { theme?: Theme }> =
+	styled(Typography)(() => ({
+		fontSize: "24px",
 	}));
 
-export const CultureDesc: StyledComponent<TypographyProps & { theme?: Theme }> =
+export const WorksCard: StyledComponent<BoxProps & { theme?: Theme }> = styled(
+	Box
+)(() => ({
+	display: "flex",
+	gap: "12px",
+}));
+
+export const WorksDesc: StyledComponent<TypographyProps & { theme?: Theme }> =
 	styled(Typography)(() => ({
 		// ellipsis 2 line
 		display: "-webkit-box",
@@ -36,4 +36,5 @@ export const CultureDesc: StyledComponent<TypographyProps & { theme?: Theme }> =
 		WebkitBoxOrient: "vertical",
 		overflow: "hidden",
 		textOverflow: "ellipsis",
+		width: "100%",
 	}));
