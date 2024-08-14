@@ -1,4 +1,11 @@
-import { Avatar, Box, Link, Typography, useTheme } from "@mui/material";
+import {
+	Avatar,
+	Box,
+	Link,
+	Typography,
+	useMediaQuery,
+	useTheme,
+} from "@mui/material";
 import { CardWrapper, CardTitle } from "./styled";
 import { AvTimer, MenuBook } from "@mui/icons-material";
 
@@ -17,6 +24,9 @@ export const FoodCard: React.FC<FoodCardProps> = ({
 	imgUrl,
 	id,
 }) => {
+	const medium = useMediaQuery("(max-width:1024px)");
+	const small = useMediaQuery("(max-width:640px)");
+
 	const theme = useTheme();
 	return (
 		<Link
@@ -31,7 +41,7 @@ export const FoodCard: React.FC<FoodCardProps> = ({
 					variant="square"
 					sx={{
 						width: "100%",
-						height: "140px",
+						height: small ? "80px" : medium ? "110px" : "140px",
 						aspectRatio: "1 / 1",
 						objectPosition: "center",
 						objectFit: "cover",
@@ -46,9 +56,9 @@ export const FoodCard: React.FC<FoodCardProps> = ({
 					gap={"0px"}
 				>
 					<Box display={"flex"} flex={1} alignItems={"center"} gap={"4px"}>
-						<AvTimer color={"primary"} />
+						<AvTimer color={"primary"} fontSize={small ? "small" : "medium"} />
 						<Typography
-							fontSize={"12px"}
+							fontSize={small ? "10px" : "12px"}
 							fontFamily={"Poppins"}
 							fontWeight={"300"}
 							color={"primary"}
@@ -57,9 +67,12 @@ export const FoodCard: React.FC<FoodCardProps> = ({
 						</Typography>
 					</Box>
 					<Box display={"flex"} flex={1} alignItems={"center"} gap={"4px"}>
-						<MenuBook color={isRecipe ? "primary" : "disabled"} />
+						<MenuBook
+							color={isRecipe ? "primary" : "disabled"}
+							fontSize={small ? "small" : "medium"}
+						/>
 						<Typography
-							fontSize={"12px"}
+							fontSize={small ? "10px" : "12px"}
 							fontFamily={"Poppins"}
 							fontWeight={"300"}
 							color={isRecipe ? "primary" : "#bfbfbf"}

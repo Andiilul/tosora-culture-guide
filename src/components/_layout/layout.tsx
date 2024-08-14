@@ -8,6 +8,7 @@ import {
 	Drawer,
 	IconButton,
 	Typography,
+	useMediaQuery,
 	useTheme,
 } from "@mui/material";
 import { Footer } from "./footer";
@@ -49,7 +50,7 @@ const adminMenu = [
 	{
 		name: "Karya Tulis & Lisan",
 		link: "/admin/works",
-		icon: <ColorLens	 />,
+		icon: <ColorLens />,
 	},
 	{
 		name: "Kebudayaan",
@@ -85,6 +86,8 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ admin = false }) => {
 	const width = "240px";
 	const path = useLocation();
 
+	const small = useMediaQuery("(max-width:640px)");
+
 	const handleLogOut = () => {
 		signOut(auth)
 			.then(() => {
@@ -105,148 +108,171 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ admin = false }) => {
 	const margin = "32px";
 
 	if (admin) {
-		return (
-			<Box display={"flex"}>
-				<Drawer onClose={handleDrawerClose} open={open} variant="persistent">
-					<Box
-						padding={"10px 14px"}
-						width={width}
-						display={"flex"}
-						bgcolor={theme.palette.background.default}
-						flexDirection={"column"}
-						boxShadow={"0 2px 2px 0 rgba(0,0,0,0.3)"}
-					>
-						<Box
-							display={"flex"}
-							justifyContent={"space-between"}
-							alignItems={"center"}
-						>
-							{/* <ThemeToggle /> */}
-							<Typography fontFamily={"Rokkitt"} fontSize={"18px"}>
-								CultureGuide
-							</Typography>
-							<IconButton onClick={handleDrawerClose}>
-								<Close />
-							</IconButton>
-						</Box>
-					</Box>
-					<Box
-						flex={1}
-						// bgcolor={"white"}
-						sx={{
-							overflowY: "auto",
-							display: "flex",
-
-							flexDirection: "column",
-							gap: "12px",
-						}}
-					>
-						{adminMenu.map((map, index) => (
-							<CardActionArea href={map.link} key={index}>
-								<Box
-									padding={"8px 16px"}
-									display={"flex"}
-									gap={"8px"}
-									alignItems={"center"}
-								>
-									<Typography
-										color={
-											path.pathname === map.link
-												? theme.palette.primary.main
-												: theme.palette.text.primary
-										}
-										fontFamily={"Poppins"}
-										fontSize={"14px"}
-									>
-										{map.icon}
-									</Typography>
-									<Typography
-										color={
-											path.pathname === map.link
-												? theme.palette.primary.main
-												: theme.palette.text.primary
-										}
-										fontFamily={"Poppins"}
-										fontSize={"14px"}
-									>
-										{map.name}
-									</Typography>
-								</Box>
-							</CardActionArea>
-						))}
-						<Box padding={"16px"}>
-							<ThemeToggle />
-						</Box>
-					</Box>
-				</Drawer>
+		if (small) {
+			return (
 				<Box
-					// bgcolor={"blue"}
-					width={"100%"}
-					display={"flex"}
-					justifyContent={"flex-end"}
-				>
-					<Box
+						width={"100vw"}
+						padding={"12px"}
+						textAlign={"center"}
 						height={"100vh"}
-						// bgcolor={"red"}
-						sx={{
-							width: open ? `calc(100% - ${width})` : "100%",
-							transition: "200ms",
-						}}
 						display={"flex"}
-						flexDirection={"column"}
+						alignItems={"center"}
+						justifyContent={"center"}
+					>
+				<Box display={"flex"} flexDirection={"column"}>
+						Tidak Kompatibel Dengan Device Layar Kecil
+					</Box>
+					<Button href="/">Home</Button>
+					
+				</Box>
+			);
+		} else {
+			return (
+				<Box display={"flex"}>
+					<Drawer onClose={handleDrawerClose} open={open} variant="persistent">
+						<Box
+							padding={"10px 14px"}
+							width={width}
+							display={"flex"}
+							bgcolor={theme.palette.background.default}
+							flexDirection={"column"}
+							boxShadow={"0 2px 2px 0 rgba(0,0,0,0.3)"}
+						>
+							<Box
+								display={"flex"}
+								justifyContent={"space-between"}
+								alignItems={"center"}
+							>
+								{/* <ThemeToggle /> */}
+								<Typography fontFamily={"Rokkitt"} fontSize={"18px"}>
+									CultureGuide
+								</Typography>
+								<IconButton onClick={handleDrawerClose}>
+									<Close />
+								</IconButton>
+							</Box>
+						</Box>
+						<Box
+							flex={1}
+							// bgcolor={"white"}
+							sx={{
+								overflowY: "auto",
+								display: "flex",
+
+								flexDirection: "column",
+								gap: "12px",
+							}}
+						>
+							{adminMenu.map((map, index) => (
+								<CardActionArea href={map.link} key={index}>
+									<Box
+										padding={"8px 16px"}
+										display={"flex"}
+										gap={"8px"}
+										alignItems={"center"}
+									>
+										<Typography
+											color={
+												path.pathname === map.link
+													? theme.palette.primary.main
+													: theme.palette.text.primary
+											}
+											fontFamily={"Poppins"}
+											fontSize={"14px"}
+										>
+											{map.icon}
+										</Typography>
+										<Typography
+											color={
+												path.pathname === map.link
+													? theme.palette.primary.main
+													: theme.palette.text.primary
+											}
+											fontFamily={"Poppins"}
+											fontSize={"14px"}
+										>
+											{map.name}
+										</Typography>
+									</Box>
+								</CardActionArea>
+							))}
+							<Box padding={"16px"}>
+								<ThemeToggle />
+							</Box>
+						</Box>
+					</Drawer>
+					<Box
+						// bgcolor={"blue"}
+						width={"100%"}
+						display={"flex"}
+						justifyContent={"flex-end"}
 					>
 						<Box
+							height={"100vh"}
+							// bgcolor={"red"}
+							sx={{
+								width: open ? `calc(100% - ${width})` : "100%",
+								transition: "200ms",
+							}}
 							display={"flex"}
-							justifyContent={"space-between"}
-							padding={"12px"}
-							bgcolor={theme.palette.background.paper}
+							flexDirection={"column"}
 						>
-							<Box display={"flex"} alignItems={"center"} gap={"12px"}>
-								<IconButton
-									disabled={open}
-									sx={{
-										color: open ? "transparent" : "white",
-
-										transition: "200ms",
-									}}
-									onClick={handleDrawerOpen}
-								>
-									<Menu
-										color="primary"
+							<Box
+								display={"flex"}
+								justifyContent={"space-between"}
+								padding={"12px"}
+								bgcolor={theme.palette.background.paper}
+							>
+								<Box display={"flex"} alignItems={"center"} gap={"12px"}>
+									<IconButton
+										disabled={open}
 										sx={{
-											fontSize: open ? "0" : "24px",
+											color: open ? "transparent" : "white",
+
 											transition: "200ms",
 										}}
-									/>
-								</IconButton>
-								<Typography>Dashboard </Typography>
+										onClick={handleDrawerOpen}
+									>
+										<Menu
+											color="primary"
+											sx={{
+												fontSize: open ? "0" : "24px",
+												transition: "200ms",
+											}}
+										/>
+									</IconButton>
+									<Typography>Dashboard </Typography>
+								</Box>
+								<Box>
+									<Button
+										onClick={() => setOpenLogOut(true)}
+										variant="outlined"
+									>
+										Sign out
+									</Button>
+								</Box>
 							</Box>
-							<Box>
-								<Button onClick={() => setOpenLogOut(true)} variant="outlined">
-									Sign out
-								</Button>
-							</Box>
-						</Box>
-						<Box padding={"24px"} sx={{ overflowY: "auto" }}>
-							<Box>
-								<Outlet />
+							<Box padding={"24px"} sx={{ overflowY: "auto" }}>
+								<Box>
+									<Outlet />
+								</Box>
 							</Box>
 						</Box>
 					</Box>
+					<Dialog open={openLogOut} onClose={() => setOpenLogOut(false)}>
+						<DialogTitle fontSize={"16px"} id="alert-dialog-title">
+							Confirm Sign Out
+						</DialogTitle>
+						<DialogActions>
+							<Button onClick={() => setOpenLogOut(false)}>Cancel</Button>
+							<Button onClick={handleLogOut} autoFocus>
+								Sign Out
+							</Button>
+						</DialogActions>
+					</Dialog>
 				</Box>
-				<Dialog open={openLogOut} onClose={() => setOpenLogOut(false)}>
-					<DialogTitle fontSize={"16px"} id="alert-dialog-title">
-						Confirm Sign Out
-					</DialogTitle>
-					<DialogActions>
-						<Button onClick={() => setOpenLogOut(false)}>Cancel</Button>
-						<Button onClick={handleLogOut} autoFocus>
-							Sign Out
-						</Button>
-					</DialogActions>
-				</Dialog>
-			</Box>
-		);
+			);
+		}
 	}
 
 	if (!admin) {

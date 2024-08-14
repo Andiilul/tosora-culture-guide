@@ -23,7 +23,7 @@ export const HomeContainer: StyledComponent<BoxProps & { theme?: Theme }> =
 		['@media (max-width: 1024px)']: {
 		padding:"16px 16px"
 		},
-		['@media (max-width: 768px)']: {
+		['@media (max-width: 640px)']: {
 		padding:"8px 8px"
 		},
 	}));
@@ -40,7 +40,7 @@ export const IntroSection: StyledComponent<BoxProps & { theme?: Theme }> =
 			gap:"32px",
 			paddding:"64px 32px"
 		},
-		['@media (max-width: 768px)']: {
+		['@media (max-width: 640px)']: {
 			padding:"32px 16px"
 		},
 	}));
@@ -79,7 +79,7 @@ export const CardImage: StyledComponent<BoxProps & { theme?: Theme }> = styled(
 	['@media (max-width: 1024px)']: {
 		height:"200px",
 	},
-	['@media (max-width: 768px)']: {
+	['@media (max-width: 640px)']: {
 		height:"100px",
 	},
 }));

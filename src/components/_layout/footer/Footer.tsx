@@ -176,7 +176,11 @@ export const Footer: React.FC<FooterProps> = () => {
 				padding={"8px"}
 				bgcolor={theme.palette.background.paper}
 			>
-				<Typography fontSize={"10px"} fontFamily={"Poppins"}>
+				<Typography
+					fontSize={"10px"}
+					fontFamily={"Poppins"}
+					textAlign={"center"}
+				>
 					&copy; 2024 CultureGuide. Created by KKNT-112 Universitas Hasanuddin
 					Team.
 				</Typography>

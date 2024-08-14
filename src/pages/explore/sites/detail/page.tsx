@@ -14,6 +14,7 @@ import {
 	IconButton,
 	Radio,
 	Typography,
+	useMediaQuery,
 	useTheme,
 } from "@mui/material";
 import { ArrowLeft, ArrowRight } from "@mui/icons-material";
@@ -38,6 +39,9 @@ export const SiteDetail: React.FC<SiteDetailProps> = () => {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 	const [selectedIndex, setSelectedIndex] = useState<number>(0);
+
+	const medium = useMediaQuery("(max-width:1024px)");
+	const small = useMediaQuery("(max-width:640px)");
 
 	const scrollToId = (id: string) => {
 		const element = document.getElementById(id);
@@ -94,11 +98,11 @@ export const SiteDetail: React.FC<SiteDetailProps> = () => {
 					<SiteHeroContent width={"100%"}>
 						<Box display={"flex"} flexDirection={"column"} gap={"12px"}>
 							<Typography
-								fontSize={"64px"}
+								fontSize={small ? "32px" : medium ? "48px" : "64px"}
 								textAlign={"center"}
 								fontFamily={"Rokkitt"}
 								textTransform={"uppercase"}
-								lineHeight={"54px"}
+								lineHeight={small ? "28px" : medium ? "38px" : "54px"}
 								sx={{
 									textShadow: "black 2px 2px",
 								}}
@@ -106,7 +110,7 @@ export const SiteDetail: React.FC<SiteDetailProps> = () => {
 								{site.name}
 							</Typography>
 							<Typography
-								fontSize={"24px"}
+								fontSize={small ? "14px" : medium ? "18px" : "24px"}
 								textAlign={"center"}
 								fontWeight={300}
 								color={theme.palette.primary.main}
@@ -126,6 +130,8 @@ export const SiteDetail: React.FC<SiteDetailProps> = () => {
 								<IconButton
 									sx={{
 										border: "solid white 1px",
+										width: small ? "24px" : "38px",
+										height: small ? "24px" : "38px",
 									}}
 									onClick={() =>
 										setSelectedIndex(
@@ -171,6 +177,8 @@ export const SiteDetail: React.FC<SiteDetailProps> = () => {
 								<IconButton
 									sx={{
 										border: "solid white 1px",
+										width: small ? "24px" : "38px",
+										height: small ? "24px" : "38px",
 									}}
 									onClick={() =>
 										setSelectedIndex(
@@ -216,18 +224,30 @@ export const SiteDetail: React.FC<SiteDetailProps> = () => {
 				</SiteHeroContainer>
 			</SiteHeroWrapper>
 			<SiteDetailContent>
-				<Box
-					sx={{
-						textAlign: "justify",
-					}}
-					component={"div"}
-					dangerouslySetInnerHTML={{
-						__html:
-							site.description.length !== 0
-								? site.description
-								: "<p>Preview Here</p>",
-					}}
-				></Box>
+				<Box display={"flex"} flexDirection={"column"}>
+					<Typography
+						color={"primary"}
+						textAlign={"center"}
+						fontFamily={"Rokkitt"}
+						fontSize={"24px"}
+					>
+						Deskripsi :
+					</Typography>
+					<Box
+						sx={{
+							textAlign: "justify",
+							fontSize: small ? "12px" : "14px",
+						}}
+						component={"div"}
+						dangerouslySetInnerHTML={{
+							__html:
+								site.description.length !== 0
+									? site.description
+									: "<p>Preview Here</p>",
+						}}
+					></Box>
+				</Box>
+
 				<Box
 					component={"div"}
 					id="maps"

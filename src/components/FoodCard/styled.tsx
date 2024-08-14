@@ -15,6 +15,12 @@ export const CardWrapper: StyledComponent<
 	display: "flex",
 	flexDirection: "column",
 	gap: "8px",
+	["@media (max-width: 1024px)"]: {
+		padding: "8px",
+	},
+	["@media (max-width: 640px)"]: {
+		padding: "8px",
+	},
 }));
 
 export const CardTitle: StyledComponent<TypographyProps & { theme?: Theme }> =
@@ -26,5 +32,11 @@ export const CardTitle: StyledComponent<TypographyProps & { theme?: Theme }> =
 		WebkitBoxOrient: "vertical",
 		fontSize: "14px",
 		lineHeight: "16px",
-		height:"32px"
+		height: "32px",
+		["@media (max-width: 1024px)"]: {
+			fontSize: "12px",
+		},
+		["@media (max-width: 640px)"]: {
+			fontSize: "10px",
+		},
 	}));

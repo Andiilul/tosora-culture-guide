@@ -26,7 +26,7 @@ export const NavbarWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
 		['@media (max-width: 1024px)']: {
 		padding:"6px 12px"
 		},
-		['@media (max-width: 768px)']: {
+		['@media (max-width: 640px)']: {
 			padding:"6px "
 		
 		},
@@ -39,7 +39,7 @@ export const NavbarMenuList: StyledComponent<BoxProps & { theme?: Theme }> =
 		['@media (max-width: 1024px)']: {
 		gap:"12px"
 		},
-		['@media (max-width: 768px)']: {
+		['@media (max-width: 640px)']: {
 			gap:"6px"
 		
 		},

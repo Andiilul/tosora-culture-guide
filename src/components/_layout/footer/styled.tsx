@@ -15,7 +15,7 @@ export const FooterWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
 		['@media (max-width: 1024px)']: {
 		padding:"32px"
 		},
-		['@media (max-width: 768px)']: {
+		['@media (max-width: 640px)']: {
 			padding:"16px"
 		
 		},
@@ -29,7 +29,7 @@ export const FooterContainer: StyledComponent<BoxProps & { theme?: Theme }> =
 		['@media (max-width: 1024px)']: {
 		
 		},
-		['@media (max-width: 768px)']: {
+		['@media (max-width: 640px)']: {
 			gridTemplateColumns: "repeat(2 , minmax(0,1fr))",
 		
 		},
@@ -59,7 +59,7 @@ export const QuickLinks: StyledComponent<BoxProps & { theme?: Theme }> = styled(
 	['@media (max-width: 1024px)']: {
 	fontSize:"12px"
 	},
-	['@media (max-width: 768px)']: {
+	['@media (max-width: 640px)']: {
 		fontSize:"10px"
 	
 	},

@@ -31,6 +31,18 @@ export const SiteHeroWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
 			backgroundColor: "rgba(0, 0, 0, 0.6)",
 			zIndex: 1,
 		},
+		["@media (max-width: 1024px)"]: {
+			padding: "48px",
+			height:"max-content",
+			minHeight:"540px"
+
+		},
+		["@media (max-width: 640px)"]: {
+			padding: "16px",
+			height:"max-content",
+			minHeight:"360px"
+
+		},
 	}));
 
 export const SiteHeroContainer: StyledComponent<BoxProps & { theme?: Theme }> =
@@ -60,4 +72,11 @@ export const SiteDetailContent: StyledComponent<BoxProps & { theme?: Theme }> =
 		flexDirection: "column",
 		gap: "24px",
 		width: "100%",
+		['@media (max-width: 1024px)']: {
+		padding:"32px"
+		},
+		['@media (max-width: 640px)']: {
+			padding:"32px 16px"
+		
+		},
 	}));
