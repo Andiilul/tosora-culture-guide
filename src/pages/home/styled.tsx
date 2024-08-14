@@ -27,7 +27,7 @@ export const IntroSection: StyledComponent<BoxProps & { theme?: Theme }> =
 		// backgroundColor:"yellow",
 		display: "grid",
 		gridTemplateColumns: "repeat(2,minmax(0,1fr))",
-		padding: "128px 96px",
+		padding: "128px 64px",
 		// backgroundColor:"grey"
 	}));
 

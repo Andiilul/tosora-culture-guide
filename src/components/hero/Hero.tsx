@@ -7,6 +7,9 @@ import {
 	Mosque,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { getJournal } from "../../services/admin/journal";
+import { useState, useEffect } from "react";
+import { JournalTypes } from "../../types/journal";
 
 interface HeroProps {}
 
@@ -16,10 +19,38 @@ export const Hero: React.FC<HeroProps> = () => {
 	const handleNavigate = () => {
 		navigate("/explore/sites");
 	};
+	const handleNavigateCulture = () => {
+		navigate("/explore/cultures");
+	};
+
+
 	const theme = useTheme();
 	const handleScrollReligi = () => {
 		const element = document.getElementById("spiritual");
 		element?.scrollIntoView({ behavior: "smooth" });
+	};
+
+	const [journal, setJournal] = useState<JournalTypes | null>(null);
+
+	useEffect(() => {
+		const fetchJournal = async () => {
+			try {
+				const fetchedJournal = await getJournal();
+				setJournal(fetchedJournal);
+			} catch (error) {
+				console.error("Error fetching journal:", error);
+			} finally {
+				console.log("Success");
+			}
+		};
+
+		fetchJournal();
+	}, []);
+
+	const handleRedirectJournal = () => {
+		if (journal) {
+			window.open(journal.link, "_blank");
+		}
 	};
 
 	const cardList = [
@@ -27,6 +58,7 @@ export const Hero: React.FC<HeroProps> = () => {
 			title: "Discover Democracy",
 			name: "Jurnal Demokrasi Tosora",
 			icon: <LibraryBooks fontSize="large" />,
+			onclick: handleRedirectJournal,
 		},
 		{
 			title: "Find Spiritual Peace",
@@ -43,6 +75,7 @@ export const Hero: React.FC<HeroProps> = () => {
 		{
 			title: "Experience Traditions",
 			name: "Kebudayaan Tosora",
+			onclick: handleNavigateCulture,
 			icon: <Diversity2 fontSize="large" />,
 		},
 	];

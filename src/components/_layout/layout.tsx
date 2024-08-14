@@ -17,7 +17,9 @@ import { Navbar } from "./navbar";
 import { useState } from "react";
 import {
 	AccountBalanceOutlined,
+	Book,
 	Close,
+	ColorLens,
 	DashboardOutlined,
 	Dining,
 	Diversity2Outlined,
@@ -47,7 +49,7 @@ const adminMenu = [
 	{
 		name: "Karya Tulis & Lisan",
 		link: "/admin/works",
-		icon: <Psychology />,
+		icon: <ColorLens	 />,
 	},
 	{
 		name: "Kebudayaan",
@@ -69,13 +71,18 @@ const adminMenu = [
 		link: "/admin/entertainment",
 		icon: <SportsEsports />,
 	},
+	{
+		name: "Jurnal Demokrasi",
+		link: "/admin/journal",
+		icon: <Book />,
+	},
 ];
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ admin = false }) => {
 	const [openLogOut, setOpenLogOut] = useState<boolean>(false);
 	const theme = useTheme();
 	const [open, setOpen] = useState(true);
-	const width = "220px";
+	const width = "240px";
 	const path = useLocation();
 
 	const handleLogOut = () => {
@@ -124,60 +131,52 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ admin = false }) => {
 						</Box>
 					</Box>
 					<Box
-						// bgcolor={"red"}
-						width={"100%"}
-						height={"100%"}
-						display={"flex"}
-						gap={"12px"}
-						padding={"12px"}
-						flexDirection={"column"}
-					>
-						<Box
-							flex={1}
-							// bgcolor={"white"}
-							sx={{
-								overflowY: "auto",
-								display: "flex",
+						flex={1}
+						// bgcolor={"white"}
+						sx={{
+							overflowY: "auto",
+							display: "flex",
 
-								flexDirection: "column",
-								gap: "12px",
-							}}
-						>
-							{adminMenu.map((map, index) => (
-								<CardActionArea href={map.link} key={index}>
-									<Box
-										padding={"8px 4px"}
-										display={"flex"}
-										gap={"8px"}
-										alignItems={"center"}
+							flexDirection: "column",
+							gap: "12px",
+						}}
+					>
+						{adminMenu.map((map, index) => (
+							<CardActionArea href={map.link} key={index}>
+								<Box
+									padding={"8px 16px"}
+									display={"flex"}
+									gap={"8px"}
+									alignItems={"center"}
+								>
+									<Typography
+										color={
+											path.pathname === map.link
+												? theme.palette.primary.main
+												: theme.palette.text.primary
+										}
+										fontFamily={"Poppins"}
+										fontSize={"14px"}
 									>
-										<Typography
-											color={
-												path.pathname === map.link
-													? theme.palette.primary.main
-													: theme.palette.text.primary
-											}
-											fontFamily={"Poppins"}
-											fontSize={"14px"}
-										>
-											{map.icon}
-										</Typography>
-										<Typography
-											color={
-												path.pathname === map.link
-													? theme.palette.primary.main
-													: theme.palette.text.primary
-											}
-											fontFamily={"Poppins"}
-											fontSize={"14px"}
-										>
-											{map.name}
-										</Typography>
-									</Box>
-								</CardActionArea>
-							))}
+										{map.icon}
+									</Typography>
+									<Typography
+										color={
+											path.pathname === map.link
+												? theme.palette.primary.main
+												: theme.palette.text.primary
+										}
+										fontFamily={"Poppins"}
+										fontSize={"14px"}
+									>
+										{map.name}
+									</Typography>
+								</Box>
+							</CardActionArea>
+						))}
+						<Box padding={"16px"}>
+							<ThemeToggle />
 						</Box>
-						<ThemeToggle />
 					</Box>
 				</Drawer>
 				<Box

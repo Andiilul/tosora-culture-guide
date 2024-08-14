@@ -12,6 +12,7 @@ export const LayoutContentWrapper: StyledComponent<
 	flexDirection: "column",
 	backgroundColor: theme.palette.background.default,
 }));
+
 export const LayoutContainer: StyledComponent<BoxProps & { theme?: Theme }> =
 	styled(Box)(() => ({
 		display: "flex",
@@ -22,3 +23,14 @@ export const LayoutContainer: StyledComponent<BoxProps & { theme?: Theme }> =
 		// backgroundColor:"green",
 		maxWidth: "1980px",
 	}));
+
+export const LayoutContentWrapperPlain: StyledComponent<
+	BoxProps & { theme?: Theme }
+> = styled(Box)(() => ({
+	display: "flex",
+	width: "100vw",
+	justifyContent: "center",
+	alignItems: "center",
+	flexDirection: "column",
+	// backgroundColor: theme.palette.background.default,
+}));

@@ -1,16 +1,18 @@
-import { Box, Link, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { NavbarWrapper, NavbarMenuList, NavbarContainer } from "./styled";
 import ThemeToggle from "../theme-toggle/ThemeToggle";
+import { useEffect, useState, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { navbarMenu } from "../../../mock/menu";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 
 interface NavbarProps {}
 
 export const Navbar: React.FC<NavbarProps> = () => {
 	const path = useLocation().pathname;
+	const navigate = useNavigate();
 	const theme = useTheme();
 	const [scrolled, setScrolled] = useState(false);
+	const scrollTargetRef = useRef<string | null>(null);
 
 	const handleScroll = () => {
 		const offset = window.scrollY;
@@ -24,11 +26,37 @@ export const Navbar: React.FC<NavbarProps> = () => {
 		};
 	}, []);
 
+	const handleMenuClick = (scrollTarget: string) => {
+		if (path !== "/") {
+			// Save the target in a ref and navigate to the home page
+			scrollTargetRef.current = scrollTarget;
+			navigate("/");
+		} else {
+			// Scroll to the section on the current page
+			scrollToTarget(scrollTarget);
+		}
+	};
+
+	const scrollToTarget = (scrollTarget: string) => {
+		const element = document.getElementById(scrollTarget);
+		if (element) {
+			element.scrollIntoView({ behavior: "smooth" });
+		}
+	};
+
+	useEffect(() => {
+		// When path changes to "/", check if there's a scroll target to move to
+		if (path === "/" && scrollTargetRef.current) {
+			scrollToTarget(scrollTargetRef.current);
+			scrollTargetRef.current = null; // Reset after scrolling
+		}
+	}, [path]);
+
 	return (
 		<NavbarWrapper
 			sx={{
 				backgroundColor:
-					path !== "/"
+					path !== "/" && path !== "/explore"
 						? theme.palette.common.white
 						: scrolled
 						? theme.palette.common.white
@@ -50,40 +78,34 @@ export const Navbar: React.FC<NavbarProps> = () => {
 				</Typography>
 				<NavbarMenuList display={"flex"}>
 					{navbarMenu.map((nav, index) => (
-						<Link
-							key={nav.link}
-							href={nav.link}
+						<Box
+							component="div"
+							key={index}
+							onClick={() => handleMenuClick(nav.scroll)}
 							sx={{
-								textDecoration: "none",
+								cursor: "pointer",
 							}}
 						>
-							<Box
-								component={"div"}
-								// onMouseEnter={() => console.log("Hovered")}
-								// onMouseLeave={() => console.log("Leaving")}
+							<Typography
+								color={
+									path === "/" && !scrolled
+										? "white"
+										: theme.palette.text.primary
+								}
+								fontFamily={"Poppins"}
+								fontSize={"12px"}
+								fontWeight={"300"}
+								sx={{
+									":hover": {
+										color: theme.palette.primary.main,
+										transition: "ease-in-out 300ms",
+									},
+									transition: "300ms",
+								}}
 							>
-								<Typography
-									color={
-										path === "/" && !scrolled
-											? "white"
-											: theme.palette.text.primary
-									}
-									fontFamily={"Poppins"}
-									fontSize={"12px"}
-									fontWeight={"300"}
-									key={index}
-									sx={{
-										":hover": {
-											color: theme.palette.primary.main,
-											transition: "ease-in-out 300ms",
-										},
-										transition: "300ms",
-									}}
-								>
-									{nav.name}
-								</Typography>
-							</Box>
-						</Link>
+								{nav.name}
+							</Typography>
+						</Box>
 					))}
 				</NavbarMenuList>
 				<ThemeToggle />
