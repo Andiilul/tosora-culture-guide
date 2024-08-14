@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { HeroCard, HeroContainer, HeroGrid, HeroWrapper } from "./styled";
 import {
 	AccountBalance,
@@ -23,6 +23,8 @@ export const Hero: React.FC<HeroProps> = () => {
 		navigate("/explore/cultures");
 	};
 
+	const medium = useMediaQuery("(max-width:1024px)");
+	const small = useMediaQuery("(max-width:640px)");
 
 	const theme = useTheme();
 	const handleScrollReligi = () => {
@@ -57,26 +59,36 @@ export const Hero: React.FC<HeroProps> = () => {
 		{
 			title: "Discover Democracy",
 			name: "Jurnal Demokrasi Tosora",
-			icon: <LibraryBooks fontSize="large" />,
+			icon: (
+				<LibraryBooks
+					fontSize={small ? "small" : medium ? "medium" : "large"}
+				/>
+			),
 			onclick: handleRedirectJournal,
 		},
 		{
 			title: "Find Spiritual Peace",
 			name: "Wisata Religi Masjid Tua",
-			icon: <Mosque fontSize="large" />,
+			icon: <Mosque fontSize={small ? "small" : medium ? "medium" : "large"} />,
 			onclick: handleScrollReligi,
 		},
 		{
 			title: "Explore Historical Sites",
 			name: "Situs Budaya Tosora",
-			icon: <AccountBalance fontSize="large" />,
+			icon: (
+				<AccountBalance
+					fontSize={small ? "small" : medium ? "medium" : "large"}
+				/>
+			),
 			onclick: handleNavigate,
 		},
 		{
 			title: "Experience Traditions",
 			name: "Kebudayaan Tosora",
 			onclick: handleNavigateCulture,
-			icon: <Diversity2 fontSize="large" />,
+			icon: (
+				<Diversity2 fontSize={small ? "small" : medium ? "medium" : "large"} />
+			),
 		},
 	];
 
@@ -91,7 +103,8 @@ export const Hero: React.FC<HeroProps> = () => {
 					color={"white"}
 					fontWeight={"bold"}
 					fontFamily={"Rokkitt"}
-					fontSize={"160px"}
+					textAlign={"center"}
+					fontSize={small?"80px" :medium? "140px" :"160px"}
 					sx={{
 						alignContent: "center",
 						flex: "1",
@@ -103,20 +116,34 @@ export const Hero: React.FC<HeroProps> = () => {
 				<HeroGrid>
 					{cardList.map((map, index) => (
 						<HeroCard key={index} onClick={map.onclick}>
-							<Box display={"flex"} gap={"12px"} alignItems={"center"}>
+							<Box
+								display={"flex"}
+								flexDirection={small ? "column" : medium ? "column" : "row"}
+								gap={"12px"}
+								alignItems={"center"}
+							>
 								<Typography color={theme.palette.primary.main}>
 									{map.icon}
 								</Typography>
 								<Box display={"flex"} flexDirection={"column"}>
-									<Typography color={"white"}>{map.title}</Typography>
 									<Typography
+										textAlign={small ? "center" : medium ? "center" : "left"}
 										color={"white"}
-										sx={{
-											fontSize: "12px",
-										}}
+										fontSize={small ? "8px" : medium ? "12px" : "14px"}
 									>
-										{map.name}
+										{map.title}
 									</Typography>
+									{!small && (
+										<Typography
+											textAlign={small ? "center" : medium ? "center" : "left"}
+											color={"white"}
+											sx={{
+												fontSize: "12px",
+											}}
+										>
+											{map.name}
+										</Typography>
+									)}
 								</Box>
 							</Box>
 						</HeroCard>

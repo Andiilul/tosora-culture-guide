@@ -20,6 +20,12 @@ export const HomeContainer: StyledComponent<BoxProps & { theme?: Theme }> =
 		// backgroundColor:"green",
 		alignItems: "center",
 		maxWidth: "1980px",
+		['@media (max-width: 1024px)']: {
+		padding:"16px 16px"
+		},
+		['@media (max-width: 768px)']: {
+		padding:"8px 8px"
+		},
 	}));
 
 export const IntroSection: StyledComponent<BoxProps & { theme?: Theme }> =
@@ -29,6 +35,14 @@ export const IntroSection: StyledComponent<BoxProps & { theme?: Theme }> =
 		gridTemplateColumns: "repeat(2,minmax(0,1fr))",
 		padding: "128px 64px",
 		// backgroundColor:"grey"
+		['@media (max-width: 1024px)']: {
+			gridTemplateColumns: "repeat(1,minmax(0,1fr))",
+			gap:"32px",
+			paddding:"64px 32px"
+		},
+		['@media (max-width: 768px)']: {
+			padding:"32px 16px"
+		},
 	}));
 
 export const SpiritualSection: StyledComponent<BoxProps & { theme?: Theme }> =
@@ -61,5 +75,11 @@ export const CardImage: StyledComponent<BoxProps & { theme?: Theme }> = styled(
 		width: "100%",
 		height: "100%",
 		objectFit: "cover",
+	},
+	['@media (max-width: 1024px)']: {
+		height:"200px",
+	},
+	['@media (max-width: 768px)']: {
+		height:"100px",
 	},
 }));

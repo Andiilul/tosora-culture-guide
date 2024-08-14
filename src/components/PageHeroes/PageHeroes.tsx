@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, useMediaQuery } from "@mui/material";
 import { HeroSection, WhiteHeroSection } from "./styled";
 import { ReactNode } from "react";
 
@@ -17,6 +17,9 @@ export const PageHeroes: React.FC<PageHeroesProps> = ({
 	id,
 	variant = "explore",
 }) => {
+	const medium = useMediaQuery("(max-width:1024px)");
+	const small = useMediaQuery("(max-width:640px)");
+
 	const handleScroll = () => {
 		const element = document.getElementById(id);
 		if (element) {
@@ -33,7 +36,7 @@ export const PageHeroes: React.FC<PageHeroesProps> = ({
 			>
 				<Box
 					display={"flex"}
-					padding={"128px 128px"}
+					padding={small ? "32px" : medium ? "64px" : "128px 128px"}
 					flexDirection={"column"}
 					gap={"48px"}
 					flex={"1"}
@@ -92,15 +95,13 @@ export const PageHeroes: React.FC<PageHeroesProps> = ({
 	} else {
 		return (
 			<WhiteHeroSection
-				sx={
-					{
-						// backgroundImage: `url(${img})`,
-					}
-				}
+				sx={{
+					backgroundImage: `url(${img})`,
+				}}
 			>
 				<Box
 					display={"flex"}
-					padding={"128px 96px"}
+					padding={small ? "32px" : medium ? "64px" : "128px 128px"}
 					flexDirection={"column"}
 					gap={"48px"}
 					flex={"1"}

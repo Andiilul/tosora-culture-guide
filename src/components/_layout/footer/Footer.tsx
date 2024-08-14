@@ -1,4 +1,11 @@
-import { Box, Link, Snackbar, Typography, useTheme } from "@mui/material";
+import {
+	Box,
+	Link,
+	Snackbar,
+	Typography,
+	useMediaQuery,
+	useTheme,
+} from "@mui/material";
 import {
 	FooterContainer,
 	FooterLeft,
@@ -13,7 +20,6 @@ import { socialMedia } from "../../../mock/socialMedia";
 
 interface FooterProps {}
 export const Footer: React.FC<FooterProps> = () => {
-
 	const [open, setOpen] = useState(false);
 
 	const handleClose = (
@@ -38,17 +44,23 @@ export const Footer: React.FC<FooterProps> = () => {
 
 	const theme = useTheme();
 
+	const medium = useMediaQuery("(max-width:1024px)");
+	const small = useMediaQuery("(max-width:640px)");
+
 	return (
 		<Box display={"flex"} flexDirection={"column"}>
 			<FooterWrapper>
 				<FooterContainer>
 					<FooterLeft>
-						<Typography fontSize={"28px"} fontFamily={"Rokkitt"}>
+						<Typography
+							fontSize={small ? "18px" : medium ? "24px" : "28px"}
+							fontFamily={"Rokkitt"}
+						>
 							CultureGuide
 						</Typography>
 						<Typography
 							fontFamily={"Poppins"}
-							fontSize={"14px"}
+							fontSize={small ? "10px" : medium ? "12px" : "14px"}
 							fontWeight={"300"}
 						>
 							Your Gateway to Tosora's Timeless Traditions
@@ -56,7 +68,7 @@ export const Footer: React.FC<FooterProps> = () => {
 
 						<Typography
 							fontFamily={"Poppins"}
-							fontSize={"14px"}
+							fontSize={small ? "10px" : medium ? "12px" : "14px"}
 							fontWeight={"300"}
 						>
 							Tosora, Kecamatan Majauleng, Kabupaten Wajo, Sulawesi Selatan
@@ -64,14 +76,14 @@ export const Footer: React.FC<FooterProps> = () => {
 						<span>
 							<Typography
 								fontFamily={"Poppins"}
-								fontSize={"14px"}
+								fontSize={small ? "10px" : medium ? "12px" : "14px"}
 								fontWeight={"400"}
 							>
 								Email:{" "}
 								<Typography
 									component={"span"}
 									fontFamily={"Poppins"}
-									fontSize={"14px"}
+									fontSize={small ? "10px" : medium ? "12px" : "14px"}
 									fontWeight={"400"}
 									onClick={() =>
 										copyToClipboard("kkn.tosora112.unhas@gmail.com")
@@ -92,7 +104,10 @@ export const Footer: React.FC<FooterProps> = () => {
 						</span>
 					</FooterLeft>
 					<FooterMid>
-						<Typography fontSize={"28px"} fontFamily={"Rokkitt"}>
+						<Typography
+							fontSize={small ? "18px" : medium ? "24px" : "28px"}
+							fontFamily={"Rokkitt"}
+						>
 							Navigate
 						</Typography>
 						<QuickLinks>
@@ -104,7 +119,10 @@ export const Footer: React.FC<FooterProps> = () => {
 						</QuickLinks>
 					</FooterMid>
 					<FooterMid>
-						<Typography fontSize={"28px"} fontFamily={"Rokkitt"}>
+						<Typography
+							fontSize={small ? "18px" : medium ? "24px" : "28px"}
+							fontFamily={"Rokkitt"}
+						>
 							Explore
 						</Typography>
 						<QuickLinks>
@@ -116,12 +134,15 @@ export const Footer: React.FC<FooterProps> = () => {
 						</QuickLinks>
 					</FooterMid>
 					<FooterRight>
-						<Typography fontSize={"28px"} fontFamily={"Rokkitt"}>
+						<Typography
+							fontSize={small ? "18px" : medium ? "24px" : "28px"}
+							fontFamily={"Rokkitt"}
+						>
 							Contact Us
 						</Typography>
 						<Typography
 							fontFamily={"Poppins"}
-							fontSize={"14px"}
+							fontSize={small ? "10px" : medium ? "12px" : "14px"}
 							fontWeight={"300"}
 						>
 							Follow Our Social Media to Find Out the Latest Updates of Our

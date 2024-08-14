@@ -1,16 +1,18 @@
-import { Box, Button, Divider, Typography } from "@mui/material";
+import { Box, Button, Divider, Typography, useMediaQuery } from "@mui/material";
 import { useThemeContext } from "../../../themes/ThemeContextProvider";
 import { BrightnessHigh, BrightnessLow } from "@mui/icons-material";
 
 const ThemeToggle = () => {
 	const { mode, toggleColorMode } = useThemeContext();
 
+	const medium = useMediaQuery("(max-width:1024px)");
+	const small = useMediaQuery("(max-width:640px)");
 	return (
 		<Button
 			variant="outlined"
 			sx={{
-				width: "94px",
-				height:"32px",
+				width: small ? "64px" : medium ? "94px" : "94px",
+				height: small ? "24px" : medium ? "36px" : "36px",
 				borderRadius: "24px",
 				borderColor: `${mode == "light" ? "#1ab69d" : "#ffffff"}`,
 				color: `${mode == "light" ? "#1ab69d" : "#ffffff"}`,
@@ -35,15 +37,19 @@ const ThemeToggle = () => {
 						textTransform: "capitalize",
 						// bgcolor: "red",
 					}}
-					fontSize={"12px"}
+					fontSize={small? "8px" :"12px"}
 				>
 					{mode}
 				</Typography>
 				<Divider orientation="vertical" flexItem />
 				{mode === "dark" ? (
-					<BrightnessHigh fontSize="small" />
+					<Typography fontSize={small ? "14px" : "14px"} lineHeight={"12px"}>
+						<BrightnessHigh fontSize={small ? "inherit" : "small"} />
+					</Typography>
 				) : (
-					<BrightnessLow fontSize="small" />
+					<Typography fontSize={small ? "14px" : "14px"}>
+						<BrightnessLow fontSize={small ? "inherit" : "small"} />
+					</Typography>
 				)}
 			</Box>
 		</Button>

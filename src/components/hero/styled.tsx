@@ -32,6 +32,14 @@ export const HeroWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
 			backgroundColor: "rgba(0, 0, 0, 0.6)",
 			zIndex: 1,
 		},
+
+		["@media (max-width: 1024px)"]: {
+			padding: "32px 32px",
+		},
+		["@media (max-width: 640px)"]: {
+			padding: "64px 16px",
+			height: "max-content",
+		},
 	}));
 
 export const HeroContainer: StyledComponent<BoxProps & { theme?: Theme }> =
@@ -44,6 +52,12 @@ export const HeroContainer: StyledComponent<BoxProps & { theme?: Theme }> =
 		maxWidth: "1980px",
 		alignItems: "center",
 		justifyContent: "center",
+		["@media (max-width: 1024px)"]: {
+			maxWidth: "",
+		},
+		["@media (max-width: 640px)"]: {
+			maxWidth: "",
+		},
 	}));
 
 export const HeroGrid: StyledComponent<BoxProps & { theme?: Theme }> = styled(
@@ -55,6 +69,14 @@ export const HeroGrid: StyledComponent<BoxProps & { theme?: Theme }> = styled(
 	padding: "0px 64px",
 	maxWidth: "1440px",
 	gap: "16px",
+	["@media (max-width: 1024px)"]: {
+		padding: "0 32px",
+		gap: "8px",
+	},
+	["@media (max-width: 640px)"]: {
+		padding: "0 4px",
+		gap: "4px",
+	},
 }));
 
 export const HeroCard: StyledComponent<
@@ -62,4 +84,9 @@ export const HeroCard: StyledComponent<
 > = styled(CardActionArea)(() => ({
 	borderRadius: "4px",
 	padding: "12px",
+	display: "flex",
+	["@media (max-width: 1024px)"]: {
+		display: "flex",
+	},
+	["@media (max-width: 640px)"]: {},
 }));

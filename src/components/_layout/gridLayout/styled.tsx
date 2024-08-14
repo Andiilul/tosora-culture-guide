@@ -7,7 +7,7 @@ export const TwoGrid: StyledComponent<BoxProps & { theme?: Theme }> = styled(
 	display: "grid",
 	gap: "12px",
 	gridTemplateColumns: "repeat(2,minmax(0,1fr))",
-	["@media (max-width: 768px)"]: {
+	["@media (max-width: 640px)"]: {
 		gridTemplateColumns: "repeat(1,minmax(0,1fr))",
 	},
 }));
@@ -21,8 +21,8 @@ export const ThreeGrid: StyledComponent<BoxProps & { theme?: Theme }> = styled(
 	["@media (max-width: 1024px)"]: {
 		gridTemplateColumns: "repeat(2,minmax(0,1fr))",
 	},
-	["@media (max-width: 768px)"]: {
-		gridTemplateColumns: "repeat(1,minmax(0,1fr))",
+	["@media (max-width: 640px)"]: {
+		gridTemplateColumns: "repeat(2,minmax(0,1fr))",
 	},
 }));
 export const FourGrid: StyledComponent<BoxProps & { theme?: Theme }> = styled(
@@ -34,7 +34,7 @@ export const FourGrid: StyledComponent<BoxProps & { theme?: Theme }> = styled(
 	["@media (max-width: 1024px)"]: {
 		gridTemplateColumns: "repeat(2,minmax(0,1fr))",
 	},
-	["@media (max-width: 768px)"]: {
+	["@media (max-width: 640px)"]: {
 		gridTemplateColumns: "repeat(1,minmax(0,1fr))",
 	},
 }));
