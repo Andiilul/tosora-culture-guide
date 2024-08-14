@@ -9,9 +9,9 @@ export interface CuisineTypes {
 	id: string;
 	name: string;
 	description: string;
+	duration: number;
 	image_path: string | null;
 	recipe: Recipe | null;
-	duration: number | null;
 	createdAt: Timestamp;
 	updatedAt: Timestamp;
 }

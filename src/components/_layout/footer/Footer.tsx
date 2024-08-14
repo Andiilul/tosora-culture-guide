@@ -9,33 +9,10 @@ import {
 } from "./styled";
 import { navbarMenu, ExploreBlog } from "../../../mock/menu";
 import { useState } from "react";
-import { Facebook, Instagram, Twitter, YouTube } from "@mui/icons-material";
+import { socialMedia } from "../../../mock/socialMedia";
 
 interface FooterProps {}
-''
 export const Footer: React.FC<FooterProps> = () => {
-	const socialMedia = [
-		{
-			name: "Facebook",
-			icon: <Facebook />,
-			link: "https://www.facebook.com/",
-		},
-		{
-			name: "Instagram",
-			icon: <Instagram />,
-			link: "https://www.instagram.com/",
-		},
-		{
-			name: "Twitter",
-			icon: <Twitter />,
-			link: "https://twitter.com/",
-		},
-		{
-			name: "YouTube",
-			icon: <YouTube />,
-			link: "https://www.youtube.com/",
-		},
-	];
 
 	const [open, setOpen] = useState(false);
 
@@ -120,7 +97,7 @@ export const Footer: React.FC<FooterProps> = () => {
 						</Typography>
 						<QuickLinks>
 							{navbarMenu.map((map, index) => (
-								<Link key={index} href={map.link}>
+								<Link key={index} href={map.scroll}>
 									<Box>{map.name}</Box>
 								</Link>
 							))}

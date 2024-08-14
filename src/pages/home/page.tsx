@@ -3,7 +3,6 @@ import {
 	Box,
 	Button,
 	CardActionArea,
-	Link,
 	Typography,
 	useTheme,
 } from "@mui/material";
@@ -19,6 +18,10 @@ import tosora from "/assets/image-1.jpg";
 import { SpinDecoration } from "../../components/_layout/decoration";
 import { ArrowRightAlt, Map } from "@mui/icons-material";
 import { useEffect, useState } from "react";
+import { Explore } from "../explore/page";
+import { PageLayout } from "../../components/_layout/pageLayout/pageLayout";
+import { socialMedia } from "../../mock/socialMedia";
+import { GridLayout } from "../../components/_layout/gridLayout";
 
 interface HomeProps {}
 
@@ -44,7 +47,12 @@ export const Home: React.FC<HomeProps> = () => {
 
 	return (
 		<>
-			<Hero />
+			<div id="firstHero">
+				<Hero />
+			</div>
+			<div id="explore">
+				<Explore />
+			</div>
 			<HomeContentWrapper>
 				<HomeContainer>
 					<IntroSection>
@@ -126,30 +134,6 @@ export const Home: React.FC<HomeProps> = () => {
 								bangunan bersejarah hingga makam raja-raja Wajo.
 							</Typography>
 							<Box display={"flex"} gap={"24px"}>
-								<Link href="/explore">
-									<Button
-										sx={{
-											textTransform: "none",
-											display: "flex",
-											gap: "12px",
-											width: "max-content",
-											boxShadow: "none",
-											color: "white",
-										}}
-										size="large"
-										variant="contained"
-									>
-										<Typography
-											fontFamily={"Poppins"}
-											fontSize={"16px"}
-											fontWeight={"300"}
-										>
-											Jelajahi
-										</Typography>
-										<ArrowRightAlt />
-									</Button>
-								</Link>
-
 								<Button
 									onClick={() =>
 										window.open("https://maps.app.goo.gl/wabPWE6zRjdCN4wH9")
@@ -238,6 +222,7 @@ export const Home: React.FC<HomeProps> = () => {
 						</Box>
 					</IntroSection>
 				</HomeContainer>
+
 				<SpiritualSection
 					id="spiritual"
 					sx={{
@@ -246,7 +231,7 @@ export const Home: React.FC<HomeProps> = () => {
 				>
 					<Box
 						display={"flex"}
-						padding={"128px 128px"}
+						padding={"128px 96px"}
 						flexDirection={"column"}
 						gap={"48px"}
 						flex={"1"}
@@ -300,11 +285,11 @@ export const Home: React.FC<HomeProps> = () => {
 									>
 										<CardImage>
 											<Avatar
-											variant="square"
-											sx={{
-												height: "100%",
-												width: "100%",
-											}}
+												variant="square"
+												sx={{
+													height: "100%",
+													width: "100%",
+												}}
 												src={`/assets/masjidtua/${index + 1}.jpg`}
 												alt=""
 											/>
@@ -360,6 +345,82 @@ export const Home: React.FC<HomeProps> = () => {
 						</Box>
 					</Box>
 				</SpiritualSection>
+				<PageLayout>
+					<Box
+						component={"div"}
+						id="about-us"
+						width={"100%"}
+						display={"flex"}
+						flexDirection={"column"}
+						gap={"24px"}
+					>
+						<Typography
+							fontFamily={"Rokkitt"}
+							textAlign={"center"}
+							fontSize={"36px"}
+						>
+							About Us
+						</Typography>
+						<Avatar
+							src="/assets/Frame 1.png"
+							variant="square"
+							sx={{
+								width: "100%",
+								height: "auto",
+							}}
+						/>
+						<Typography
+							fontFamily={"Rokkitt"}
+							textAlign={"center"}
+							fontSize={"14px"}
+						>
+							Welcome to the Tosora Culture Guide, one of projects proudly created by
+							the KKNT-112 Team from Universitas Hasanuddin. This website is
+							part of our community service program, dedicated to preserving and
+							sharing the rich cultural heritage of Tosora. Our mission is to
+							provide an informative and engaging resource for anyone interested
+							in learning about the unique traditions, history, and culture of
+							Tosora. We hope this guide helps foster a deeper appreciation and
+							understanding of this vibrant community. Thank you for exploring
+							with us!
+						</Typography>
+						<GridLayout defaultGrid={4}>
+							{socialMedia.map((map, index) => (
+								<CardActionArea
+									key={index}
+									onClick={() => window.open(map.link)}
+								>
+									<Box display={"flex"} padding={"12px"}>
+										<Box>
+											<Typography fontSize={"64px"}>{map.icon}</Typography>
+										</Box>
+										<Box
+											padding={"12px"}
+											display={"flex"}
+											flexDirection={"column"}
+											gap={"4px"}
+										>
+											<Typography
+												fontFamily={"Poppins"}
+												fontWeight={200}
+												fontSize={"18px"}
+											>
+												{map.name}
+											</Typography>
+											<Typography
+												fontFamily={"Poppins"}
+												fontWeight={200}
+												fontSize={"14px"}
+											>
+												{map.text}
+											</Typography>
+										</Box>
+									</Box>
+								</CardActionArea>
+							))}
+						</GridLayout>
+					</Box>
+				</PageLayout>
 			</HomeContentWrapper>
 		</>
 	);

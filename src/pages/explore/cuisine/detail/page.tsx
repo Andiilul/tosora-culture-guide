@@ -1,62 +1,36 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { AddSiteInput } from "../../../../types/sites";
+import { PageLayout } from "../../../../components/_layout/pageLayout/pageLayout";
+import { getOneCuisine } from "../../../../services/admin/cuisine";
+import { CuisineTypes } from "../../../../types/cuisine";
+import { Avatar, Box, Button, Typography, useTheme } from "@mui/material";
+import { formatDateString } from "../../../../services/dateformatter";
 import {
-	SiteHeroContainer,
-	SiteHeroContent,
-	SiteHeroWrapper,
-	SiteDetailWrapper,
-	SiteDetailContent,
-} from "./styled";
-import {
-	Box,
-	Button,
-	IconButton,
-	Radio,
-	Typography,
-	useTheme,
-} from "@mui/material";
-import { ArrowLeft, ArrowRight } from "@mui/icons-material";
-import { NotFound } from "../../../_notfound/page";
-import { getOneSite } from "../../../../services/admin/sites";
+	ArrowBack,
+	AvTimer,
+	DateRangeOutlined,
+	RiceBowl,
+} from "@mui/icons-material";
 
 interface CuisineDetailProps {}
 
 export const CuisineDetail: React.FC<CuisineDetailProps> = () => {
-	const theme = useTheme();
 	const { id } = useParams();
+	const theme = useTheme();
 
-	const [site, setSite] = useState<AddSiteInput>({
-		name: "",
-		description: "",
-		catchphrase: "",
-		location: "",
-		embedded_maplink: "",
-		designationYear: new Date().getFullYear(),
-		image_path: [],
-	});
+	const [cuisine, setCuisine] = useState<CuisineTypes>();
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
-	const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
-	const scrollToId = (id: string) => {
-		const element = document.getElementById(id);
-		if (element) {
-			element.scrollIntoView({
-				behavior: "smooth",
-				block: "start",
-				inline: "nearest",
-			});
-		}
-	};
+	const image = "380px";
 
 	useEffect(() => {
 		if (id) {
 			const fetchSite = async () => {
 				try {
-					const siteData = await getOneSite(id);
+					const siteData = await getOneCuisine(id);
 					if (siteData) {
-						setSite(siteData);
+						setCuisine(siteData);
 					} else {
 						setError("Invalid parameter: Data not found.");
 					}
@@ -74,194 +48,169 @@ export const CuisineDetail: React.FC<CuisineDetailProps> = () => {
 	}, [id]);
 
 	if (loading) {
-		return <div>Loadingg....</div>;
+		return <div>Loading...</div>;
 	}
+
 	if (error) {
-		return <NotFound customMessage={error.toString()} />;
+		return <div>{error}</div>;
 	}
 
 	return (
-		<SiteDetailWrapper>
-			<SiteHeroWrapper
+		<PageLayout>
+			<Button
+				href="/explore/cuisines"
 				sx={{
-					backgroundImage: site.image_path
-						? `url(${site.image_path[selectedIndex]})`
-						: "",
-					transition: "background-image 0.2s ease-in-out",
+					width: "max-content",
 				}}
+				size="large"
 			>
-				<SiteHeroContainer>
-					<SiteHeroContent width={"100%"}>
-						<Box display={"flex"} flexDirection={"column"} gap={"12px"}>
-							<Typography
-								fontSize={"64px"}
-								textAlign={"center"}
-								fontFamily={"Rokkitt"}
-								textTransform={"uppercase"}
-								lineHeight={"54px"}
-								sx={{
-									textShadow: "black 2px 2px",
-								}}
-							>
-								{site.name}
-							</Typography>
-							<Typography
-								fontSize={"24px"}
-								textAlign={"center"}
-								fontWeight={300}
-								color={theme.palette.primary.main}
-								fontFamily={"Poppins"}
-								sx={{
-									textShadow: "rgba(0,0,0,0.4) 2px 2px",
-								}}
-							>
-								{site.catchphrase}
-							</Typography>
-							<Box
-								justifyContent={"center"}
-								display={"flex"}
-								gap={"12px"}
-								marginTop={"12px"}
-							>
-								<IconButton
-									sx={{
-										border: "solid white 1px",
-									}}
-									onClick={() =>
-										setSelectedIndex(
-											selectedIndex === 0
-												? site.image_path.length - 1
-												: selectedIndex - 1
-										)
-									}
-								>
-									<ArrowLeft />
-								</IconButton>
-								<Box
-									display={"flex"}
-									gap={"12px"}
-									justifyContent={"space-between"}
-									alignItems={"center"}
-									width={"100%"}
-								>
-									<Box
-										sx={{
-											display: "flex",
-											width: "100%",
-											justifyContent: "center",
-										}}
-									>
-										{Array.from(
-											{ length: site.image_path.length },
-											(_, index) => (
-												<Radio
-													key={index}
-													sx={{
-														color: "white",
-														padding: "2px",
-													}}
-													size="small"
-													checked={selectedIndex === index}
-													onClick={() => setSelectedIndex(index)}
-												/>
-											)
-										)}
-									</Box>
-								</Box>
-								<IconButton
-									sx={{
-										border: "solid white 1px",
-									}}
-									onClick={() =>
-										setSelectedIndex(
-											selectedIndex === site.image_path.length - 1
-												? 0
-												: selectedIndex + 1
-										)
-									}
-								>
-									<ArrowRight />
-								</IconButton>
-							</Box>
-						</Box>
-						<Box
-							display={"flex"}
-							alignItems={"center"}
-							justifyContent={"center"}
-							maxWidth={"360px"}
-							gap={"24px"}
-							width={"100%"}
-						>
-							<Button
-								href={site.location}
-								sx={{
-									flex: "1",
-								}}
-								variant="outlined"
-							>
-								View In Maps
-							</Button>
-
-							<Button
-								onClick={() => scrollToId("detail")}
-								sx={{
-									flex: "1",
-								}}
-								variant="outlined"
-							>
-								Detail
-							</Button>
-						</Box>
-					</SiteHeroContent>
-				</SiteHeroContainer>
-			</SiteHeroWrapper>
-			<SiteDetailContent>
-				<Box
+				<ArrowBack />
+				Back
+			</Button>
+			<Box
+				width={"100%"}
+				display={"flex"}
+				flexDirection={"column"}
+				gap={"24px"}
+			>
+				<Typography fontFamily={"Poppins"} fontSize={"32px"} fontWeight={300}>
+					{cuisine?.name}{" "}
+				</Typography>
+				<Box display={"flex"} gap={"12px"}>
+					<Typography fontFamily={"Poppins"} fontSize={"12px"} fontWeight={300}>
+						<DateRangeOutlined color="primary" fontSize="inherit" /> Created At{" "}
+						{formatDateString(cuisine?.createdAt.toDate().toString() as string)}
+					</Typography>
+					<Typography fontFamily={"Poppins"} fontSize={"12px"} fontWeight={300}>
+						<DateRangeOutlined color="primary" fontSize="inherit" /> Last
+						Updated At{" "}
+						{formatDateString(cuisine?.updatedAt.toDate().toString() as string)}{" "}
+					</Typography>
+				</Box>
+				<Avatar
+					variant="square"
 					sx={{
-						textAlign: "justify",
+						width: "100%",
+						height: image,
 					}}
-					component={"div"}
-					dangerouslySetInnerHTML={{
-						__html:
-							site.description.length !== 0
-								? site.description
-								: "<p>Preview Here</p>",
-					}}
-				></Box>
+					src={
+						cuisine?.image_path ? cuisine.image_path : "/assets/not-found.webp"
+					}
+				></Avatar>
 				<Box
-					component={"div"}
-					id="maps"
 					display={"flex"}
-					flexDirection={"column"}
+					width={"100%"}
+					justifyContent={"center"}
 					gap={"12px"}
 				>
-					<Typography
-						textAlign={"center"}
-						fontFamily={"Rokkitt"}
-						color={theme.palette.primary.main}
-						sx={{
-							fontSize: "24px",
-							fontWeight: "bold",
-						}}
-					>
-						Location
-					</Typography>
 					<Box
 						display={"flex"}
-						width={"100%"}
-						height={"400px"}
-						bgcolor={"white"}
+						padding={"12px"}
+						flexDirection={"column"}
+						alignItems={"center"}
+						gap={"12px"}
 					>
-						<iframe
-							width={"100%"}
-							height={"100%"}
-							title={site.name}
-							src={site.embedded_maplink}
-							allowFullScreen
-						></iframe>
+						<Box
+							fontFamily={"Poppins"}
+							fontSize={"24px"}
+							display={"flex"}
+							alignItems={"center"}
+							gap={"4px"}
+						>
+							<AvTimer fontSize="inherit" />
+							<Typography
+								component={"span"}
+								fontFamily={"Poppins"}
+								fontSize={"18px"}
+								fontWeight={400}
+							>
+								Lama Pembuatan
+							</Typography>
+						</Box>
+						<Typography fontFamily={"Poppins"} fontSize={"14px"}>
+							± {cuisine?.duration} Menit
+						</Typography>
+					</Box>
+					<Box maxWidth={"1px"} flex={1} bgcolor={theme.palette.primary.main} />
+					<Box
+						display={"flex"}
+						padding={"12px"}
+						flexDirection={"column"}
+						alignItems={"center"}
+						gap={"12px"}
+					>
+						<Box
+							fontFamily={"Poppins"}
+							fontSize={"24px"}
+							display={"flex"}
+							alignItems={"center"}
+							gap={"4px"}
+						>
+							<RiceBowl fontSize="inherit" />
+							<Typography
+								component={"span"}
+								fontFamily={"Poppins"}
+								fontSize={"18px"}
+								fontWeight={400}
+							>
+								{" "}
+								Jumlah Bahan
+							</Typography>
+						</Box>
+						<Typography fontFamily={"Poppins"} fontSize={"14px"}>
+							{cuisine?.recipe === null
+								? "N/A"
+								: cuisine?.recipe?.ingredients.length}
+						</Typography>
 					</Box>
 				</Box>
-			</SiteDetailContent>
-		</SiteDetailWrapper>
+				<Box
+					display={"flex"}
+					flexDirection={"column"}
+					gridTemplateColumns={"repeat(2,minmax(0,1fr))"}
+					gap={"48px"}
+				>
+					<Box display={"flex"} flexDirection={"column"} gap={"12px"}>
+						<Typography fontFamily={"Poppins"} fontSize={"20px"}>
+							Deskripsi :
+						</Typography>
+						<Typography
+							fontFamily={"Poppins"}
+							fontSize={"14px"}
+							textAlign={"justify"}
+						>
+							{cuisine?.description}
+						</Typography>
+					</Box>
+					{cuisine?.recipe === null ? (
+						<Typography>Resep Tidak Tersedia</Typography>
+					) : (
+						<Box display={"flex"} flexDirection={"column"} gap={"12px"}>
+							<Typography fontFamily={"Poppins"} fontSize={"20px"}>
+								Resep :
+							</Typography>
+							<Typography fontFamily={"Poppins"} fontSize={"14px"}>
+								Bahan Bahan :
+							</Typography>
+							<Typography fontFamily={"Poppins"} fontSize={"14px"}>
+								<ul>
+									{cuisine?.recipe?.ingredients.map((map, index) => (
+										<li key={index}>{map}</li>
+									))}
+								</ul>
+								<Typography fontFamily={"Poppins"} fontSize={"14px"}>
+									Langkah Langkah :
+								</Typography>
+								<ol>
+									{cuisine?.recipe?.steps.map((map, index) => (
+										<li key={index}>{map}</li>
+									))}
+								</ol>
+							</Typography>
+						</Box>
+					)}
+				</Box>
+			</Box>
+		</PageLayout>
 	);
 };

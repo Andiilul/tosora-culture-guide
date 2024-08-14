@@ -9,7 +9,6 @@ import {
 	Navigate,
 } from "react-router-dom";
 import { Home } from "./pages/home/page";
-import { Explore } from "./pages/explore/page";
 import { NotFound } from "./pages/_notfound/page";
 import { MainLayout } from "./components/_layout/layout";
 import { Sites } from "./pages/explore/sites/page";
@@ -29,6 +28,12 @@ import { AdminWorks } from "./pages/admin/worksAdmin/page";
 import AdminWorksForm from "./pages/admin/worksAdmin/Form";
 import AdminCultureForm from "./pages/admin/cultureAdmin/Form";
 import { Cuisine } from "./pages/explore/cuisine/page";
+import AdminJournalForm from "./pages/admin/journalAdmin/page";
+import { CuisineDetail } from "./pages/explore/cuisine/detail/page";
+import { Culture } from "./pages/explore/culture/page";
+import { Works } from "./pages/explore/works/page";
+import { Entertainments } from "./pages/explore/entertainments/page";
+import { Wisdoms } from "./pages/explore/wisdoms/page";
 
 function App() {
 	const { theme } = useThemeContext();
@@ -91,6 +96,7 @@ function App() {
 								path="entertainment/edit/:id"
 								element={<AdminEntertainmentForm isedit />}
 							/>
+							<Route path="journal" element={<AdminJournalForm />} />
 							{/* <Route path="blog" element={"Blog"} />
 							<Route path="blog/add" element={"Blog"} />{" "}
 							<Route
@@ -103,25 +109,24 @@ function App() {
 					{/* User Route */}
 					<Route element={<MainLayout />}>
 						<Route path="/" element={<Home />} />
-						<Route path="/explore" element={<Explore />} />
 						{/* Sites */}
 						<Route path="/explore/sites" element={<Sites />} />
 						<Route path="/explore/sites/:id" element={<SiteDetail />} />
 						{/* Works */}
-						<Route path="/explore/works" element={<Sites />} />
+						<Route path="/explore/works" element={<Works />} />
 						<Route path="/explore/works/:id" element={<SiteDetail />} />
 						{/* Culture */}
-						<Route path="/explore/culture" element={<Sites />} />
-						<Route path="/explore/culture/:id" element={<SiteDetail />} />
+						<Route path="/explore/cultures" element={<Culture />} />
+						<Route path="/explore/cultures/:id" element={<SiteDetail />} />
 						{/* Local Knowledfe */}
-						<Route path="/explore/wisdoms" element={<Sites />} />
+						<Route path="/explore/wisdoms" element={<Wisdoms />} />
 						<Route path="/explore/wisdoms/:id" element={<SiteDetail />} />
 						{/* Cuisines */}
 						<Route path="/explore/cuisines" element={<Cuisine />} />
-						<Route path="/explore/cuisines/:id" element={<SiteDetail />} />
+						<Route path="/explore/cuisines/:id" element={<CuisineDetail />} />
 						{/* Arts and Entertainments */}
-						<Route path="/explore/sites" element={<Sites />} />
-						<Route path="/explore/sites/:id" element={<SiteDetail />} />
+						<Route path="/explore/entertainments" element={<Entertainments />} />
+						<Route path="/explore/entertainments /:id" element={<SiteDetail />} />
 					</Route>
 					<Route element={<MainLayout />}>
 						<Route path="*" element={<NotFound />} />
