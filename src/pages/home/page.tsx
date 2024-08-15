@@ -431,7 +431,7 @@ export const Home: React.FC<HomeProps> = () => {
 							understanding of this vibrant community. Thank you for exploring
 							with us!
 						</Typography>
-						<GridLayout defaultGrid={4}>
+						<GridLayout defaultGrid={2}>
 							{socialMedia.map((map, index) => (
 								<CardActionArea
 									key={index}

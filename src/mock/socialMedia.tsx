@@ -1,4 +1,4 @@
-import { Instagram, Public, Twitter, YouTube } from "@mui/icons-material";
+import { Instagram, Public, } from "@mui/icons-material";
 
 export const socialMedia = [
 	// {
@@ -13,18 +13,18 @@ export const socialMedia = [
 		text: "@kkn112.tosora.unhas",
 		link: "https://www.instagram.com/kkn112.tosora.unhas/",
 	},
-	{
-		name: "Twitter",
-		icon: <Twitter fontSize="inherit" />,
-		text: "Coming Soon",
-		link: "https://twitter.com/",
-	},
-	{
-		name: "YouTube",
-		icon: <YouTube fontSize="inherit" />,
-		text: "Coming Soon",
-		link: "https://www.youtube.com/",
-	},
+	// {
+	// 	name: "Twitter",
+	// 	icon: <Twitter fontSize="inherit" />,
+	// 	text: "Coming Soon",
+	// 	link: "https://twitter.com/",
+	// },
+	// {
+	// 	name: "YouTube",
+	// 	icon: <YouTube fontSize="inherit" />,
+	// 	text: "Coming Soon",
+	// 	link: "https://www.youtube.com/",
+	// },
 	{
 		name: "Our Website",
 		icon: <Public fontSize="inherit" />,
