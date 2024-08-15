@@ -15,12 +15,17 @@ import {
 	QuickLinks,
 } from "./styled";
 import { navbarMenu, ExploreBlog } from "../../../mock/menu";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { socialMedia } from "../../../mock/socialMedia";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface FooterProps {}
 export const Footer: React.FC<FooterProps> = () => {
+	const path = useLocation().pathname;
 	const [open, setOpen] = useState(false);
+	const navigate = useNavigate();
+
+	const scrollTargetRef = useRef<string | null>(null);
 
 	const handleClose = (
 		event: React.SyntheticEvent | Event,
@@ -35,6 +40,32 @@ export const Footer: React.FC<FooterProps> = () => {
 
 		setOpen(false);
 	};
+
+	const handleMenuClick = (scrollTarget: string) => {
+		if (path !== "/") {
+			// Save the target in a ref and navigate to the home page
+			scrollTargetRef.current = scrollTarget;
+			navigate("/");
+		} else {
+			// Scroll to the section on the current page
+			scrollToTarget(scrollTarget);
+		}
+	};
+
+	const scrollToTarget = (scrollTarget: string) => {
+		const element = document.getElementById(scrollTarget);
+		if (element) {
+			element.scrollIntoView({ behavior: "smooth" });
+		}
+	};
+
+	useEffect(() => {
+		// When path changes to "/", check if there's a scroll target to move to
+		if (path === "/" && scrollTargetRef.current) {
+			scrollToTarget(scrollTargetRef.current);
+			scrollTargetRef.current = null; // Reset after scrolling
+		}
+	}, [path]);
 
 	const copyToClipboard = (text: string) => {
 		navigator.clipboard.writeText(text).then(() => {
@@ -112,9 +143,30 @@ export const Footer: React.FC<FooterProps> = () => {
 						</Typography>
 						<QuickLinks>
 							{navbarMenu.map((map, index) => (
-								<Link key={index} href={map.scroll}>
-									<Box>{map.name}</Box>
-								</Link>
+								<Box
+									key={index}
+									component={"div"}
+									onClick={() => handleMenuClick(map.scroll)}
+									sx={{
+										cursor: "pointer",
+									}}
+								>
+									<Typography
+										color={theme.palette.primary.main}
+										fontFamily={"Poppins"}
+										fontSize={small ? "14px" : medium ? "14px" : "14px"}
+										fontWeight={"400"}
+										sx={{
+											transition: "200ms",
+											":hover": {
+												color: theme.palette.text.primary,
+												transition: "200ms",
+											},
+										}}
+									>
+										{map.name}
+									</Typography>
+								</Box>
 							))}
 						</QuickLinks>
 					</FooterMid>
@@ -127,7 +179,19 @@ export const Footer: React.FC<FooterProps> = () => {
 						</Typography>
 						<QuickLinks>
 							{ExploreBlog.map((map, index) => (
-								<Link key={index} href={map.link}>
+								<Link
+									key={index}
+									href={map.link}
+									sx={{
+										textTransform: "none",
+										textDecoration: "none",
+										transition: "200ms",
+										":hover": {
+											color: theme.palette.text.primary,
+											transition: "200ms",
+										},
+									}}
+								>
 									<Box>{map.name}</Box>
 								</Link>
 							))}
