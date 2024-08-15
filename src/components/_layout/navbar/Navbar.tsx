@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { NavbarWrapper, NavbarMenuList, NavbarContainer } from "./styled";
 import ThemeToggle from "../theme-toggle/ThemeToggle";
 import { useEffect, useState, useRef } from "react";
@@ -52,6 +52,8 @@ export const Navbar: React.FC<NavbarProps> = () => {
 		}
 	}, [path]);
 
+	const medium = useMediaQuery("(max-width:1024px)");
+	const small = useMediaQuery("(max-width:640px)");
 	return (
 		<NavbarWrapper
 			sx={{
@@ -72,7 +74,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
 					color={
 						path === "/" && !scrolled ? "white" : theme.palette.text.primary
 					}
-					fontSize={"24px"}
+					fontSize={small ? "14px" : medium ? "16px" : "24px"}
 				>
 					CultureGuide
 				</Typography>
@@ -93,7 +95,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
 										: theme.palette.text.primary
 								}
 								fontFamily={"Poppins"}
-								fontSize={"12px"}
+								fontSize={small ? "8px" : medium ? "10px" : "12px"}
 								fontWeight={"300"}
 								sx={{
 									":hover": {

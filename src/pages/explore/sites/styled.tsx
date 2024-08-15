@@ -24,6 +24,17 @@ export const SiteWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
 			backgroundColor: "rgba(0, 0, 0, 0.6)",
 			zIndex: 1,
 		},
+		["@media (max-width: 1024px)"]: {
+			minHeight: "640px",
+
+			height: "max-content",
+			padding: "48px",
+		},
+		["@media (max-width: 640px)"]: {
+			minHeight: "360px",
+			height: "max-content",
+			padding: "16px",
+		},
 	}));
 
 export const SiteContainer: StyledComponent<BoxProps & { theme?: Theme }> =
@@ -46,6 +57,11 @@ export const SiteContent: StyledComponent<BoxProps & { theme?: Theme }> =
 		display: "grid",
 		gap: "24px",
 		gridTemplateColumns: "repeat(2,minmax(0,1fr))",
+		["@media (max-width: 1024px)"]: {},
+		["@media (max-width: 640px)"]: {
+			gridTemplateColumns: "repeat(1,minmax(0,1fr))",
+			gap: "12px",
+		},
 	}));
 
 export const CarouselContainer: StyledComponent<BoxProps & { theme?: Theme }> =

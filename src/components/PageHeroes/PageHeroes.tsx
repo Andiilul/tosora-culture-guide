@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, useMediaQuery } from "@mui/material";
 import { HeroSection, WhiteHeroSection } from "./styled";
 import { ReactNode } from "react";
 
@@ -17,6 +17,9 @@ export const PageHeroes: React.FC<PageHeroesProps> = ({
 	id,
 	variant = "explore",
 }) => {
+	const medium = useMediaQuery("(max-width:1024px)");
+	const small = useMediaQuery("(max-width:640px)");
+
 	const handleScroll = () => {
 		const element = document.getElementById(id);
 		if (element) {
@@ -33,7 +36,7 @@ export const PageHeroes: React.FC<PageHeroesProps> = ({
 			>
 				<Box
 					display={"flex"}
-					padding={"128px 128px"}
+					padding={small ? "32px" : medium ? "64px" : "128px 128px"}
 					flexDirection={"column"}
 					gap={"48px"}
 					flex={"1"}
@@ -44,7 +47,7 @@ export const PageHeroes: React.FC<PageHeroesProps> = ({
 					<Box display={"flex"} flexDirection={"column"}>
 						<Typography
 							textAlign={"center"}
-							fontSize={"48px"}
+							fontSize={small ? "24px" : medium ? "36px" : "48px"}
 							fontWeight={"300"}
 							color={"white"}
 							fontFamily={"Baskervville SC"}
@@ -54,17 +57,20 @@ export const PageHeroes: React.FC<PageHeroesProps> = ({
 					</Box>
 					<Box display={"flex"} justifyContent={"center"}>
 						<Box
-							width={"360px"}
-							gap={"24px"}
+							width={small ? "max-content" : "360px"}
+							gap={medium ? "12px" : "24px"}
 							display={"grid"}
-							gridTemplateColumns={"repeat(2,minmax(0,1fr))"}
+							gridTemplateColumns={
+								small ? "repeat(1,minmax(0,1fr))" : "repeat(2,minmax(0,1fr))"
+							}
 						>
 							<Button
 								variant="outlined"
 								sx={{
 									textTransform: "none",
+									width: small ? "240px" : "100%",
 								}}
-								size="large"
+								size={medium ? "small" : "large"}
 								onClick={handleScroll}
 							>
 								<Typography fontWeight={300} fontFamily={"Poppins"}>
@@ -77,8 +83,9 @@ export const PageHeroes: React.FC<PageHeroesProps> = ({
 								variant="outlined"
 								sx={{
 									textTransform: "none",
+									width: small ? "240px" : "100%",
 								}}
-								size="large"
+								size={medium ? "small" : "large"}
 							>
 								<Typography fontWeight={300} fontFamily={"Poppins"}>
 									Kembali
@@ -92,15 +99,13 @@ export const PageHeroes: React.FC<PageHeroesProps> = ({
 	} else {
 		return (
 			<WhiteHeroSection
-				sx={
-					{
-						// backgroundImage: `url(${img})`,
-					}
-				}
+				sx={{
+					backgroundImage: `url(${img})`,
+				}}
 			>
 				<Box
 					display={"flex"}
-					padding={"128px 96px"}
+					padding={small ? "32px" : medium ? "64px" : "128px 128px"}
 					flexDirection={"column"}
 					gap={"48px"}
 					flex={"1"}

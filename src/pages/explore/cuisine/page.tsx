@@ -5,6 +5,7 @@ import { CuisineTypes } from "../../../types/cuisine";
 import { getAllCuisine } from "../../../services/admin/cuisine";
 import { useCallback, useEffect, useState } from "react";
 import { PageHeroes } from "../../../components/PageHeroes";
+import { GridLayout } from "../../../components/_layout/gridLayout";
 
 interface SitesProps {}
 
@@ -79,28 +80,22 @@ export const Cuisine: React.FC<SitesProps> = () => {
 							label="Memiliki Resep"
 						/>
 					</Box> */}
-					<Box
-						sx={{
-							display: "grid",
-							gap: "12px",
-							gridTemplateColumns: "repeat(5,minmax(0,1fr))",
-						}}
-					>
+					<GridLayout defaultGrid={4}>
 						{data?.map((data, index) => (
-								<FoodCard
-									id={data.id}
-									imgUrl={data.image_path}
-									key={index}
-									name={data.name}
-									isRecipe={
-										data.recipe !== null &&
-										data.recipe.ingredients.length > 0 &&
-										data.recipe.steps.length > 0
-									}
-									duration={data.duration}
-								/>
-							))}
-					</Box>
+							<FoodCard
+								id={data.id}
+								imgUrl={data.image_path}
+								key={index}
+								name={data.name}
+								isRecipe={
+									data.recipe !== null &&
+									data.recipe.ingredients.length > 0 &&
+									data.recipe.steps.length > 0
+								}
+								duration={data.duration}
+							/>
+						))}
+					</GridLayout>
 				</Box>
 			</PageLayout>
 		</>

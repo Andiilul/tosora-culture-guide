@@ -4,6 +4,7 @@ import {
 	Button,
 	CardActionArea,
 	Typography,
+	useMediaQuery,
 	useTheme,
 } from "@mui/material";
 import { Hero } from "../../components/hero";
@@ -45,14 +46,15 @@ export const Home: React.FC<HomeProps> = () => {
 		preloadImages(imagesToPreload);
 	}, []);
 
+	const medium = useMediaQuery("(max-width:1024px)");
+	const small = useMediaQuery("(max-width:640px)");
+
 	return (
 		<>
 			<div id="firstHero">
 				<Hero />
 			</div>
-			<div id="explore">
-				<Explore />
-			</div>
+
 			<HomeContentWrapper>
 				<HomeContainer>
 					<IntroSection>
@@ -102,17 +104,18 @@ export const Home: React.FC<HomeProps> = () => {
 										fontWeight={"500"}
 										fontFamily={"Poppins"}
 										color={theme.palette.text.secondary}
+										fontSize={small ? "12px" : medium ? "12px" : "14px"}
 									>
 										DESA TOSORA
 									</Typography>
 									<Typography
-										fontSize={"40px"}
+										fontSize={small ? "32px" : medium ? "40px" : "40px"}
 										fontFamily={"Rokkitt"}
 										fontWeight={"400"}
 									>
 										Menyajikan Keindahan dan Kekayaan Budaya{" "}
 										<Typography
-											fontSize={"40px"}
+											fontSize={small ? "32px" : medium ? "40px" : "40px"}
 											fontFamily={"Rokkitt"}
 											fontWeight={"400"}
 											component={"span"}
@@ -124,7 +127,10 @@ export const Home: React.FC<HomeProps> = () => {
 								</Box>
 							</Box>
 							<Box height={"1px"} bgcolor={theme.palette.primary.main} />
-							<Typography fontFamily={"Poppins"}>
+							<Typography
+								fontFamily={"Poppins"}
+								fontSize={small ? "12px" : medium ? "14px" : "16px"}
+							>
 								Tosora adalah salah satu desa di Kecamatan Majauleng, Kabupaten
 								Wajo, Sulawesi Selatan. Tosora merupakan ibukota kerajaan Wajo
 								dimasa lampau.
@@ -149,7 +155,7 @@ export const Home: React.FC<HomeProps> = () => {
 								>
 									<Typography
 										fontFamily={"Poppins"}
-										fontSize={"16px"}
+										fontSize={small ? "12px" : medium ? "14px" : "16px"}
 										fontWeight={"400"}
 									>
 										Buka di Maps
@@ -160,7 +166,7 @@ export const Home: React.FC<HomeProps> = () => {
 						</Box>
 
 						<Box
-							display={"flex"}
+							display={medium ? "none" : "flex"}
 							flexDirection={"column"}
 							alignItems={"center"}
 							justifyContent={"center"}
@@ -212,6 +218,7 @@ export const Home: React.FC<HomeProps> = () => {
 										bottom: "0",
 										zIndex: "15", // Set a lower z-index than the relative image
 										boxShadow: "-3px -3px 3px 0 rgba(0,0,0,0.4)",
+
 										height: "180px",
 										width: "320px",
 									}}
@@ -220,8 +227,37 @@ export const Home: React.FC<HomeProps> = () => {
 								/>
 							</Box>
 						</Box>
+						<Box
+							display={small ? "flex" : medium ? "flex" : "none"}
+							gap={small ? "12px" : "24px"}
+						>
+							<Avatar
+								style={{
+									borderRadius: "8px",
+									boxShadow: "-3px -3px 3px 0 rgba(0,0,0,0.4)",
+									height: small ? "120px" : "180px",
+									flex: "1",
+								}}
+								src={tosora}
+								alt=""
+							/>
+							<Avatar
+								style={{
+									borderRadius: "8px",
+									boxShadow: "-3px -3px 3px 0 rgba(0,0,0,0.4)",
+
+									height: small ? "120px" : "180px",
+									flex: "1",
+								}}
+								src="/assets/image-2.jpg"
+								alt=""
+							/>
+						</Box>
 					</IntroSection>
 				</HomeContainer>
+				<div id="explore">
+					<Explore />
+				</div>
 
 				<SpiritualSection
 					id="spiritual"
@@ -231,9 +267,9 @@ export const Home: React.FC<HomeProps> = () => {
 				>
 					<Box
 						display={"flex"}
-						padding={"128px 96px"}
+						padding={small ? "32px" : medium ? "64px" : "128px 96px"}
 						flexDirection={"column"}
-						gap={"48px"}
+						gap={small ? "24px" : medium ? "36px" : "48px"}
 						flex={"1"}
 						maxWidth={"1980px"}
 						position={"relative"}
@@ -242,7 +278,7 @@ export const Home: React.FC<HomeProps> = () => {
 						<Box display={"flex"} flexDirection={"column"}>
 							<Typography
 								fontFamily={"Rokkitt"}
-								fontSize={"48px"}
+								fontSize={small ? "24px" : medium ? "32px" : "48px"}
 								fontWeight={"300"}
 								color={"white"} // Ensure text is readable
 							>
@@ -250,7 +286,7 @@ export const Home: React.FC<HomeProps> = () => {
 							</Typography>
 							<Typography
 								fontFamily={"Rokkitt"}
-								fontSize={"48px"}
+								fontSize={small ? "24px" : medium ? "32px" : "48px"}
 								fontWeight={"600"}
 								color={"white"} // Ensure text is readable
 							>
@@ -258,7 +294,7 @@ export const Home: React.FC<HomeProps> = () => {
 								<Typography
 									component={"span"}
 									fontFamily={"Rokkitt"}
-									fontSize={"48px"}
+									fontSize={small ? "24px" : medium ? "32px" : "48px"}
 									fontWeight={"600"}
 									color={(theme) => theme.palette.primary.main}
 								>
@@ -269,8 +305,10 @@ export const Home: React.FC<HomeProps> = () => {
 						<Box
 							display={"grid"}
 							sx={{
-								gridTemplateColumns: "repeat(2,minmax(0,1fr))",
-								gap: "72px",
+								gridTemplateColumns: medium
+									? "repeat(1,minmax(0,1fr))"
+									: "repeat(2,minmax(0,1fr))",
+								gap: small ? "24px" : medium ? "48px" : "72px",
 							}}
 						>
 							<Box
@@ -307,14 +345,14 @@ export const Home: React.FC<HomeProps> = () => {
 							>
 								<Typography
 									fontFamily={"Rokkitt"}
-									fontSize={"32px"}
+									fontSize={small ? "24px" : medium ? "28px" : "32px"}
 									fontWeight={"600"}
 									color={"white"}
 								>
 									Temukan Sejarah, Alami Keindahan, Jelajahi Masa Lalu
 								</Typography>
 								<Typography
-									fontSize={"14px"}
+									fontSize={small ? "10px" : medium ? "12px" : "14px"}
 									fontFamily={"Poppins"}
 									color={"white"}
 								>
@@ -334,7 +372,7 @@ export const Home: React.FC<HomeProps> = () => {
 								>
 									<Typography
 										fontFamily={"Poppins"}
-										fontSize={"22px"}
+										fontSize={small ? "12px" : medium ? "16px" : "22px"}
 										fontWeight={"400"}
 									>
 										Jelajahi Masjid Tua
@@ -357,7 +395,7 @@ export const Home: React.FC<HomeProps> = () => {
 						<Typography
 							fontFamily={"Rokkitt"}
 							textAlign={"center"}
-							fontSize={"36px"}
+							fontSize={small ? "24px" : medium ? "28px" : "36px"}
 						>
 							About Us
 						</Typography>
@@ -372,14 +410,23 @@ export const Home: React.FC<HomeProps> = () => {
 						<Typography
 							fontFamily={"Rokkitt"}
 							textAlign={"center"}
-							fontSize={"14px"}
+							fontSize={small ? "10px" : medium ? "12px" : "14px"}
 						>
-							Welcome to the Tosora Culture Guide, one of projects proudly created by
-							the KKNT-112 Team from Universitas Hasanuddin. This website is
-							part of our community service program, dedicated to preserving and
-							sharing the rich cultural heritage of Tosora. Our mission is to
-							provide an informative and engaging resource for anyone interested
-							in learning about the unique traditions, history, and culture of
+							Welcome to the{" "}
+							<Typography
+								component={"span"}
+								color={"primary"}
+								fontFamily={"Rokkitt"}
+								fontSize={small ? "10px" : medium ? "12px" : "14px"}
+							>
+								Tosora Culture Guide
+							</Typography>
+							, one of projects proudly created by the KKNT-112 Team from
+							Universitas Hasanuddin. This website is part of our community
+							service program, dedicated to preserving and sharing the rich
+							cultural heritage of Tosora. Our mission is to provide an
+							informative and engaging resource for anyone interested in
+							learning about the unique traditions, history, and culture of
 							Tosora. We hope this guide helps foster a deeper appreciation and
 							understanding of this vibrant community. Thank you for exploring
 							with us!

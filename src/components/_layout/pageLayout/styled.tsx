@@ -25,8 +25,8 @@ export const LayoutContainer: StyledComponent<BoxProps & { theme?: Theme }> =
 		["@media (max-width: 1024px)"]: {
 			padding: "32px 48px",
 		},
-		["@media (max-width: 768px)"]: {
-			padding: "32px 24px",
+		["@media (max-width: 640px)"]: {
+			padding: "32px 16px",
 		},
 	}));
 

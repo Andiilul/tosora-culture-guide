@@ -12,13 +12,27 @@ export const FooterWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
 		display: "flex",
 		maxWidth: "1980px",
 		justifyContent: "center",
+		['@media (max-width: 1024px)']: {
+		padding:"32px"
+		},
+		['@media (max-width: 640px)']: {
+			padding:"16px"
+		
+		},
 	}));
 
 export const FooterContainer: StyledComponent<BoxProps & { theme?: Theme }> =
 	styled(Box)(() => ({
 		display: "grid",
 		gridTemplateColumns: "repeat(4 , minmax(0,1fr))",
-		gap:"32px"
+		gap:"32px",
+		['@media (max-width: 1024px)']: {
+		
+		},
+		['@media (max-width: 640px)']: {
+			gridTemplateColumns: "repeat(2 , minmax(0,1fr))",
+		
+		},
 	}));
 
 export const FooterBox: StyledComponent<BoxProps & { theme?: Theme }> = styled(
@@ -41,7 +55,14 @@ export const QuickLinks: StyledComponent<BoxProps & { theme?: Theme }> = styled(
 	flexDirection: "column",
 	gap: "4px",
 	fontWeight: "400",
-	fontSize: "16px",
+	fontSize: "14px",
+	['@media (max-width: 1024px)']: {
+	fontSize:"12px"
+	},
+	['@media (max-width: 640px)']: {
+		fontSize:"10px"
+	
+	},
 }));
 
 export const FooterMid: StyledComponent<BoxProps & { theme?: Theme }> = styled(

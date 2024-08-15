@@ -23,12 +23,26 @@ export const NavbarWrapper: StyledComponent<BoxProps & { theme?: Theme }> =
 		zIndex: "100",
 		userSelect: "none",
 		justifyContent: "center",
+		['@media (max-width: 1024px)']: {
+		padding:"6px 12px"
+		},
+		['@media (max-width: 640px)']: {
+			padding:"6px "
+		
+		},
 	}));
 
 export const NavbarMenuList: StyledComponent<BoxProps & { theme?: Theme }> =
 	styled(Box)(() => ({
 		display: "flex",
 		gap: "24px",
+		['@media (max-width: 1024px)']: {
+		gap:"12px"
+		},
+		['@media (max-width: 640px)']: {
+			gap:"6px"
+		
+		},
 	}));
 
 export const NavItem: StyledComponent<BoxProps & { theme?: Theme }> = styled(
