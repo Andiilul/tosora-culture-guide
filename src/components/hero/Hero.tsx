@@ -104,7 +104,7 @@ export const Hero: React.FC<HeroProps> = () => {
 					fontWeight={"bold"}
 					fontFamily={"Rokkitt"}
 					textAlign={"center"}
-					fontSize={small?"80px" :medium? "140px" :"160px"}
+					fontSize={small ? "80px" : medium ? "140px" : "160px"}
 					sx={{
 						alignContent: "center",
 						flex: "1",
@@ -121,8 +121,13 @@ export const Hero: React.FC<HeroProps> = () => {
 								flexDirection={small ? "column" : medium ? "column" : "row"}
 								gap={"12px"}
 								alignItems={"center"}
+								width={"100%"}
+								justifyContent={"flex-start"}
 							>
-								<Typography color={theme.palette.primary.main}>
+								<Typography
+									lineHeight={"0px"}
+									color={theme.palette.primary.main}
+								>
 									{map.icon}
 								</Typography>
 								<Box display={"flex"} flexDirection={"column"}>
