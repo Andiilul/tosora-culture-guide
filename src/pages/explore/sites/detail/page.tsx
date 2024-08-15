@@ -224,7 +224,7 @@ export const SiteDetail: React.FC<SiteDetailProps> = () => {
 				</SiteHeroContainer>
 			</SiteHeroWrapper>
 			<SiteDetailContent>
-				<Box display={"flex"} flexDirection={"column"}>
+				<Box component={"div"} id="detail" display={"flex"} flexDirection={"column"}>
 					<Typography
 						color={"primary"}
 						textAlign={"center"}
