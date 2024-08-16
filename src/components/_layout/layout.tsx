@@ -48,7 +48,7 @@ const adminMenu = [
 		icon: <AccountBalanceOutlined />,
 	},
 	{
-		name: "Karya Tulis & Lisan",
+		name: "Manuskrip dan Tradisi Lisan",
 		link: "/admin/works",
 		icon: <ColorLens />,
 	},

@@ -173,7 +173,7 @@ export const AdminWorks: React.FC = () => {
 	return (
 		<AdminSiteWrapper>
 			<Box padding={"12px 0"}>
-				<Typography color={"primary"}>Data Karya Tulis dan Lisan</Typography>
+				<Typography color={"primary"}>Data Manuskrip dan Tradisi Lisan</Typography>
 			</Box>			<Box display={"flex"} flexDirection={"column"} gap={"24px"}>
 				<Rlinks
 					to={"./add"}

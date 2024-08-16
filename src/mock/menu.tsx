@@ -52,7 +52,7 @@ export const ExploreBlog = [
 			"Temukan Kebijaksanaan yang Diturunkan Melalui Generasi di Tosora.",
 	},
 	{
-		name: "Karya Tulis dan Lisan",
+		name: "Manuskrip dan Tradisi Lisan",
 		link: "/explore/works",
 		icon: <ColorLens fontSize="inherit" />,
 		catchphrase: "Selami Ekspresi Karya Tosora, dari Masa Lalu hingga Kini.",
