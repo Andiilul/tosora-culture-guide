@@ -83,7 +83,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ admin = false }) => {
 	const [openLogOut, setOpenLogOut] = useState<boolean>(false);
 	const theme = useTheme();
 	const [open, setOpen] = useState(true);
-	const width = "240px";
+	const width = "280px";
 	const path = useLocation();
 
 	const small = useMediaQuery("(max-width:640px)");

@@ -34,6 +34,8 @@ import { Culture } from "./pages/explore/culture/page";
 import { Works } from "./pages/explore/works/page";
 import { Entertainments } from "./pages/explore/entertainments/page";
 import { Wisdoms } from "./pages/explore/wisdoms/page";
+import { Dashboard } from "./pages/admin/_dashboard/page";
+
 
 function App() {
 	const { theme } = useThemeContext();
@@ -50,7 +52,7 @@ function App() {
 					<Route element={<ProtectedRoute type="admin" />}>
 						<Route path="/admin" element={<MainLayout admin />}>
 							<Route path="" element={<Navigate to="/admin/dashboard" />} />{" "}
-							<Route path="dashboard" element={"Dashboard"} />
+							<Route path="dashboard" element={<Dashboard />} />
 							{/*1. Situs */}
 							<Route path="sites" element={<AdminSites />} />
 							<Route path="sites/add" element={<AdminSitesForm />} />
@@ -125,8 +127,14 @@ function App() {
 						<Route path="/explore/cuisines" element={<Cuisine />} />
 						<Route path="/explore/cuisines/:id" element={<CuisineDetail />} />
 						{/* Arts and Entertainments */}
-						<Route path="/explore/entertainments" element={<Entertainments />} />
-						<Route path="/explore/entertainments /:id" element={<SiteDetail />} />
+						<Route
+							path="/explore/entertainments"
+							element={<Entertainments />}
+						/>
+						<Route
+							path="/explore/entertainments /:id"
+							element={<SiteDetail />}
+						/>
 					</Route>
 					<Route element={<MainLayout />}>
 						<Route path="*" element={<NotFound />} />

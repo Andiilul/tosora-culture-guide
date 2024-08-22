@@ -214,7 +214,8 @@ export const AdminSites: React.FC = () => {
 		<AdminSiteWrapper>
 			<Box padding={"12px 0"}>
 				<Typography color={"primary"}>Data Situs Budaya</Typography>
-			</Box>			<Box display={"flex"} flexDirection={"column"} gap={"24px"}>
+			</Box>{" "}
+			<Box display={"flex"} flexDirection={"column"} gap={"24px"}>
 				<Rlinks
 					to={"./add"}
 					style={{

@@ -12,8 +12,10 @@ import { db } from "../../config/firebaseConfig";
 import { AddSiteInput, SitesTypes, UpdateSiteInput } from "../../types/sites";
 import { deleteAllImage } from "../image";
 
+const collectionName = "sites";
+
 export const getAllSites = async (): Promise<SitesTypes[]> => {
-	const querySnapshot = await getDocs(collection(db, "sites"));
+	const querySnapshot = await getDocs(collection(db, collectionName));
 	const sites: SitesTypes[] = [];
 
 	querySnapshot.docs.forEach((doc) => {
@@ -42,7 +44,7 @@ export async function getOneSite(
 	siteId: string
 ): Promise<SitesTypes | undefined> {
 	try {
-		const siteDocRef = doc(collection(db, "sites"), siteId);
+		const siteDocRef = doc(collection(db, collectionName), siteId);
 		const siteSnapshot = await getDoc(siteDocRef);
 
 		if (siteSnapshot.exists()) {
@@ -79,7 +81,7 @@ export async function createSites(
 	siteId: string
 ): Promise<SitesTypes> {
 	try {
-		const siteCollection = collection(db, "sites");
+		const siteCollection = collection(db, collectionName);
 
 		const newSiteRef = doc(siteCollection, siteId);
 
@@ -112,7 +114,7 @@ export const updateSite = async ({
 	site: UpdateSiteInput;
 }) => {
 	try {
-		const siteDocRef = doc(db, "sites", id);
+		const siteDocRef = doc(db, collectionName, id);
 		const currentSiteSnapshot = await getDoc(siteDocRef);
 
 		if (currentSiteSnapshot.exists()) {
@@ -136,7 +138,7 @@ export const updateSite = async ({
 
 export const deleteSite = async (site: SitesTypes): Promise<void> => {
 	try {
-		const siteDocRef = doc(db, "sites", site.id);
+		const siteDocRef = doc(db, collectionName, site.id);
 		await deleteDoc(siteDocRef);
 		await deleteAllImage(site.image_path);
 		console.log("Site deleted successfully with ID:", site.id);
@@ -147,7 +149,7 @@ export const deleteSite = async (site: SitesTypes): Promise<void> => {
 };
 
 export const deleteSiteImageOnly = async (id: string, imgPaths: string[]) => {
-	const siteDocRef = doc(db, "sites", id);
+	const siteDocRef = doc(db, collectionName, id);
 
 	try {
 		// Fetch the document
