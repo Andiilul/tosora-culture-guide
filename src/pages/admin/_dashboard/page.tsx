@@ -38,7 +38,7 @@ export const Dashboard: React.FC<DashboardProps> = () => {
 					collection(db, "cuisine")
 				);
 				const entertainmentSnapshot = await getCountFromServer(
-					collection(db, "entertainment")
+					collection(db, "entertainments")
 				);
 
 				setDataCounts({
