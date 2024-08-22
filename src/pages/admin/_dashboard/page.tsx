@@ -29,10 +29,10 @@ export const Dashboard: React.FC<DashboardProps> = () => {
 				const sitesSnapshot = await getCountFromServer(collection(db, "sites"));
 				const worksSnapshot = await getCountFromServer(collection(db, "works"));
 				const culturesSnapshot = await getCountFromServer(
-					collection(db, "cultures")
+					collection(db, "culture")
 				);
 				const wisdomsSnapshot = await getCountFromServer(
-					collection(db, "wisdoms")
+					collection(db, "wisdom")
 				);
 				const cuisineSnapshot = await getCountFromServer(
 					collection(db, "cuisine")
